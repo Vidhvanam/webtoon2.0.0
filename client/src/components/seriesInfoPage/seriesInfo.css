@@ -1,0 +1,31 @@
+.all-reviews{
+    margin:40px 0;
+    border-top: 1px solid rgb(186, 185, 185);
+    padding : 30px 0;
+    gap:2rem;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+.review-container{
+  border:1px solid rgb(186, 185, 185);
+  width :100%;
+  padding :20px
+}
+
+.review{
+
+}
+.person{
+    gap:1rem;
+}
+
+.stars-container{
+  justify-content: space-between;
+}
+.stars-container .delete-btn{
+  color :rgb(245, 39, 39);
+  font-size: 2rem;
+}
+.stars-container .delete-btn:hover{
+  cursor: pointer;
+}

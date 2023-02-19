@@ -1,0 +1,40 @@
+.logo{
+    width :77px;
+    background-color:transparent;
+}
+
+nav{
+    border-bottom: 1px solid rgb(194, 193, 193);
+}
+
+
+nav li a{
+    text-decoration: none;
+    color: black !important;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+nav button a{
+    color: var(--main-color);
+}
+nav button :hover{
+    color : white !important;
+}
+nav .active{
+    color : var(--main-color) !important;
+}
+
+.login-btn{
+    height: 38px;
+     text-decoration: none;
+     /* vertical-align: middle; */
+     color:  var(--main-color);
+    border: 1px solid var(--main-color);
+    margin-right: 7px;
+    border-radius: 10px;
+    padding :5px 15px;
+  }
+ .login-btn:hover{
+    background-color: var(--main-color);
+    color : white !important;
+ } 
