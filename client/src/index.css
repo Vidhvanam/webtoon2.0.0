@@ -1,12 +1,14 @@
-*{
+* {
   margin: 0;
-  padding : 0;
+  padding: 0;
   box-sizing: border-box;
 }
-:root{
-  --main-color : rgb(9, 210, 9);
-  --error-color :rgb(194, 35, 35);
+
+:root {
+  --main-color: rgb(9, 210, 9);
+  --error-color: rgb(194, 35, 35);
 }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -17,173 +19,192 @@ body {
   background-color: rgb(236, 235, 235);
 }
 
-#carouselExampleIndicators{
+#carouselExampleIndicators {
   /* background-image: url(./img/sliderImg/Unlovable-Replacement-Mobile-Banner2.2.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
   background-color: rgba(14, 155, 33, 0.171);
 }
 
-.main-container{
+.main-container {
   min-height: 100vh;
   /* padding:40px 0px; */
- 
+
 }
 
-.home-container{
+.home-container {
   min-height: 100vh;
   /* padding:40px 0px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-footer{
-  padding-top : 20px;
+
+footer {
+  padding-top: 20px;
 }
-.pd-y-40{
-  padding:40px;
+
+.pd-y-40 {
+  padding: 40px;
 }
-.main-btn{
-  padding : 10px 20px;
-  color : white;
+
+.main-btn {
+  padding: 10px 20px;
+  color: white;
   background-color: var(--main-color);
 }
 
-.slide{
+.slide {
   background-color: rgb(156, 156, 156);
   max-height: 500px;
-  width:100%;
+  width: 100%;
 }
-.slide img{
+
+.slide img {
   max-width: 100%;
   max-height: 100%;
 }
 
-.txt-center{
+.txt-center {
   width: 300px;
   text-transform: uppercase;
   text-align: center;
   margin: auto;
-  color:rgb(40, 41, 41);
+  color: rgb(40, 41, 41);
 }
-.flex-box{
-  margin : 30px 0;
+
+.flex-box {
+  margin: 30px 0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  gap:2rem;
+  gap: 2rem;
   flex-wrap: wrap;
   align-items: center;
 }
-.sub-container{
-  padding :30px;
+
+.sub-container {
+  padding: 30px;
 }
 
 /* card css */
 
-.card-img-top{width: 250px;
+.card-img-top {
+  width: 250px;
   height: 250px;
 }
-.card-title{
+
+.card-title {
   text-transform: capitalize;
 }
-.pos-bot{
+
+.pos-bot {
   position: absolute;
   bottom: 20px;
-  color:rgb(92, 179, 6)
+  color: rgb(92, 179, 6)
 }
-.card-container{
+
+.card-container {
   position: relative;
-  width:250px;
+  width: 250px;
   height: 250px;
-  gap:1rem;
+  gap: 1rem;
   justify-content: stretch;
   text-decoration: none;
-  color : black !important;
+  color: black !important;
+  border: 2px solid transparent;
+  overflow: hidden;
 }
-.border-b-gray{
+
+.border-b-gray {
   border-bottom: 1px solid rgb(192, 192, 192);
 
 }
 
- .card-container:hover .hover-component{
+.card-container:hover .hover-component {
   display: block;
 }
-.card-container:hover{
+
+.card-container:hover {
   cursor: pointer;
 }
-.hover-component{
-  padding :30px;
+
+.hover-component {
+  padding: 30px;
   font-size: 0.8rem;
   display: none;
-  color :white;
-  position : absolute;
-  top:0;
+  color: white;
+  position: absolute;
+  top: 0;
   right: 0;
-  left:0;
+  left: 0;
   bottom: 0;
   background-color: var(--main-color);
-  
-} 
-.main-txt-color{
+
+}
+
+.main-txt-color {
   color: var(--main-color)
 }
+
 /* @media screen and() {
   
 } */
 
 
 /* series page  */
-.series-container{
+.series-container {
   max-width: 900px;
   /* margin-top: 40px; */
-  margin: 40px auto ;
-  padding : 40px;
-  background-color: #fff;   
+  margin: 40px auto;
+  padding: 40px;
+  background-color: #fff;
 }
-.flex-col-box{
+
+.flex-col-box {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.flex-row-box{
+
+.flex-row-box {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
 }
-.center-flex{
+
+.center-flex {
   justify-content: center;
   align-items: center;
 }
-.episodes-container{
+
+.episodes-container {
   margin-top: 40px;
 }
-.gap-2{
-  gap:2rem;
-}
-.gap-4{
-  gap:4rem;
-}
-.episode{ 
-  width: 100%;
-  text-decoration: none;
-  color:black;
-  cursor: pointer;
-  justify-content: space-between;
-  padding : 20px;
-  background-color: rgb(223, 220, 220);
-}
-.mr-5{
-  margin:5px;
+
+.gap-2 {
+  gap: 2rem;
 }
 
-@media only screen and (max-width: 430px )  {
-  .episode {
-    padding : 10px;
-    justify-content: center; 
-  }
+.gap-4 {
+  gap: 4rem;
 }
+
+.episode {
+  width: 100%;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: rgb(223, 220, 220);
+}
+
+.mr-5 {
+  margin: 5px;
+}
+
 
 .pdf-document {
   display: flex;
@@ -199,42 +220,97 @@ footer{
 }
 
 /* user account page */
-.user-account-nav{
+.user-account-nav {
   background-color: rgb(243, 242, 242);
 }
-.user-account-nav ul{
+
+.user-account-nav ul {
   list-style: none;
-  padding :0;
-  margin :0;
+  padding: 0;
+  margin: 0;
   height: 60px;
   justify-content: center;
 }
-.user-account-nav ul li{
+
+.user-account-nav ul li {
   height: 100%;
   display: inline-block;
 }
-.user-account-nav ul li a{
-  padding : 10px 20px;
+
+.user-account-nav ul li a {
+  padding: 10px 20px;
   display: inline-block;
   height: 100%;
   display: flex;
   align-items: center;
   transition: 0.3s all;
 }
-.user-account-nav ul li a:hover{
+
+.user-account-nav ul li a:hover {
   background-color: rgba(219, 215, 215, 0.377);
-  color:var(--main-color) !important;
+  color: var(--main-color) !important;
 }
-.height-100vh{
-   height: 100vh;
+
+.height-100vh {
+  height: 100vh;
 }
 
 /* review section styling  */
 
-.gap-1{
-  gap :1
+.gap-1 {
+  gap: 1
 }
-.series-icon{
+
+.series-icon {
   font-size: 1.3rem;
   color: var(--main-color)
+}
+
+/* subscribe page */
+@media only screen and (max-width: 430px) {
+  .episode {
+    padding: 10px;
+    justify-content: center;
+  }
+}
+
+.subscribes-container {
+  padding: 20px;
+  max-width: 1150px;
+  margin: auto;
+}
+
+.js-space-bet {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label-checked {
+  border: 2px solid var(--main-color);
+}
+
+.dis-none {
+  display: "none"
+}
+
+.card-inp {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  zoom: 2;
+  z-index: 40;
+  background-color: #23f734;
+  
+}
+.sub {
+    
+  justify-content: start;
+  align-items: center;
+}
+@media only screen and (max-width: 570px) {
+  .sub {
+    
+    justify-content: center;
+    align-items: center;
+  }
 }

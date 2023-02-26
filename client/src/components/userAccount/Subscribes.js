@@ -1,45 +1,108 @@
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import { Fragment, useContext, useEffect, useState } from "react"
 import { userContext } from "../UserContext"
 import Card from "../Card"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 export default function Subscriber() {
-    const { user } = useContext(userContext)
+    const { user ,setUser} = useContext(userContext)
     const [subsribes, setSubsribes] = useState([])
+    const [subArray, setSubArray] = useState([])
+    const [mode ,setMode] = useState("view")
+
     useEffect(() => {
         async function getData() {
 
             if (user) {
                 const userSubscribes = user.subscribes
                 const res = await axios.get(`http://localhost:6969/api/series/allSubscribes/get?userSubscribes=${userSubscribes}`)
-                // console.log(userSubscribes);
-
+        
                 if (res.data.type === "success") {
-                    console.log(res.data);
-                    setSubsribes(res.data.seriesInfo)
+                    const resSeries = res.data.seriesInfo
+                    setSubsribes(resSeries)
+                    setSubArray(resSeries.map(item => item._id))
                 }
             }
         }
         getData()
-        // axios.get(`http://localhost:6969/api/series/allSubscribes/get?userSubscribes=${userSubscribes}`,)
-        //  .then(res => {
-        //     console.log(res);
-        //  })
-
     }, [user])
 
-    const subSeries = subsribes.map(series => (
+    function handleSubArray(s_id){
+        const deleteBol = subArray.some(item => item === s_id)
+        if(deleteBol)
+            setSubArray(subArray.filter(item => item !== s_id))       
+        else
+            setSubArray([...subArray , s_id])
+    }
 
-        <Card key={series._id} series={series} />
+    function handelMode(){
+        setMode(prev => prev === "view" ? "edit" : "view")
+    }
+   function deleteSub(){
+    if(subArray.length === subSeries.length){
+        toast.info("Select series to delete");
+    }else{
+        const s_id = user.subscribes.filter(prev => !subArray.includes(prev))
+        console.log({s_id}); 
+        axios.put(`http://localhost:6969/api/user/unSubscribe/${user._id}`,{data:subArray , action:'unSub',s_id}).then(res =>{
+            if(res.data.type === "success"){
+            
+              setUser(res.data.upUser)
+              localStorage.setItem("user",JSON.stringify(res.data.upUser))
+              console.log(res.data.upUser);
+              toast[res.data.type](res.data.message);
+            }else{
+            
+              toast[res.data.type](res.data.message);      
+            }
+          })
+    }
+   }
+  
+
+    const subSeries = subsribes.map((series, index) => (
+       <Fragment key={series._id}>
+           
+            <Card  label={"card" + index} series={series} mode={mode} handleSubArray={handleSubArray}/>
+       </Fragment>
+      
+
     ))
     return (
         <div className="main-container">
-            <div className="sub-container">
-            <h2 className='txt-center'>Subscribes</h2>
+            {
+        console.log(subArray)
 
-            <div className="flex-row-box gap-4">
-                
-                {subSeries}
-            </div>
+            }
+              <ToastContainer  position="top-center"
+          autoClose={2000}
+          hideProgressBa={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme="light"/>
+
+            <div className="subscribes-container">
+                <div className="flex-row-box js-space-bet">
+                    <h2 className=''>Subscribes</h2>
+                    <span>
+                        {mode === "view" ? 
+                        <button className="btn btn-success" onClick={()=>handelMode()}>Edit</button> :
+                       ( <div className="flex-row-box gap-2">
+                       
+                       <button className="btn btn-danger " onClick={()=>deleteSub()}>Delete</button>
+                       <button className="btn btn-success" onClick={()=>handelMode()}>Cancle</button>
+                       </div>
+                        )
+                    }
+                    </span>
+                </div>
+
+                <div className="flex-row-box gap-4 sub  mt-3 ">
+
+                    {subSeries}
+                </div>
             </div>
 
         </div>

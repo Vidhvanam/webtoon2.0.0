@@ -42,7 +42,7 @@ function Header() {
                 <NavLink className="nav-link" to='/about'>About</NavLink>
               </li>
             </ul>
-            <button type="button" className="btn btn-dark me-2">Publish</button>
+            {/* <button type="button" className="btn btn-dark me-2">Publish</button> */}
             {user ? (<>
              <NavLink to={`/account`} className='nav-link user-account login-btn'> <FaUserAlt /> {user.userName?.substring(0, 6)}</NavLink>
             </>

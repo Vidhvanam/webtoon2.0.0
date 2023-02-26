@@ -71,7 +71,7 @@ function SeriesInfo() {
     }else{
        newSubcribes = [...user.subscribes , id]
     }
-    axios.put(`http://localhost:6969/api/user/unSubscribe/${user._id}`,{data:newSubcribes , action,s_id:id}).then(res =>{
+    axios.put(`http://localhost:6969/api/user/unSubscribe/${user._id}`,{data:newSubcribes , action,s_id:[id]}).then(res =>{
       if(res.data.type === "success"){
       
         setUser(res.data.upUser)
@@ -92,7 +92,7 @@ function SeriesInfo() {
   }
   return (
     <>
-     {console.log(user)}
+     {/* {console.log(user)} */}
       <div className="main-container ">
       <ToastContainer  position="top-center"
           autoClose={2000}

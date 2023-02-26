@@ -23,7 +23,7 @@ function Review({ reviews, setReviews, s_id }) {
   useEffect(() => {
     if (user) {
 
-      console.log({reviews});
+      // console.log({reviews});
       reviews.filter((review) => {
         if (review.userId._id === user._id) {
           setUserReview(review)

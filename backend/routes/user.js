@@ -11,17 +11,19 @@ router.put("/unSubscribe/:id",async (req,res)=>{
         const id = req.params.id
         const {data,action ,s_id} =req.body
         let message =""
-        // console.log(newSubscribes , id);
+        console.log(s_id);
         const upUser = await users.findOneAndUpdate({ _id: id }, {subscribes : data} ,{returnDocument: 'after' ,returnNewDocument: true,
         new: true,
         strict: false
      })
+     console.log(upUser);
        if(action === "sub"){
         message="Added to subscribes list"
-       const newS = await series.findOneAndUpdate({_id:s_id} ,{ $inc: { subscribers : 1 }})
+       const newS = await series.updateMany({_id:{$in: s_id}} ,{ $inc: { subscribers : 1 }})
        }else{
         message = 'Removed form subscribes list'
-        await series.findOneAndUpdate({_id:s_id} ,{ $inc: { subscribers : -1 }})
+        const newS= await series.updateMany({_id:{$in :s_id}} ,{ $inc: { subscribers : -1 }})
+        console.log({newS});
        }
         res.send({message , type:"success" ,upUser})
     }catch(err){
@@ -30,26 +32,5 @@ router.put("/unSubscribe/:id",async (req,res)=>{
     }
 });
 
-router.post("/register",(req,res)=>{
-    // console.log(req.body) 
-    const {userName,phone,email,password} =req.body;
-    var ciphertext = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString();
-    users.findOne({email:email},(err,user)=>{
-        if(user){
-            res.send({message:"user already exist"})
-        }else {
-            const user = new users({userName,email,phone,password : ciphertext})
-            user.save(err=>{
-                if(err){
-                    res.send(err)
-                }else{
-                    console.log(user)
-                    res.send({message:"sucessfull"})
-                }
-            })
-        }
-    })
 
-
-}) 
 export default router

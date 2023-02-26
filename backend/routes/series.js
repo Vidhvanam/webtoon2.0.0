@@ -27,7 +27,7 @@ router.get('/allSubscribes/get' , (req ,res) =>{
     series.find({ _id :{$in : userSubscribes}})
     
     .then(seriesInfo => {
-        console.log('seriesInfo', seriesInfo)
+        // console.log('seriesInfo', seriesInfo)
         res.send({seriesInfo ,type : "success"})
         
     })
