@@ -1,6 +1,6 @@
-import {  useState } from 'react';
-import {userContext} from './components/UserContext'
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import {  useState ,useEffect} from 'react';
+import {userContext } from './components/UserContext'
+import { Routes, Route, BrowserRouter ,Navigate} from 'react-router-dom';
 
 import Registration from './components/registration/Regitration';
 import Header from './components/header/Header'
@@ -14,10 +14,19 @@ import NotFound from './components/NotFound';
 import Home from './components/Home'
 import SeriesInfo from './components/seriesInfoPage/SeriesInfo'
 import EpisodeView from './components/EpisodeView'
-import UserAccount from './components/UserAccount'
+import UserAccount from './components/userAccount/UserAccount'
+import Subscribes from './components/userAccount/Subscribes';
 import ScrollToTop from './components/ScrollToTop';
 function App() {
   const [user ,setUser] = useState()
+  useEffect(()=>{
+    if(localStorage.getItem('user')){
+        setUser(JSON.parse(localStorage.getItem('user')))
+    }
+},[])
+// useEffect(()=>{
+//   console.log(user);
+// },[user])
   return (
    
     <userContext.Provider value={{user , setUser}}>
@@ -32,7 +41,11 @@ function App() {
         <Route path="/popular" element={<Popular />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/account/:id" element={<UserAccount />} />
+        <Route path="/account" element={<UserAccount/>} >
+            <Route index element={<Navigate to="subscribes" />} />
+            <Route path="subscribes" element={<Subscribes/>} />
+            {/* <Route path="list" element={<Subscribes/>}/> */}
+        </Route>
         <Route path="/episode/:file" element={<EpisodeView />} />
         <Route path="/series/:id" element={<SeriesInfo />} />
         <Route path="*" element={<NotFound />} />

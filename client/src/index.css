@@ -5,6 +5,7 @@
 }
 :root{
   --main-color : rgb(9, 210, 9);
+  --error-color :rgb(194, 35, 35);
 }
 body {
   margin: 0;
@@ -151,11 +152,18 @@ footer{
   flex-direction: row;
   flex-wrap: wrap;  
 }
+.center-flex{
+  justify-content: center;
+  align-items: center;
+}
 .episodes-container{
   margin-top: 40px;
 }
 .gap-2{
   gap:2rem;
+}
+.gap-4{
+  gap:4rem;
 }
 .episode{ 
   width: 100%;
@@ -223,3 +231,10 @@ footer{
 
 /* review section styling  */
 
+.gap-1{
+  gap :1
+}
+.series-icon{
+  font-size: 1.3rem;
+  color: var(--main-color)
+}

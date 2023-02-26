@@ -15,13 +15,13 @@ router.post("/login",(req,res)=>{
             var originalText = bytes.toString(CryptoJS.enc.Utf8);
            if(password === originalText){
                const {password , ...info} = user
-               res.send({message:"login sucessful",user:info})
+               res.send({message:"Login Sucessfully",user:info , type:"success"})
            }else{
-               res.send({message:"wrong email or password"})
+               res.send({message:"Wrong email or password" ,type:'error'})
            }
         // console.log('user does not exists')
         }else{
-            res.send({message:"not register"})
+            res.send({message:"Not registered" ,type:"success"})
         }
     })
 });

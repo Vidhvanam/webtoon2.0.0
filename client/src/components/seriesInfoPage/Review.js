@@ -11,9 +11,10 @@ const colors = {
   grey: "#a9a9a9",
 };
 
-function Review({ s_id }) {
+function Review({ reviews, setReviews, s_id }) {
   const { user } = useContext(userContext)
-  const [review, setReview] = useState({
+  const [userReview, setUserReview] = useState({
+
     seriesId: s_id,
     review: '',
     star: 0
@@ -21,52 +22,92 @@ function Review({ s_id }) {
   const [mode, setMode] = useState("adde")
   useEffect(() => {
     if (user) {
-      axios.get(`http://localhost:6969/api/reviews/useReview?s_id=${s_id}&u_id=${user._id}`)
-        .then(res => {
-          // console.log('res.userReview', res.data.userReview)
-          setReview({ ...review, ...res.data.userReview[0] })
-          if (res.data.userReview[0]) {
-            setMode("edite")
-          }
-        }).catch(err => console.log(err))
 
+      console.log({reviews});
+      reviews.filter((review) => {
+        if (review.userId._id === user._id) {
+          setUserReview(review)
+          setMode("update")
+        }
+      })
     }
-  }, [user])
+  }, [user, reviews])
   const stars = Array(5).fill(0);
 
   const handleClick = (value) => {
-    setReview({ ...review, star: value })
+    setUserReview({ ...userReview, star: value })
   };
   const handaleChange = (e) => {
-    setReview({ ...review, [e.target.name]: e.target.value });
+    setUserReview({ ...userReview, [e.target.name]: e.target.value });
     //  console.log('e.target.value', e.target.value)
   }
   const addReview = () => {
-    if (review.review.length === 0 || review.star === 0) {
+    if (userReview.review.length === 0 || userReview.star === 0) {
 
       toast.warn('Pleace rate and review first');
     } else {
-      //  console.log(review);
-      axios.post(`http://localhost:6969/api/reviews/addReview`, { ...review, userId: user['_id'] })
+      axios.post(`http://localhost:6969/api/reviews/addReview`, { ...userReview, userId: user['_id'] })
         .then(res => {
-
+          //  console.log(res.data.newReview);
           toast[res.data.type](res.data.message);
-        })
-      setTimeout(() => {
+          if (res.data.type === "success") {
+            const newReview ={...res.data.newReview,userId :user}
+            setReviews(prevReviews => ([...prevReviews , newReview ]))
+            console.log(newReview);
+            setMode("update")
 
-        window.location.reload()
-      }, 2000)
+          }
+        })
+
     }
 
   }
 
   const updateReview = () => {
-    alert("udat fun")
+    if (userReview.review.length === 0 || userReview.star === 0) {
+
+      toast.warn('Pleace rate and review first');
+    } else {
+      axios.post(`http://localhost:6969/api/reviews/updateReview/${userReview._id}`, { ...userReview, userId: user['_id'] })
+        .then(res => {
+
+          toast[res.data.type](res.data.message);
+          if (res.data.type === "success") {
+            setReviews(prevReviews => prevReviews.map(item => {
+
+              if (item.userId._id === user._id) {
+                console.log("inside");
+                item.review = userReview.review
+                item.star = userReview.star
+                return item
+              } else {
+                return item
+              }
+            }))
+          }
+        })
+
+    
+    }
   }
   const deleteReview = () => {
-    alert("udat fun")
+    axios.post(`http://localhost:6969/api/reviews/deleteReview/${userReview._id}`)
+      .then(res => {
+          
+        toast[res.data.type](res.data.message);
+        if (res.data.type === "error") {
+          setReviews(prevReviews =>  prevReviews.filter(item => item.userId._id !== user._id))
+          setMode("adde")
+          setUserReview({
+            seriesId: s_id,
+            review: '',
+            star: 0
+          })
+        }
+      })
+         
   }
-  
+
   return (
     user ? (
       <div >
@@ -79,7 +120,6 @@ function Review({ s_id }) {
           draggable={true}
           theme="light"
         />
-        {/* {console.log('review', review)} */}
         <h5 className="mb-4">Reviews Section</h5>
         <div className="flex-row-box stars-container">
           <span>
@@ -90,7 +130,7 @@ function Review({ s_id }) {
                   key={index}
                   size={24}
                   onClick={() => handleClick(index + 1)}
-                  color={review.star > index ? colors.orange : colors.grey}
+                  color={userReview.star > index ? colors.orange : colors.grey}
                   style={{
                     marginRight: 10,
                     cursor: "pointer",
@@ -98,7 +138,7 @@ function Review({ s_id }) {
                 />
               );
             })}
-            {review.star || "No Rating"}
+            {userReview.star || "No Rating"}
           </span>
 
 
@@ -108,7 +148,7 @@ function Review({ s_id }) {
           <form>
             <div className="form-group">
               <label>Your Review</label>
-              <textarea name='review' value={review.review} className="form-control mt-3" onChange={handaleChange}></textarea>
+              <textarea name='review' value={userReview.review} className="form-control mt-3" onChange={handaleChange}></textarea>
             </div>
             <div className="form-group">
               {mode === "adde" ? <button className="btn btn-primary btn-sm mt-3" type="button" onClick={addReview}>

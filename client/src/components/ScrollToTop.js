@@ -8,7 +8,7 @@ export default function ScrollToTop() {
     // "document.documentElement.scrollTo" is the magic for React Router Dom v6
   
     window.scrollTo(0, 0);
-    console.log("scrolling" ,routePath );
+    // console.log("scrolling" ,routePath );
     
   }, [routePath ]);
 

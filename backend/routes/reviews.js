@@ -15,7 +15,7 @@ router.get('/useReview' , (req ,res) =>{
 router.get('/:id' , (req ,res) =>{
     reviewMd.find({seriesId :req.params.id}).populate('userId')
     .then(reviewsData => {
-        // console.log('reviewsData', reviewsData)
+        // console.log('reviewsData', req.params.id)
         res.send({reviewsData})})
     .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
     
@@ -23,24 +23,44 @@ router.get('/:id' , (req ,res) =>{
 router.post('/addReview' , (req ,res) =>{
 
     const date = new Date()
-    // const userId = new ObjectId(req.body.userId)
-    // console.log("asdfasf",userId)
-
     const {star , review ,userId , seriesId} = req.body
-    console.log('dd',req.body)
+    // console.log('dd',req.body)
     const newReview = new reviewMd({userId,seriesId,star,review,date})
     newReview.save(err=>{
-        console.log(newReview)
-
                 if(err){
-                    console.log("asdfasf",newReview)
-                    res.send({err , message:"error",type:"error"})
+                    res.send({err , message:"Sorry error occured",type:"error"})
                 }else{
-                    console.log(newReview)
-                    res.send({message:"sucessfull" ,type:"success"})
+                    res.send({message:"Review added sucessfully" ,type:"success" ,newReview})
                 }
             })
     
+})
+
+router.post('/updateReview/:id' ,async (req ,res) =>{
+    const id = req.params.id
+    // const date = new Date()
+    const {star , review } = req.body
+    // console.log('dd',req.body)
+    try{
+
+        const Ures = await reviewMd.updateOne({ _id: id }, { star ,review})
+        // console.log(Ures);
+        res.send({message:'Review Updated successfully' , type:"success"})
+    }catch(err){
+        res.send({message:'Sorry error occured not updated' , type:"error"})
+    }
+            
+})
+router.post('/deleteReview/:id' ,async (req ,res) =>{
+    const id = req.params.id
+    reviewMd.findByIdAndDelete(id, function (err, docs) {
+        if (!err){
+            res.send({message:'Review Deleted successfully' , type:"error"})
+        }
+        else{
+            res.send({message:'Sorry error occured not deleted' , type:"error" , err})
+        }
+     });
 })
 
 

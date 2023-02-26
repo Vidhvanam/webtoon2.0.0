@@ -3,7 +3,8 @@ import axios from 'axios';
 import { NavLink } from "react-router-dom"
 // import { GoogleRegistration } from 'react-google-Registration';
 // import { gapi } from 'gapi-script';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const emailRegex =/^[A-Za-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 const Registration = ({ setRegistrationUser }) => {
@@ -90,7 +91,11 @@ const onSubmit = (e) =>{
         password
       }
       axios.post("http://localhost:6969/api/auth/register",newUser)
-      .then(res=>{alert(res.data.message)})
+      .then(res=>{
+        // alert(res.data.message)
+        toast[res.data.type](res.data.message);
+      
+      })
       // console.log('this.state :>> ', this.state);
   }else{
       console.log('invalid form');
@@ -100,6 +105,15 @@ const onSubmit = (e) =>{
 }
   return (
     <section className="main-container">
+       <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBa={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme="light"
+        />
       <div className="container-fluid h-custom pd-y-40">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-md-9 col-lg-6 col-xl-5">

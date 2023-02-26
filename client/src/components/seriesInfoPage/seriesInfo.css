@@ -29,3 +29,13 @@
 .stars-container .delete-btn:hover{
   cursor: pointer;
 }
+
+.btn-sub{
+  background-color: var(--main-color);
+  color:white;
+  border-radius: 15px;
+  vertical-align: middle;
+}
+.btn-unsub{
+  background-color: var(--error-color);
+}

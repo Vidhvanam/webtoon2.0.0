@@ -7,7 +7,7 @@ import authRoute from './routes/auth.js'
 import seriesRoute from './routes/series.js'
 import episodeRoute from "./routes/episode.js";
 import reviewsRoute from "./routes/reviews.js";
-
+import userRoute from "./routes/user.js"
 
 dotenv.config()
 
@@ -27,12 +27,13 @@ mongoose.connect(process.env.MONGO_URL,{
     ()=>{
         console.log("connected to DB")
     }
-).catch((err)=> console.log("not connected to DB"))
+).catch((err)=> console.log("not connected to DB",err))
 
 app.use("/api/auth",authRoute)
 app.use("/api/series",seriesRoute)
 app.use("/api/episodes",episodeRoute)
 app.use("/api/reviews",reviewsRoute)
+app.use("/api/user",userRoute)
 
 
 // console.log(authRoute)

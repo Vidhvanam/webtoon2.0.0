@@ -10,10 +10,9 @@ import mongoose, { isObjectIdOrHexString } from "mongoose";
 //         });
 
     var seriesSchema = new mongoose.Schema({
-      _id:mongoose.Schema.Types.ObjectId,
       name:String,
-      date:Date
-
+      date:Date,
+      subscribers:Number
     });
 
 const seriesModel = new mongoose.model('series',seriesSchema);

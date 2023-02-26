@@ -7,15 +7,16 @@ import { FaUserAlt } from 'react-icons/fa'
 function Header() {
   
   
-  const {user , setUser} = useContext(userContext)
-  useEffect(()=>{
-      if(localStorage.getItem('user')){
-          setUser(JSON.parse(localStorage.getItem('user')))
-      }
-  },[])
+  const {user} = useContext(userContext)
+  // useEffect(()=>{
+  //     if(localStorage.getItem('user')){
+  //         setUser(JSON.parse(localStorage.getItem('user')))
+  //         console.log();
+  //     }
+  //     console.log(user);
+  // },[])
   return (
     <>
-      {/* {console.log(user)} */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <img className='logo me-5' src={logo} alt="webtoon" />
@@ -43,7 +44,7 @@ function Header() {
             </ul>
             <button type="button" className="btn btn-dark me-2">Publish</button>
             {user ? (<>
-             <NavLink to={`/account/${user._id}`} className='nav-link user-account login-btn'> <FaUserAlt /> {user.userName?.substring(0, 6)}</NavLink>
+             <NavLink to={`/account`} className='nav-link user-account login-btn'> <FaUserAlt /> {user.userName?.substring(0, 6)}</NavLink>
             </>
             )
               :<NavLink to='/login' className='nav-link login-btn'>login</NavLink>

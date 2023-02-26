@@ -4,6 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom"
 // import { GoogleLogin } from 'react-google-login';
 // import { gapi } from 'gapi-script';
 import { userContext } from '../UserContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const navigation = useNavigate()
@@ -18,7 +20,9 @@ useEffect(()=>{
 
      console.log(user)
      localStorage.setItem('user' ,JSON.stringify(user))
-    navigation(-1) 
+     setTimeout(()=>{
+       navigation(-1) 
+     },2000)
     // sessionStorage.setItem('user',user)
   }
 },[user])
@@ -33,7 +37,8 @@ const onSubmit = () =>{
     
       axios.post("http://localhost:6969/api/auth/login",logUser)
       .then(res=>{
-        alert(res.data.message)
+        // alert(res.data.message)
+        toast[res.data.type](res.data.message);
         if(res.data.user){
           // console.log(res.data.user)
           setUser(res.data.user._doc)
@@ -44,6 +49,15 @@ const onSubmit = () =>{
   }
   return (
     <section className="main-container">
+      <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBa={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme="light"
+        />
       <div className="container-fluid h-custom pd-y-40">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-md-9 col-lg-6 col-xl-5">
