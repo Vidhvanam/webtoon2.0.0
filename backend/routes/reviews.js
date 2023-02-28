@@ -63,5 +63,29 @@ router.post('/deleteReview/:id' ,async (req ,res) =>{
      });
 })
 
+router.get('/AllUserReviews/:id' , (req ,res) =>{
+    reviewMd.find({userId :req.params.id}).populate('userId seriesId')
+    .then(reviewsData => {
+        // console.log('reviewsData', req.params.id)
+        res.send({reviewsData ,type:"success"}) })
+    .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
+    
+})
+
+router.delete('/reviewsDelete' , (req ,res) =>{
+    const r_ids =req.query.r_ids.split(",")
+    // console.log(req.query.userSubscribes.split(","));
+    console.log({r_ids})
+    reviewMd.deleteMany({ _id :{$in : r_ids}})
+    
+    .then(info => {
+        console.log({info})
+        res.send({message:"Delete Succesfully" ,type : "success"})
+        
+    })
+    .catch(err => res.send({ noSeries: 'No series found',type: "error" ,err}));
+})
+
+
 
 export default router   

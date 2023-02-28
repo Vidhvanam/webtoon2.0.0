@@ -1,10 +1,12 @@
 import { NavLink } from "react-router-dom"
 import { AiFillStar } from "react-icons/ai";
 import { useState } from "react";
+import noImg from "D:/sem6/ReactjsProjects/webtoon/client/src/img/noimage.png"
 
 export default function Card({ series, mode="view",label ,handleSubArray }) {
 
-
+    const colors = { thriller:"#c00355",romance : "#fd337f" ,action:"#006afa" ,fantasy:"#8b00e9" , sliceoflife:"#9ab710" ,comedy : "#eea800" ,supernatural:"#7a41e9"} 
+    const color = series.genres[0].split(" ").join("").toLowerCase()
     const [isChecked, setIsChecked] = useState(false);
   
     function handleCheckboxChange() {
@@ -16,23 +18,23 @@ export default function Card({ series, mode="view",label ,handleSubArray }) {
 
     mode === "view" ?
 
-      <NavLink className={`card-container `} to={`/series/${series._id}`}>
-        <img src={process.env.REACT_APP_IMG_PATH + series.img} className="card-img-top" alt="..." />
+      <NavLink className={`card-container `} to={`/series/${series._id}`} style={{backgroundColor:"white"}}>
+        <img src={process.env.REACT_APP_IMG_PATH + series.img} className="card-img-top" alt="..." onError={(e)=>e.target.src =noImg}/>
         <div className="card-img-overlay">
           <h5 className="card-title">{series.name}</h5>
-          <p className="pos-bot">{series.genres.join(' / ')}</p>
+          <p style={{color :colors[color]}} className="pos-bot">{series.genres.join(' / ')}</p>
           <div>{series.author}</div>
           <AiFillStar style={{ color: 'var(--main-color)' }} /> <span className="main-txt-color">{series.ratting}/5</span>
-
+           <div className="main-txt-color">{series.completed ? "completed" : "on going"}</div> 
         </div>
-        <div className="card hover-component">
+        <div className="card hover-component" style={{backgroundColor :colors[color]}}>
           <h5 className="card-title">{series.name}</h5>
           <p className="card-text">{series.description.substring(0, 220) + '....'}</p>
         </div>
       </NavLink> :
 
       <label className={`card-container ${isChecked ? "label-checked" : ""}`}  htmlFor={label} >
-        <img src={process.env.REACT_APP_IMG_PATH + series.img} className="card-img-top" alt="..."  style={{opacity:"0.8"}}/>
+        <img src={process.env.REACT_APP_IMG_PATH + series.img} className="card-img-top" alt="..." onError={(e)=>e.target.src =noImg} style={{opacity:"0.8"}}/>
         <div className="card-img-overlay" style={{pointerEvents:"none" ,opacity:"0.8"}}>
           <h5 className="card-title">{series.name}</h5>
           <p className="pos-bot">{series.genres.join(' / ')}</p>

@@ -17,6 +17,7 @@ import EpisodeView from './components/EpisodeView'
 import UserAccount from './components/userAccount/UserAccount'
 import Subscribes from './components/userAccount/Subscribes';
 import ScrollToTop from './components/ScrollToTop';
+import UserReviws from './components/userAccount/UserReviews';
 function App() {
   const [user ,setUser] = useState()
   useEffect(()=>{
@@ -44,7 +45,7 @@ function App() {
         <Route path="/account" element={<UserAccount/>} >
             <Route index element={<Navigate to="subscribes" />} />
             <Route path="subscribes" element={<Subscribes/>} />
-            {/* <Route path="list" element={<Subscribes/>}/> */}
+            <Route path="reviwes" element={<UserReviws/>}/>
         </Route>
         <Route path="/episode/:file" element={<EpisodeView />} />
         <Route path="/series/:id" element={<SeriesInfo />} />

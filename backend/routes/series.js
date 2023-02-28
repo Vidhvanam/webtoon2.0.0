@@ -56,4 +56,12 @@ router.get("/filter/trending",(req,res)=>{
         res.send({series : [...series]})
     })
 })
+
+router.get("/filter/all",(req,res)=>{
+    series.find({},(err,series)=>{
+        if(err) return console.log(err)
+        // console.log(series)
+        res.send({series : [...series]})
+    })
+})
 export default router

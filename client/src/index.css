@@ -286,14 +286,18 @@ footer {
 }
 
 .label-checked {
-  border: 2px solid var(--main-color);
+  border: 2px solid var(--main-color) !important;
 }
-
+.re-selected{
+  
+    border: 1px solid var(--main-color) !important;
+  opacity:0.7
+}
 .dis-none {
   display: "none"
 }
 
-.card-inp {
+.card-inp ,.review-check {
   position: absolute;
   right: 10px;
   bottom: 10px;
@@ -307,10 +311,31 @@ footer {
   justify-content: start;
   align-items: center;
 }
+.color-gray{
+  color:gray;
+}
 @media only screen and (max-width: 570px) {
   .sub {
     
     justify-content: center;
     align-items: center;
   }
+}
+
+.re-label{
+ position: relative;
+}
+
+.link-style{
+  text-decoration: none;
+  color:gray;
+}
+.link-style:hover{
+  color:gray;
+}
+
+.select-box{
+  max-width:300px;
+  font-size:1rem;
+  padding :10px 20px;
 }

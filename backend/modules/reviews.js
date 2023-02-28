@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const reviewSchema = new mongoose.Schema({
     userId : { type : mongoose.Schema.Types.ObjectId , ref:'users'},
-    seriesId: mongoose.Schema.Types.ObjectId,
+    seriesId: {type: mongoose.Schema.Types.ObjectId, ref:'series'},
     star: Number,
     date : Date,
     review: String

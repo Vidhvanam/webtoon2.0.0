@@ -19,7 +19,7 @@ export default function UserAccount(){
           <NavLink  to="subscribes">Subscribes</NavLink>
         </li>
         <li>
-          <NavLink  to="reviwes">Revies</NavLink>
+          <NavLink  to="reviwes">Reviwes</NavLink>
         </li>
         {/* <li>
           <a  href="#"></a>
