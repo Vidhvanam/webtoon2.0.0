@@ -42,7 +42,7 @@ function App() {
         <Route path="/popular" element={<Popular />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/account" element={<UserAccount/>} >
+        <Route path="/account" element={<UserAccount/>} replace>
             <Route index element={<Navigate to="subscribes" />} />
             <Route path="subscribes" element={<Subscribes/>} />
             <Route path="reviwes" element={<UserReviws/>}/>

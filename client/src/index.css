@@ -265,6 +265,9 @@ footer {
   font-size: 1.3rem;
   color: var(--main-color)
 }
+.review-container {
+  background-color: #fff;
+}
 
 /* subscribe page */
 @media only screen and (max-width: 430px) {
@@ -286,11 +289,11 @@ footer {
 }
 
 .label-checked {
-  border: 2px solid var(--main-color) !important;
+  border: 2px solid red !important;
 }
 .re-selected{
   
-    border: 1px solid var(--main-color) !important;
+    border: 1px solid red !important;
   opacity:0.7
 }
 .dis-none {
@@ -303,7 +306,8 @@ footer {
   bottom: 10px;
   zoom: 2;
   z-index: 40;
-  background-color: #23f734;
+  background-color: #23f734 !important;
+    accent-color: red;
   
 }
 .sub {
