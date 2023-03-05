@@ -103,7 +103,11 @@ function SeriesInfo() {
           theme="light"/>
         <div className="series-container">
           <div className="series-info">
+            <div className="d-flex align-items-center gap-3 ">
+
             <h1>{series.name}</h1>
+            <span>{new Date(series.date).toDateString()}</span>
+            </div>
             <h3>{series.author}</h3>
             <p>{series.description}</p>
             <div className="flex-row-box gap-4">
@@ -118,8 +122,9 @@ function SeriesInfo() {
               </span>
               {user && (user?.subscribes.includes(series._id) ?<button className="btn btn-sub  btn-unsub " onClick={()=>subscribe("unSub")}>UnSubscribe</button>  
               : <button className="btn btn-sub" onClick={()=>subscribe("sub")}><b>+</b>Subscribe</button>)
-            
+             
             }
+            
             </div>
           </div>
           <div className="flex-col-box gap-2 episodes-container ">

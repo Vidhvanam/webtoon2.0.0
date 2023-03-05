@@ -64,4 +64,14 @@ router.get("/filter/all",(req,res)=>{
         res.send({series : [...series]})
     })
 })
-export default router
+router.get("/filter/popularByGenre/:genre",async (req,res)=>{
+    try{
+        console.log(req.params.genre);
+        let seriesIngo = await series.find({ratting:{$gte : 4 } , genres :  { $regex: new RegExp("^" + req.params.genre.toLowerCase() +"$", "i") } }).limit(10).exec()
+        res.send({series : [...seriesIngo]})
+    }catch(error){
+       res.send({error})
+    }
+})
+
+    export default router

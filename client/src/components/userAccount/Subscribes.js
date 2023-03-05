@@ -37,8 +37,8 @@ export default function Subscriber() {
     }
 
     function handelMode() {
-        setMode(prev => prev === "view" ? "edit" : "view")
         setSubArray(subsribes.map(item => item._id))
+        setMode(prev => prev === "view" ? "edit" : "view")
     }
     function deleteSub() {
         if (subArray.length === subSeries.length) {

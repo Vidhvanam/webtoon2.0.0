@@ -343,3 +343,76 @@ footer {
   font-size:1rem;
   padding :10px 20px;
 }
+
+
+/* popular page */
+.category {
+  color: gray;
+  font-family: var(--font1);
+  font-size: bold;
+  font-size: 15px;
+}
+.first{
+  position: static;
+}
+.name {
+  font-size: 27px;
+  font-family: var(--font1);
+}
+.author {
+  font-family: var(--font1);
+  font-size: 14px;
+  margin-top: -4px !important;
+}
+.summary {
+  font-size: 14px;
+  line-height: 22px;
+  margin-top: 17px !important;
+}
+#new {
+  background-color: black;
+  display: inline;
+  color: rgb(60, 216, 60);
+  font-family: 'Tilt Neon', cursive;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 9px 5px !important;
+  border-radius: 50px;
+}
+.data {
+  padding-bottom: 4px !important;
+  border-bottom: 1px solid #BBBBBB;
+}
+.list {
+  padding: 4px 0px !important;
+  border-bottom: 1px solid #BBBBBB;
+}
+.photo {
+  width: 14% !important;
+  height: 13vh;
+  position: relative;
+}
+.photo img {
+  height: 100%;
+  width: 100%;
+}
+.new {
+  position: absolute;
+  top: 0;
+}
+.num {
+  font-size: 20px;
+  font-weight: bold;
+}
+.title {
+  font-size: 18px;
+  font-family: var(--font1);
+  font-weight: bold;
+}
+.b-border-gray{
+  border-bottom:1px solid #BBBBBB;
+}
+#coll-right a , #coll-left{
+  text-decoration: none;
+  color:inherit;
+}

@@ -8,7 +8,7 @@ export default function Card({ series, mode="view",label ,handleSubArray }) {
     const colors = { thriller:"#c00355",romance : "#fd337f" ,action:"#006afa" ,fantasy:"#8b00e9" , sliceoflife:"#9ab710" ,comedy : "#eea800" ,supernatural:"#7a41e9"} 
     const color = series.genres[0].split(" ").join("").toLowerCase()
     const [isChecked, setIsChecked] = useState(false);
-  
+    
     function handleCheckboxChange() {
       setIsChecked(!isChecked);
       handleSubArray(series._id)
@@ -26,11 +26,13 @@ export default function Card({ series, mode="view",label ,handleSubArray }) {
           <div>{series.author}</div>
           <AiFillStar style={{ color: 'var(--main-color)' }} /> <span className="main-txt-color">{series.ratting}/5</span>
            <div className="main-txt-color">{series.completed ? "completed" : "on going"}</div> 
+        <div>{new Date(series.date).getDate()+ "/" + (new Date(series.date).getMonth()+1) + "/" + new Date(series.date).getFullYear()}</div>
         </div>
         <div className="card hover-component" style={{backgroundColor :colors[color]}}>
           <h5 className="card-title">{series.name}</h5>
           <p className="card-text">{series.description.substring(0, 220) + '....'}</p>
         </div>
+        
       </NavLink> :
 
       <label className={`card-container ${isChecked ? "label-checked" : ""}`}  htmlFor={label} >

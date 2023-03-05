@@ -42,9 +42,9 @@ function App() {
         <Route path="/popular" element={<Popular />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/account" element={<UserAccount/>} replace>
+        <Route path="/account" element={<UserAccount/>}>
             <Route index element={<Navigate to="subscribes" />} />
-            <Route path="subscribes" element={<Subscribes/>} />
+            <Route path="subscribes" element={<Subscribes/>}  replace/>
             <Route path="reviwes" element={<UserReviws/>}/>
         </Route>
         <Route path="/episode/:file" element={<EpisodeView />} />

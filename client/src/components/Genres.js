@@ -4,17 +4,18 @@ import axios from "axios"
 function Genres() {
     const [series, setSeries] = useState([])
     const [filteredData, setfilteredData] = useState([])
-    const [filters ,setFilters] = useState({gener: "" ,order:"" ,status :""})
+    const [filters ,setFilters] = useState({gener: "all" ,order:"ratting" ,status :""})
     useEffect(() => {
         axios.get(`http://localhost:6969/api/series/filter/all`)
             .then(res => {
                 setSeries(res.data.series)
-                setfilteredData(res.data.series.sort((a, b) => a.star - b.star))
+                setfilteredData(res.data.series.sort((a, b) => b.ratting - a.ratting))
             })
 
     }, [])
     useEffect(() =>{
-        let newFilteredData = filters.gener ? series.filter(item => item.genres.includes(filters.gener)) : series
+        console.log(filters);
+        let newFilteredData = filters.gener !=="all" ? series.filter(item => item.genres.includes(filters.gener)) : series
         newFilteredData =  filters.status ? newFilteredData.filter(item => {
             if(filters.status === "completed"){
                 return item.completed  
@@ -22,6 +23,24 @@ function Genres() {
                 return !item.completed
             }
           })  : newFilteredData
+          
+           if(filters.order === "ratting" ){
+            console.log("ratting");
+          
+            newFilteredData =   newFilteredData.sort((a,b) => b.ratting - a.ratting )
+           }else if(filters.order === "old"){
+            console.log("old");
+            newFilteredData =   newFilteredData.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime() )
+         
+           }else{
+            // console.log(newFilteredData);
+            console.log("new");
+
+            newFilteredData =   newFilteredData.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime() )
+            console.log(newFilteredData);
+           }
+          
+           console.log(newFilteredData);
         
         setfilteredData(newFilteredData)
     },[filters])
@@ -36,8 +55,8 @@ function Genres() {
             <div className="subscribes-container mt-3">
                 <div className="flex-row-box js-space-bet ">
 
-                    <select defaultValue="" className="form-select form-select-sm mb-3 select-box" name="gener" aria-label=".form-select-lg example" onChange={handleFilter}>
-                        <option  value="">All Genres</option>
+                    <select defaultValue="all" className="form-select form-select-sm mb-3 select-box" name="gener" aria-label=".form-select-lg example" onChange={handleFilter}>
+                        <option  value="all">All Genres</option>
                         <option value="Comedy">Comedy</option>
                         <option value="Romance">Romance</option>
                         <option value="Fantasy">Fantasy</option>
@@ -55,7 +74,7 @@ function Genres() {
                         <option  value="ratting">By Ratting</option>
                         <option value="new">By Date (New First)</option>
                         <option value="old">By Date (Old First)</option>
-                        <option value="3">Three</option>
+                        {/* <option value="3">Three</option> */}
                     </select>
 
                 </div>
