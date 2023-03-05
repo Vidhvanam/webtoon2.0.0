@@ -18,6 +18,7 @@ import UserAccount from './components/userAccount/UserAccount'
 import Subscribes from './components/userAccount/Subscribes';
 import ScrollToTop from './components/ScrollToTop';
 import UserReviws from './components/userAccount/UserReviews';
+import MainRoutes from './Routes';
 function App() {
   const [user ,setUser] = useState()
   useEffect(()=>{
@@ -28,29 +29,33 @@ function App() {
 // useEffect(()=>{
 //   console.log(user);
 // },[user])
+
+const routes = (
+  <Routes>
+  <Route exact  path="/" element={<Home />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/registration" element={<Registration />} />
+  <Route path="/genres" element={<Genres />} />
+  <Route path="/popular" element={<Popular />} />
+  <Route path="/contact" element={<ContactUs />} />
+  <Route path="/about" element={<AboutUs />} />
+  <Route path="/account" element={<UserAccount/>}>
+      <Route index element={<Navigate to="subscribes" />} />
+      <Route path="subscribes" element={<Subscribes/>}  replace/>
+      <Route path="reviwes" element={<UserReviws/>}/>
+  </Route>
+  <Route path="/episode/:file" element={<EpisodeView />} />
+  <Route path="/series/:id" element={<SeriesInfo />} />
+  <Route path="*" element={<NotFound />} />
+</Routes>
+)
   return (
    
     <userContext.Provider value={{user , setUser}}>
     <BrowserRouter>
         <ScrollToTop/>
         <Header />
-      <Routes>
-        <Route exact  path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/genres" element={<Genres />} />
-        <Route path="/popular" element={<Popular />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/account" element={<UserAccount/>}>
-            <Route index element={<Navigate to="subscribes" />} />
-            <Route path="subscribes" element={<Subscribes/>}  replace/>
-            <Route path="reviwes" element={<UserReviws/>}/>
-        </Route>
-        <Route path="/episode/:file" element={<EpisodeView />} />
-        <Route path="/series/:id" element={<SeriesInfo />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <MainRoutes user={user}/>
         <Footer />
        
     </BrowserRouter>

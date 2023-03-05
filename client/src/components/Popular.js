@@ -6,15 +6,16 @@ function Popular() {
     const [top, setTop] = useState({})
 
     const colors = { thriller: "#c00355", romance: "#fd337f", action: "#006afa", fantasy: "#8b00e9", sliceoflife: "#9ab710", comedy: "#eea800", supernatural: "#7a41e9" }
-    let color
+    // const [color ,setColor] = useState("")
+    
     useEffect(() => {
         axios.get('http://localhost:6969/api/series/filter/popularByGenre/romance',)
             .then(res => {
                 setSeriesData(res.data.series.filter((item, i) => i !== 0))
                 setTop(res.data.series[0])
 
-                color = res.data.series[0].genres[0].split(" ").join("").toLowerCase()
-                // console.log(res.data.series[0]);
+                // setColor(colors[res.data.series[0].genres[0].split(" ").join("").toLowerCase()])
+                // console.log(color);
             })
     }, [])
     const handleGenre=(e)=>{
@@ -26,7 +27,7 @@ function Popular() {
               setSeriesData(res.data.series.filter((item, i) => i !== 0))
               setTop(res.data.series[0])
 
-              color = res.data.series[0].genres[0].split(" ").join("").toLowerCase()
+            //   color = res.data.series[0].genres[0].split(" ").join("").toLowerCase()
               // console.log(res.data.series[0]);
           }) 
     }
@@ -58,11 +59,18 @@ function Popular() {
           
         </nav>
     )
+//     function setBg(e){
+//               e.target.style.backgroundColor = color
+//               console.log( e.target.style.backgroundColor,color);
+//     }
+//     function removeBg(e){
+//         e.target.style.backgroundColor = "transparent"
+// }
     const otherSeries =seriesData.map((item, i) => {
 
         return (
             
-                <NavLink to={`/series/${item._id}`} className="d-flex gap-3 b-border-gray py-2" key={i}>
+                <NavLink to={`/series/${item._id}`} className="d-flex flex-wrap gap-3 b-border-gray p-2" key={i}>
                     <div className="photo">
                         <img src={process.env.REACT_APP_IMG_PATH + item.img} alt="" className="img-fluid" />
                         {/* <div className="mt-1 ms-2 new">
@@ -105,7 +113,7 @@ function Popular() {
                                         <p className="category">{top?.genres?.join(" / ")}</p>
                                         <h3 className="name mb-2">{top.name}</h3>
                                         <p className="author">{top.author}</p>
-                                        <p className="summary" style={{ color: colors[color] }}>
+                                        <p className="summary">
                                             {top.description}
                                         </p>
                                         {/* <div className="mt-3 mb-3">

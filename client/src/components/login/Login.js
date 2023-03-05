@@ -40,8 +40,9 @@ const onSubmit = () =>{
         // alert(res.data.message)
         toast[res.data.type](res.data.message);
         if(res.data.user){
-          // console.log(res.data.user)
+          console.log(res.data.user)
           setUser(res.data.user._doc)
+          localStorage.setItem('user' ,JSON.stringify(res.data.user._doc))
           
         }
       })

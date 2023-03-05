@@ -15,6 +15,43 @@ function Header() {
   //     }
   //     console.log(user);
   // },[])
+  const Links = () =>{
+    let links
+   if(user?.roll === "admin"){
+    links = <>
+    <li className="nav-item me-3">
+    <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
+  </li>
+  <li className="nav-item me-3">
+    <NavLink className="nav-link" to="/createSeries">Create Series</NavLink>
+  </li>
+  <li className="nav-item me-3">
+    <NavLink className="nav-link" to="/editSeries">Edit Series</NavLink>
+  </li>
+
+    </>
+   } else{
+    links = <>
+     <li className="nav-item me-3">
+    <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
+  </li>
+  <li className="nav-item me-3">
+    <NavLink className="nav-link" to="/genres">Genres</NavLink>
+  </li>
+
+  <li className="nav-item me-3">
+    <NavLink className="nav-link" to='/popular'>Popular</NavLink>
+  </li>
+  <li className="nav-item me-3">
+    <NavLink className="nav-link" to='/contact'>Contact us</NavLink>
+  </li>
+  <li className="nav-item me-3">
+    <NavLink className="nav-link" to='/about'>About</NavLink>
+  </li>
+    </>
+   }
+   return links
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,22 +62,7 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item me-3">
-                <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
-              </li>
-              <li className="nav-item me-3">
-                <NavLink className="nav-link" to="/genres">Genres</NavLink>
-              </li>
-
-              <li className="nav-item me-3">
-                <NavLink className="nav-link" to='/popular'>Popular</NavLink>
-              </li>
-              <li className="nav-item me-3">
-                <NavLink className="nav-link" to='/contact'>Contact us</NavLink>
-              </li>
-              <li className="nav-item me-3">
-                <NavLink className="nav-link" to='/about'>About</NavLink>
-              </li>
+              <Links/>
             </ul>
             {/* <button type="button" className="btn btn-dark me-2">Publish</button> */}
             {user ? (<>

@@ -379,17 +379,10 @@ footer {
   padding: 9px 5px !important;
   border-radius: 50px;
 }
-.data {
-  padding-bottom: 4px !important;
-  border-bottom: 1px solid #BBBBBB;
-}
-.list {
-  padding: 4px 0px !important;
-  border-bottom: 1px solid #BBBBBB;
-}
+
 .photo {
-  width: 14% !important;
-  height: 13vh;
+  width: 100px !important;
+  /* height: 13vh; */
   position: relative;
 }
 .photo img {
@@ -415,4 +408,8 @@ footer {
 #coll-right a , #coll-left{
   text-decoration: none;
   color:inherit;
+}
+#coll-right a:hover{
+  background-color: rgb(24, 230, 41);
+  color:white
 }
