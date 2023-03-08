@@ -1,5 +1,7 @@
 import express from 'express'
 import series from '../modules/series.js'
+import multer from 'multer';
+import path  from 'path';
 
 const router = express.Router()
 router.get('/:id' , (req ,res) =>{
@@ -73,5 +75,25 @@ router.get("/filter/popularByGenre/:genre",async (req,res)=>{
        res.send({error})
     }
 })
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, '../public/img');
+    },
+    filename: function(req, file, cb) {   
+        cb(null,  Date.now() + path.extname(file.originalname));
+    }
+});
+
+
+
+const upload = multer({ storage: storage });
+router.post('/admin/add',upload.single('img'), (req, res) => {
+    const {name} = req.body
+    console.log(req.file ,name);
+    res.json({ message: 'Image uploaded successfully' });
+ 
+});
+
 
     export default router
