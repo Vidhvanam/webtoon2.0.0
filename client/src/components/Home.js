@@ -31,18 +31,20 @@ function Home() {
         <div className="home-container">
             {/* {console.log(seriesData)} */}
             <Slider />
+           
+            <div className='sub-container'>
+                <h2 className='txt-center'>Trending Series</h2>
+                <div className="flex-box">
+                {trandingSeries}
+                </div>
+            </div>  
             <div className='sub-container border-b-gray'>
                 <h2 className='txt-center'>New Series</h2>
                 <div className="flex-box">
                 {NewSeries}
                 </div>
             </div> 
-            <div className='sub-container'>
-                <h2 className='txt-center'>Trending Series</h2>
-                <div className="flex-box">
-                {trandingSeries}
-                </div>
-            </div>            
+
         </div>
     )
 }

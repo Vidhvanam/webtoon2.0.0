@@ -8,11 +8,10 @@ import mongoose from 'mongoose'
 //     url: String
 // })
 const episodeSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     SeriesId: mongoose.Schema.Types.ObjectId,
     name: String,
-    createdData : Date,
+    createdData: Date,
     url: String
-})
+}, { strict: false })
 const episodesModel = mongoose.model("episodes", episodeSchema)
 export default episodesModel

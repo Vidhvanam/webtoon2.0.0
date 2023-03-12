@@ -21,7 +21,12 @@ useEffect(()=>{
      console.log(user)
      localStorage.setItem('user' ,JSON.stringify(user))
      setTimeout(()=>{
-       navigation(-1) 
+      if(user?.roll == "admin"){
+        navigation("/")
+      }else{
+
+        navigation(-1) 
+      }
      },2000)
     // sessionStorage.setItem('user',user)
   }
@@ -43,7 +48,9 @@ const onSubmit = () =>{
           console.log(res.data.user)
           setUser(res.data.user._doc)
           localStorage.setItem('user' ,JSON.stringify(res.data.user._doc))
-          
+          if(res.data.user._doc?.roll == "admin"){
+            navigation("/")
+          }
         }
       })
   

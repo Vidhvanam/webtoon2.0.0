@@ -1,0 +1,17 @@
+.table-img {
+    width: 100px;
+
+}
+
+.table-heading {
+    color: white;
+    background-color: var(--main-color);
+}
+
+.series-table td {
+    vertical-align: middle;
+}
+
+table {
+    overflow-x: scroll;
+}
