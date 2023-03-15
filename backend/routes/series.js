@@ -1,9 +1,8 @@
 import express from 'express'
 import series from '../modules/series.js'
 import multer from 'multer';
-import episode from "./episode"
-import path from 'path';
-
+import fs from "fs"
+import episode from '../modules/episode.js';
 const router = express.Router()
 router.get('/:id', (req, res) => {
     series.findOne({ _id: req.params.id })
@@ -103,43 +102,66 @@ router.post('/admin/add', upload.single('img'), (req, res) => {
     const newSeries = new series(seriesData)
     console.log('new', newSeries)
 
-    // newSeries.save(err => {
-    //     if (err) {
-    //         res.send({ err, message: "Sorry error occured", type: "error" })
-    //     } else {
-    //         res.send({ message: "Series added sucessfully", type: "success", newSeries })
-    //     }
-    // })
-    res.send({
-        message: "Series added sucessfully", type: "success",
-        newSeries: {
-            name: 'Sub Zero',
-            date: "addd",
-            subscribers: 0,
-            _id: "640c45a7863b1d7811d624bd",
-            completed: false,
-            genres: ['Romance'],
-            description: 'What would you sacrifice to save your family? How far would you go to protect your people? For Clove, the last princess of a near-extinct Dragon clan, the answer is the unthinkable:',
-            ratting: 0,
-            author: 'light yagani',
-            img: '1678525863935subzero.jpg'
+    newSeries.save(err => {
+        if (err) {
+            res.send({ err, message: "Sorry error occured", type: "error" })
+        } else {
+            res.send({ message: "Series added sucessfully", type: "success", newSeries })
         }
     })
 
+
 });
 
-router.post('/deleteSeries/one', async (req, res) => {
+router.post('/admin/deleteSeries/one', (req, res) => {
     const { _id, img } = req.body
     try {
 
-        series.findByIdAndDelete(_id, function (err, docs) {
-            if (!err) {
-                res.send({ message: 'Series Deleted successfully', type: "succes" })
+        const filePath = `./public/img/${img}`
+        // fs.unlinkSync(`./public/img/${img}`)
+
+        if (fs.existsSync(filePath)) {
+            console.log(img, 'File exists. Deleting now ...');
+            fs.unlinkSync(filePath);
+        } else {
+            console.log(img, 'File not found, so not deleting.');
+        }
+
+        episode.find({ SeriesId: _id }).sort({ 'ep_num': 1 }).then(epAll => {
+            // if (err) console.log(err);
+            console.log(epAll);
+            epAll.forEach(element => {
+                const path = `./public/pdfs/${element.url}`
+                fs.exists(path, function (exists) {
+                    if (exists) {
+                        console.log('File exists. Deleting now ...');
+                        fs.unlinkSync(path);
+                    } else {
+                        console.log('File not found, so not deleting.');
+                    }
+                });
+            });
+
+        }).catch(err => console.log(err))
+
+        episode.deleteMany({ SeriesId: _id }, (err, result) => {
+            if (err) {
+                console.log("episode " + err);
+                res.send({ message: "Series not deleted", type: "error" })
+            } else {
+                console.log(result);
             }
-            else {
-                res.send({ message: 'Sorry error occured not deleted', type: "error", err })
+
+        })
+
+        series.deleteOne({ _id: _id }, (err, result) => {
+            if (err) {
+                res.send({ message: "Series not deleted", type: "error", err })
+            } else {
+                res.send({ message: "Series deleted", type: "success", result })
             }
         })
+
         //file removed
     } catch (err) {
         console.error(err)

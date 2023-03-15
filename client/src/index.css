@@ -7,6 +7,8 @@
 :root {
   --main-color: rgb(9, 210, 9);
   --error-color: rgb(194, 35, 35);
+  --font1: 'Roboto', sans-serif;
+  --poppins: 'Poppins', sans-serif;
 }
 
 body {
@@ -278,7 +280,12 @@ footer {
   }
 }
 
-.subscribes-container,
+.subscribes-container {
+  padding: 30px 10px;
+  max-width: 1150px;
+  margin: auto;
+}
+
 .page-heading div {
   padding: 10px;
   max-width: 1150px;
@@ -453,4 +460,32 @@ footer {
   font-size: 1rem;
   padding: 5px 10px;
   border: 1px solid gray;
+}
+
+
+/* About us page */
+/* #about {
+  width: 70%;
+} */
+#about a {
+  word-wrap: break-word;
+}
+
+#about h1 {
+  font-family: var(--poppins);
+  font-weight: bolder;
+  font-size: 50px;
+}
+
+#about p {
+  line-height: 1.76;
+  font-size: 17px;
+  font-family: var(--font1);
+  margin-bottom: 72px !important;
+}
+
+#about h3 {
+  font-size: 24px;
+  font-family: var(--poppins);
+  font-weight: bold;
 }

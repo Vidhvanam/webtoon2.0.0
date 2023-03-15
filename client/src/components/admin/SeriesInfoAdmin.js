@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import AllReviews from "../seriesInfoPage/AllReviews";
@@ -18,13 +18,13 @@ function SeriesInfoAdmin() {
     axios
       .get(`http://localhost:6969/api/series/${id}`)
       .then((series) => {
-        // console.log(series.data.seriesInfo);
+        console.log(series.data);
 
         setSeries(series.data.seriesInfo);
       })
       .catch((err) => console.log(err));
 
-      axios
+    axios
       .get(`http://localhost:6969/api/reviews/${id}`)
       .then((res) => {
         // console.log('res.data.reviews', id)
@@ -61,39 +61,39 @@ function SeriesInfoAdmin() {
     );
   });
 
-  
+
   return (
     <>
-     {/* {console.log(user)} */}
+      {/* {console.log(user)} */}
       <div className="main-container ">
-      <ToastContainer  position="top-center"
+        <ToastContainer position="top-center"
           autoClose={2000}
           hideProgressBa={false}
           closeOnClick={true}
           pauseOnHover={true}
           draggable={true}
-          theme="light"/>
+          theme="light" />
         <div className="series-container">
           <div className="series-info">
             <div className="d-flex align-items-center gap-3 ">
 
-            <h1>{series.name}</h1>
-            <span>{new Date(series.date).toDateString()}</span>
+              <h1>{series?.name}</h1>
+              <span>{new Date(series?.date).toDateString()}</span>
             </div>
-            <h3>{series.author}</h3>
-            <p>{series.description}</p>
+            <h3>{series?.author}</h3>
+            <p>{series?.description}</p>
             <div className="flex-row-box gap-4">
               <span className="flex-row-box gap-1 center-flex">
-                <ImUserPlus className="series-icon "/>
-                <b>{series.subscribers}</b>
+                <ImUserPlus className="series-icon " />
+                <b>{series?.subscribers}</b>
               </span>
               <span className="flex-row-box gap-1 center-flex">
-                < FaStar className="series-icon"/> 
+                < FaStar className="series-icon" />
 
-                 <b>{series.ratting}</b>
+                <b>{series?.ratting}</b>
               </span>
-        
-            
+
+
             </div>
           </div>
           <div className="flex-col-box gap-2 episodes-container ">
@@ -107,10 +107,10 @@ function SeriesInfoAdmin() {
             )}
           </div>
         </div>
-      <div className="bg-white rounded shadow-sm  mb-5 series-container rating-review-select-page">
-        <AllReviews reviews={reviews}/>
-      </div>
-        
+        <div className="bg-white rounded shadow-sm  mb-5 series-container rating-review-select-page">
+          <AllReviews reviews={reviews} />
+        </div>
+
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import express from 'express'
 import episode from '../modules/episode.js'
 import multer from 'multer';
+import mongoose from 'mongoose';
 
 const router = express.Router()
 router.get('/:id', (req, res) => {
@@ -29,7 +30,9 @@ router.post('/admin/add', upload.single('pdf'), (req, res) => {
     const createdDate = new Date()
     const url = req.file.filename
 
-    const { name, SeriesId, ep_num } = req.body
+    const { name, ep_num } = req.body
+    let { SeriesId } = req.body
+    SeriesId = new mongoose.mongo.ObjectId('56cb91bdc3464f14678934ca')
     const episodeData = { SeriesId, name, createdDate, url, ep_num: Number(ep_num) }
     const newEpisode = new episode(episodeData)
     console.log('new', newEpisode)

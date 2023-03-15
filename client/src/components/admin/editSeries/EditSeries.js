@@ -27,11 +27,12 @@ export default function App() {
             })
     }, [])
     const handelFilteredSeries = (value) => {
+        setCurrentPage(1)
         const searchedData = allSeries.filter(series => {
-            if (series.name.includes(value)) {
+            if (series.name.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
-            if (series.author.includes(value)) {
+            if (series.author.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
         })
@@ -49,8 +50,20 @@ export default function App() {
         ).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios()
-                Swal.fire('Series deleted', '', 'success');
+                axios.post('http://localhost:6969/api/series/admin/deleteSeries/one', series)
+                    .then(res => {
+                        console.log(res);
+                        setSeries(prev => prev.filter(item => item._id !== series._id))
+                        setFilteredSeries(prev => prev.filter(item => item._id !== series._id))
+                        Swal.fire('Series deleted', '', 'success');
+
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        Swal.fire('Not deleted', '', 'error')
+
+                    });
 
             } else
                 Swal.fire(' Cancelled', '', 'error')
@@ -61,7 +74,8 @@ export default function App() {
     return (
         <>
             <Page pageName="Edit Series" hasSearch={true} data={filteredSeries} handelData={handelFilteredSeries}>
-                <div>
+                <div className='overflow-scroll'>
+                    {/* {console.log(filteredSeries, allSeries)} */}
                     <table className="table table-striped series-table">
                         <thead className='table-heading'>
                             <tr className='p-5'>
@@ -85,8 +99,8 @@ export default function App() {
                                         <td>{item.author}</td>
                                         <td>{item.ratting} / 5</td>
                                         <td>
-                                            <button className="btn btn-danger" onClick={() => fireAlert(item)}>Delete</button>
-                                            <button className="btn btn-success mx-1">Edit</button>
+                                            <button className="btn btn-danger m-1" onClick={() => fireAlert(item)}>Delete</button>
+                                            <button className="btn btn-success m-1">Edit</button>
 
                                         </td>
 
