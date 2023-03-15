@@ -134,7 +134,6 @@ export default function CreateSeries() {
       formData.append('subscribers', newSeries.subscribers);
 
 
-
       axios.post('http://localhost:6969/api/series/admin/add', formData)
         .then(res => {
           toast[res.data.type](res.data.message);
