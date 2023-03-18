@@ -64,7 +64,7 @@ function MagageSeries() {
         ).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios.post(`http://localhost:6969/api/episodes/updateEpisode/${item._id}`, { url: "", status: "removed", name: item.name })
+                axios.post(`http://localhost:6969/api/episodes/deleteEpisode/${item._id}`, { url: "", status: "removed", name: item.name })
                     .then(res => {
                         console.log(res);
                         if (res.data.type === "success") {
@@ -158,12 +158,12 @@ function MagageSeries() {
                                             <td className="text-danger">{item?.status}</td>
                                             <td>{new Date(item.createdDate).toDateString()}</td>
                                             <td>
-                                                <button className="btn btn-danger m-1" onClick={() => handleDelete(item)} >Delete</button>
+                                                <button className="btn btn-danger m-1" onClick={() => handleDelete(item)} disabled={item?.status === "removed"}>Delete</button>
                                                 <button className="btn btn-success m-1" onClick={() => {
                                                     // console.log("cliked");
                                                     navigetor(`/EditEpisode/${item._id}`)
                                                 }}>Edit</button>
-                                                <button className="btn btn-primary m-1" onClick={() => navigetor(`/episode/${item.url}`)}>Preview</button>
+                                                <button className="btn btn-primary m-1" onClick={() => navigetor(`/episode/${item.url}`)} disabled={item?.status === "removed"}>Preview</button>
 
                                             </td>
 

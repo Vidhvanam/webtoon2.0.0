@@ -49,6 +49,34 @@ router.post('/admin/add', upload.single('pdf'), (req, res) => {
 });
 
 
+router.post('/deleteEpisode/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const { name, url, status } = await req.body
+        const oldEpData = await episode.findOneAndUpdate({ _id: id }, { name, url, status }, { returnDocument: "before" })
+        console.log(oldEpData);
+        const newEpData = await episode.find({ _id: id })
+        // console.log("new ", newEpData);
+        if (oldEpData.url !== "") {
+
+            fs.exists(`./public/pdfs/${oldEpData.url}`, function (exists) {
+                if (exists) {
+                    console.log('File exists. Deleting now ...');
+                    fs.unlinkSync(`./public/pdfs/${oldEpData.url}`);
+                } else {
+                    console.log('File not found, so not deleting.');
+                }
+            });
+        }
+
+        res.send({ message: "Episode deleted Successfully", type: "success", newEpData })
+    } catch (err) {
+        res.send({ message: 'Sorry error occured not updated', type: "error", err })
+    }
+
+})
+
+
 router.post('/updateEpisode/:id', async (req, res) => {
     try {
         const id = req.params.id
@@ -69,21 +97,12 @@ router.post('/updateEpisode/:id', async (req, res) => {
             });
         }
 
-        let msg = ""
-        if (status === "removed") {
-            console.log(status);
-
-            msg = "Episode deleted Successfully"
-        }
-        else {
-
-            msg = 'Episode Updated successfully'
-        }
-        res.send({ message: msg, type: "success", newEpData })
+        res.send({ message: "Episode deleted Successfully", type: "success", newEpData })
     } catch (err) {
         res.send({ message: 'Sorry error occured not updated', type: "error", err })
     }
 
 })
+
 
 export default router   

@@ -1,13 +1,13 @@
 import logo from './logo3.png'
 import './header.css'
 import { NavLink } from 'react-router-dom'
-import { useContext ,useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { userContext } from '../UserContext'
 import { FaUserAlt } from 'react-icons/fa'
 function Header() {
-  
-  
-  const {user} = useContext(userContext)
+
+
+  const { user } = useContext(userContext)
   // useEffect(()=>{
   //     if(localStorage.getItem('user')){
   //         setUser(JSON.parse(localStorage.getItem('user')))
@@ -15,42 +15,42 @@ function Header() {
   //     }
   //     console.log(user);
   // },[])
-  const Links = () =>{
+  const Links = () => {
     let links
-   if(user?.roll === "admin"){
-    links = <>
-    <li className="nav-item me-3">
-    <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
-  </li>
-  <li className="nav-item me-3">
-    <NavLink className="nav-link" to="/createSeries">Create Series</NavLink>
-  </li>
-  <li className="nav-item me-3">
-    <NavLink className="nav-link" to="/editSeries">Edit Series</NavLink>
-  </li>
+    if (user?.roll === "admin") {
+      links = <>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
+        </li>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" to="/createSeries">Create Series</NavLink>
+        </li>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" to="/editSeries">Edit Series</NavLink>
+        </li>
 
-    </>
-   } else{
-    links = <>
-     <li className="nav-item me-3">
-    <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
-  </li>
-  <li className="nav-item me-3">
-    <NavLink className="nav-link" to="/genres">Genres</NavLink>
-  </li>
+      </>
+    } else {
+      links = <>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
+        </li>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" to="/genres">Genres</NavLink>
+        </li>
 
-  <li className="nav-item me-3">
-    <NavLink className="nav-link" to='/popular'>Popular</NavLink>
-  </li>
-  <li className="nav-item me-3">
-    <NavLink className="nav-link" to='/contact'>Contact us</NavLink>
-  </li>
-  <li className="nav-item me-3">
-    <NavLink className="nav-link" to='/about'>About</NavLink>
-  </li>
-    </>
-   }
-   return links
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" to='/popular'>Popular</NavLink>
+        </li>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" to='/contact'>Contact us</NavLink>
+        </li>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" to='/about'>About</NavLink>
+        </li>
+      </>
+    }
+    return links
   }
   return (
     <>
@@ -62,19 +62,23 @@ function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <Links/>
+              <Links />
             </ul>
             {/* <button type="button" className="btn btn-dark me-2">Publish</button> */}
             {user ? (<>
-             <NavLink to={`/account`} className='nav-link user-account login-btn'> <FaUserAlt /> {user.userName?.substring(0, 6)}</NavLink>
+              <NavLink to={`/account`} className='nav-link user-account login-btn'> <FaUserAlt /> {user.userName?.substring(0, 6)}</NavLink>
             </>
             )
-              :<NavLink to='/login' className='nav-link login-btn'>login</NavLink>
+              : (
+                <div className="d-flex">
+                  <NavLink to='/login' className='nav-link login-btn'>login</NavLink>
+                  <NavLink to='/registration' className='nav-link login-btn'>Register</NavLink>
+
+                </div>)
 
             }
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            </form>
+
+            <input className="form-control me-2 d-inline search-box-header" type="search" placeholder="Search" aria-label="Search" />
 
           </div>
         </div>

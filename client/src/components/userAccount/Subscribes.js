@@ -80,15 +80,15 @@ export default function Subscriber() {
                 pauseOnHover={true}
                 draggable={true}
                 theme="light" />
-{console.log({subArray})}
+            {console.log({ subArray })}
             <div className="subscribes-container">
                 {
-                    
-                    user && !user.subscribes.length ? (<div className="flex-col-box color-gray">
-                          <img src={noImg}/>
-                          <h3>No subscriptions.</h3>
-                          <h5>You haven’t subscribed to any series.</h5>
-                          <h5>Subscribe to your favorite series.</h5>
+
+                    user && !user?.subscribes.length ? (<div className="flex-col-box color-gray">
+                        <img src={noImg} />
+                        <h3>No subscriptions.</h3>
+                        <h5>You haven’t subscribed to any series.</h5>
+                        <h5>Subscribe to your favorite series.</h5>
 
                     </div>) :
                         (

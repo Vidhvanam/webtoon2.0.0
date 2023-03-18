@@ -49,14 +49,16 @@ function SeriesInfo() {
 
   const episodesList = episodesData.map((episode) => {
     const createdDate = new Date(episode.createdDate);
+    const className = `flex-row-box episode ${episode?.status === "removed" ? "removed-ep" : ""}`
     return (
       <NavLink
         key={episode._id}
         to={`/episode/${episode.url}`}
-        className="flex-row-box episode"
+        className={className}
       >
         <span>{episode.name}</span>
         <div>
+          {episode?.status === "removed" ? <span className="text-danger">Removed (will be availabel soon)</span> : null}
           <span className="mr-5">{createdDate.toDateString()}</span>
           <span># {episode.ep_num}</span>
         </div>
