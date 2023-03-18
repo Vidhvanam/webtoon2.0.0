@@ -6,9 +6,11 @@ import Page from "../../Page"
 import Swal from 'sweetalert2'
 import "./editSeries.css"
 import noImg from "../../../img/noimage.png"
+import { useNavigate } from 'react-router-dom';
 let PageSize = 5;
 
 export default function App() {
+    const navigate = useNavigate()
     const [allSeries, setSeries] = useState([])
     const [filteredSeries, setFilteredSeries] = useState([])
 
@@ -100,7 +102,10 @@ export default function App() {
                                         <td>{item.ratting} / 5</td>
                                         <td>
                                             <button className="btn btn-danger m-1" onClick={() => fireAlert(item)}>Delete</button>
-                                            <button className="btn btn-success m-1">Edit</button>
+                                            <button className="btn btn-success m-1" onClick={() => {
+                                                console.log("cliked");
+                                                navigate(`/ManageSeries/${item._id}`)
+                                            }}>Edit</button>
 
                                         </td>
 

@@ -8,6 +8,7 @@ import fs from "fs"
 //     url: String
 // })
 const episodeSchema = new mongoose.Schema({
+    SeriesId: mongoose.Schema.Types.ObjectId,
     name: String,
     createdData: Date,
     url: String

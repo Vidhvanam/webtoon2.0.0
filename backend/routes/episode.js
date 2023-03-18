@@ -2,6 +2,7 @@ import express from 'express'
 import episode from '../modules/episode.js'
 import multer from 'multer';
 import mongoose from 'mongoose';
+import fs from "fs"
 
 const router = express.Router()
 router.get('/:id', (req, res) => {
@@ -32,7 +33,7 @@ router.post('/admin/add', upload.single('pdf'), (req, res) => {
 
     const { name, ep_num } = req.body
     let { SeriesId } = req.body
-    SeriesId = new mongoose.mongo.ObjectId('56cb91bdc3464f14678934ca')
+    SeriesId = new mongoose.mongo.ObjectId(SeriesId)
     const episodeData = { SeriesId, name, createdDate, url, ep_num: Number(ep_num) }
     const newEpisode = new episode(episodeData)
     console.log('new', newEpisode)
@@ -46,4 +47,43 @@ router.post('/admin/add', upload.single('pdf'), (req, res) => {
     })
 
 });
+
+
+router.post('/updateEpisode/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const { name, url, status } = await req.body
+        const oldEpData = await episode.findOneAndUpdate({ _id: id }, { name, url, status }, { returnDocument: "before" })
+        console.log(oldEpData);
+        const newEpData = await episode.find({ _id: id })
+        // console.log("new ", newEpData);
+        if (oldEpData.url !== "") {
+
+            fs.exists(`./public/pdfs/${oldEpData.url}`, function (exists) {
+                if (exists) {
+                    console.log('File exists. Deleting now ...');
+                    fs.unlinkSync(`./public/pdfs/${oldEpData.url}`);
+                } else {
+                    console.log('File not found, so not deleting.');
+                }
+            });
+        }
+
+        let msg = ""
+        if (status === "removed") {
+            console.log(status);
+
+            msg = "Episode deleted Successfully"
+        }
+        else {
+
+            msg = 'Episode Updated successfully'
+        }
+        res.send({ message: msg, type: "success", newEpData })
+    } catch (err) {
+        res.send({ message: 'Sorry error occured not updated', type: "error", err })
+    }
+
+})
+
 export default router   

@@ -146,7 +146,7 @@ export default function CreateSeries() {
             <div className="mt-3 d-flex">
               <i className="fa-solid fa-check fs-5 trueicon mt-1 mb-1"></i>
               <p className="agree ms-3 mt-2">
-                Image size should be less than 500kb and Image must be of 510*510
+                PDF size must be smaller than 10mb
               </p>
             </div>
           </div>

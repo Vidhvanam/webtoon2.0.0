@@ -37,7 +37,7 @@ function SeriesInfoAdmin() {
     axios
       .get(`http://localhost:6969/api/episodes/${id}`)
       .then((episodes) => {
-        // console.log(episodes.data.episodeInfo);
+        console.log(episodes.data.episodeInfo);
 
         setEpisodesData(episodes.data.episodeInfo);
       })

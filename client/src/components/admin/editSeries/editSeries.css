@@ -12,6 +12,28 @@
     vertical-align: middle;
 }
 
-table {
-    overflow-x: scroll;
+.table {
+    min-width: 680px;
+}
+
+.table td,
+th {
+    text-align: center;
+}
+
+/* manage series */
+.manage-series-box {
+    background-color: #fff;
+}
+
+.edit-icons {
+    font-size: "2rem";
+    background-color: "#e7e2e2a8";
+    padding: "5px";
+    color: "black",
+
+}
+
+.removed-ep {
+    background-color: #fde2e2 !important;
 }

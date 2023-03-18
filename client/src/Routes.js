@@ -23,6 +23,10 @@ import CreateSeriesNav from "./components/admin/CreateSeriesNav";
 import AddEpisode from "./components/admin/AddEpisode"
 import SeriesInfoAdmin from "./components/admin/SeriesInfoAdmin";
 import EditSeries from "./components/admin/editSeries/EditSeries"
+import ManageSeries from "./components/admin/ManageSeries";
+import EditSeriesInfo from "./components/admin/editSeries/EditSeriesInfo"
+import EditEpisode from "./components/admin/editSeries/EditEpisode"
+import ManageAddEpisode from "./components/admin/editSeries/ManageAddEpisode"
 
 export default function MainRoutes({ user }) {
   let routes = (
@@ -55,6 +59,10 @@ export default function MainRoutes({ user }) {
         <Route path="/episode/:file" element={<EpisodeView />} />
         <Route path="/series/admin/:id" element={<SeriesInfoAdmin />} />
         <Route path="/editSeries" element={<EditSeries />} />
+        <Route path="/EditEpisode/:id" element={<EditEpisode />} />
+        <Route path="/EditSeriesInfo/:id" element={<EditSeriesInfo />} />
+        <Route path="/ManageSeries/:id" element={<ManageSeries />} />
+        <Route path="/ManageSeries/addEpisode" element={<ManageAddEpisode />} />
 
         <Route path="/account" element={<UserAccount />}>
 
