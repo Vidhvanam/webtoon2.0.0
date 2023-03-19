@@ -59,7 +59,7 @@ export default function MainRoutes({ user }) {
         <Route path="/episode/:file" element={<EpisodeView />} />
         <Route path="/series/admin/:id" element={<SeriesInfoAdmin />} />
         <Route path="/editSeries" element={<EditSeries />} />
-        <Route path="/EditEpisode/:id" element={<EditEpisode />} />
+        <Route path="/EditEpisode" element={<EditEpisode />} />
         <Route path="/EditSeriesInfo/:id" element={<EditSeriesInfo />} />
         <Route path="/ManageSeries/:id" element={<ManageSeries />} />
         <Route path="/ManageSeries/addEpisode" element={<ManageAddEpisode />} />

@@ -161,7 +161,7 @@ function MagageSeries() {
                                                 <button className="btn btn-danger m-1" onClick={() => handleDelete(item)} disabled={item?.status === "removed"}>Delete</button>
                                                 <button className="btn btn-success m-1" onClick={() => {
                                                     // console.log("cliked");
-                                                    navigetor(`/EditEpisode/${item._id}`)
+                                                    navigetor(`/EditEpisode?id=${item._id}&name=${item.name}&url=${item.url}`)
                                                 }}>Edit</button>
                                                 <button className="btn btn-primary m-1" onClick={() => navigetor(`/episode/${item.url}`)} disabled={item?.status === "removed"}>Preview</button>
 
