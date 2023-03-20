@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
 import { userContext } from '../UserContext'
 import { FaUserAlt } from 'react-icons/fa'
+import SearchBox from "./SearchBox"
 function Header() {
 
 
@@ -77,9 +78,7 @@ function Header() {
                 </div>)
 
             }
-
-            <input className="form-control me-2 d-inline search-box-header" type="search" placeholder="Search" aria-label="Search" />
-
+            {<SearchBox />}
           </div>
         </div>
       </nav>

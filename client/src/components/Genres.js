@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import Card from "./Card"
 import axios from "axios"
+import Page from "./Page"
 function Genres() {
     const [series, setSeries] = useState([])
     const [filteredData, setfilteredData] = useState([])
-    const [filters, setFilters] = useState({ gener: "all", order: "ratting", status: "" })
+    const [filters, setFilters] = useState({ gener: "all", order: "ratting", status: "both" })
     useEffect(() => {
         axios.get(`http://localhost:6969/api/series/filter/all`)
             .then(res => {
@@ -16,7 +17,7 @@ function Genres() {
     useEffect(() => {
         console.log(filters);
         let newFilteredData = filters.gener !== "all" ? series.filter(item => item.genres.includes(filters.gener)) : series
-        newFilteredData = filters.status ? newFilteredData.filter(item => {
+        newFilteredData = filters.status !== "both" ? newFilteredData.filter(item => {
             if (filters.status === "completed") {
                 return item.completed
             } else {
@@ -50,43 +51,42 @@ function Genres() {
     }
 
     return (
-        <div className="main-container">
+        <Page pageName="Filter series">
             {/* {console.log(series)} */}
-            <div className="subscribes-container mt-3">
-                <div className="flex-row-box js-space-bet ">
 
-                    <select defaultValue="all" className="form-select form-select-sm mb-3 select-box" name="gener" aria-label=".form-select-lg example" onChange={handleFilter}>
-                        <option value="all">All Genres</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Action">Action</option>
-                        <option value="Slice of life">Slice of life</option>
-                        <option value="Fantasy"></option>
+            <div className="flex-row-box js-space-bet ">
 
-                    </select>
+                <select value={filters.gener} className="form-select form-select-sm mb-3 select-box" name="gener" aria-label=".form-select-lg example" onChange={handleFilter}>
+                    <option value="all">All Genres</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Action">Action</option>
+                    <option value="Slice of life">Slice of life</option>
+                    <option value="Fantasy">Fantasy</option>
 
-                    <select defaultValue="" className="form-select form-select-sm mb-3 select-box" name="status" aria-label=".form-select-lg example" onChange={handleFilter}>
-                        <option value="">Status</option>
-                        <option value="completed">Completed</option>
-                        <option value="onging">Onging</option>
+                </select>
 
-                    </select>
+                <select value={filters.status} className="form-select form-select-sm mb-3 select-box" name="status" aria-label=".form-select-lg example" onChange={handleFilter}>
+                    <option value="both">Status</option>
+                    <option value="completed">Completed</option>
+                    <option value="onging">Onging</option>
+
+                </select>
 
 
-                    <select defaultValue="ratting" className="form-select form-select-sm mb-3 select-box" name="order" aria-label=".form-select-lg example" onChange={handleFilter}>
-                        <option value="ratting">By Ratting</option>
-                        <option value="new">By Date (New First)</option>
-                        <option value="old">By Date (Old First)</option>
-                        {/* <option value="3">Three</option> */}
-                    </select>
+                <select value={filters.order} className="form-select form-select-sm mb-3 select-box" name="order" aria-label=".form-select-lg example" onChange={handleFilter}>
+                    <option value="ratting">By Ratting</option>
+                    <option value="new">By Date (New First)</option>
+                    <option value="old">By Date (Old First)</option>
+                    {/* <option value="3">Three</option> */}
+                </select>
 
-                </div>
-                <div className="flex-box">
-                    {filteredData.map(item => <Card key={item._id} series={item} />)}
-                </div>
             </div>
-        </div>
+            <div className="flex-box">
+                {filteredData.map(item => <Card key={item._id} series={item} />)}
+            </div>
+        </Page>
     )
 }
 export default Genres

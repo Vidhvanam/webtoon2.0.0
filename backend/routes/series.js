@@ -113,6 +113,42 @@ router.post('/admin/add', upload.single('img'), (req, res) => {
 
 });
 
+router.post('/admin/update', upload.single('img'), async (req, res) => {
+    try {
+        const img = req.file.filename
+        let { genres, ratting, _id, completed, date, subscribers } = req.body
+        genres = [genres]
+        ratting = Number(ratting)
+        completed = (completed === "true")
+        date = new Date(date)
+        subscribers = Number(subscribers)
+        const seriesData = await { ...req.body, completed, genres, ratting, date, subscribers, img }
+        console.log('createdData', seriesData, _id)
+
+        const oldEpData = await series.findOneAndUpdate({ _id: _id }, seriesData, { returnDocument: "before" })
+        console.log(oldEpData);
+        if (oldEpData.img !== "") {
+
+            fs.exists(`./public/img/${oldEpData.img}`, function (exists) {
+                if (exists) {
+                    // console.log('File exists. Deleting now ...');
+                    fs.unlinkSync(`./public/img/${oldEpData.img}`);
+                } else {
+                    console.log('File not found, so not deleting.');
+                }
+            });
+        }
+
+        res.send({ message: "Series updated Successfully", type: "success" })
+    } catch (err) {
+        res.send({ message: 'Sorry error occured not updated', type: "error", err })
+    }
+
+
+
+});
+
+
 router.post('/admin/deleteSeries/one', (req, res) => {
     const { _id, img } = req.body
     try {

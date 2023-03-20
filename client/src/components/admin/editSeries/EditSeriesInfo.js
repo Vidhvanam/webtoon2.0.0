@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate, NavLink } from "react-router-dom"
+import { useNavigate, NavLink, useParams } from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
+import Page from "../../Page"
+import Swal from 'sweetalert2'
 
 export default function CreateSeries() {
+    const { id } = useParams()
     const navigetor = useNavigate()
     const [newSeries, setNewSeries] = useState({
         name: "",
@@ -24,6 +27,16 @@ export default function CreateSeries() {
         author: "",
         genres: ""
     })
+    useEffect(() => {
+        axios
+            .get(`http://localhost:6969/api/series/${id}`)
+            .then((series) => {
+                console.log(series.data);
+
+                setNewSeries(series.data.seriesInfo);
+            })
+            .catch((err) => console.log(err));
+    }, [id])
     const addData = (e) => {
         const { name, value } = e.target;
         if (name == "genre1") {
@@ -54,8 +67,8 @@ export default function CreateSeries() {
             setError(prev => ({ ...prev, name: "" }))
 
         }
-        if (newSeries.description === "" || newSeries.description.length > 200 || newSeries.description.length < 50) {
-            setError(prev => ({ ...prev, description: "Description  should be between 50 to 200 character" }))
+        if (newSeries.description === "" || newSeries.description.length > 300 || newSeries.description.length < 50) {
+            setError(prev => ({ ...prev, description: "Description  should be between 50 to 300 character" }))
             flag = false
         } else {
             setError(prev => ({ ...prev, description: "" }))
@@ -71,7 +84,7 @@ export default function CreateSeries() {
 
             flag = false
 
-        } else if (!newSeries.img.name.match(/\.(jpg|jpeg|png)$/)) {
+        } else if (Object.keys(newSeries.img).includes("name") && !newSeries.img.name.match(/\.(jpg|jpeg|png)$/)) {
             setError((prev) => ({ ...prev, img: "Not valid formate noly JPG , PNG , JPEG allowed." }))
             flag = false
         } else if (newSeries.img.size > 512000) {
@@ -121,49 +134,57 @@ export default function CreateSeries() {
         e.preventDefault();
         const flag = await formValidation()
         if (flag) {
-            console.log("valid");
-            const formData = new FormData();
-            formData.append('name', newSeries.name);
-            formData.append('completed', newSeries.completed);
-            formData.append('genres', newSeries.genres);
-            formData.append('description', newSeries.description);
-            formData.append('ratting', newSeries.ratting);
-            formData.append('date', newSeries.date);
-            formData.append('img', newSeries.img);
-            formData.append('author', newSeries.author);
-            formData.append('subscribers', newSeries.subscribers);
+
+            Swal.fire({
+                title: `Are you sure you want to update "${newSeries.name}"?`,
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                showCancelButton: "Cancel",
+                icon: 'warning'
+            }
+            ).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    console.log("valid");
+                    const formData = new FormData();
+                    formData.append('_id', newSeries._id);
+                    formData.append('name', newSeries.name);
+                    formData.append('completed', newSeries.completed);
+                    formData.append('genres', newSeries.genres);
+                    formData.append('description', newSeries.description);
+                    formData.append('ratting', newSeries.ratting);
+                    formData.append('date', newSeries.date);
+                    formData.append('img', newSeries.img);
+                    formData.append('author', newSeries.author);
+                    formData.append('subscribers', newSeries.subscribers);
 
 
-            axios.post('http://localhost:6969/api/series/admin/add', formData)
-                .then(res => {
-                    toast[res.data.type](res.data.message);
-                    // console.log(res);
-                    // <Navigate to={`createSeries/second/${res.data.newSeries._id}`} />
-                    navigetor(`/createSeries/second/${res.data.newSeries._id}`)
-                })
-                .catch(err => {
-                    // console.log(err);
-                    toast[err.data.type](err.data.message);
+                    axios.post('http://localhost:6969/api/series/admin/update', formData)
+                        .then(res => {
+                            Swal.fire(res.data.message, '', res.data.type);
+                            // console.log(res);
+                            // <Navigate to={`createSeries/second/${res.data.newSeries._id}`} />
+                            navigetor(-1)
+                        })
+                        .catch(err => {
+                            // console.log(err);
+                            toast[err.data.type](err.data.message);
 
-                });
+                        });
+
+
+                } else
+                    Swal.fire(' Cancelled', '', 'error')
+
+            })
 
         } else {
             console.log("not valid");
         }
     }
     return (
-        <div className="main-container">
-            <nav className="user-account-nav">
-                <ul className="flex-row-box">
-                    <li>
-                        <NavLink to="/createSeries/first">1. Edit Series</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/createSeries/second" className="disabled-link">2. Edit Episode</NavLink>
-                    </li>
-                </ul>
-
-            </nav>
+        <Page pageName="Edit series information">
             <ToastContainer
                 position="top-center"
                 autoClose={2000}
@@ -174,91 +195,108 @@ export default function CreateSeries() {
                 theme="light"
             />
             {console.log(newSeries)}
-            <div className="subscribes-container">
-                <h1>Create Series</h1>
 
-                <form className="row g-3" onSubmit={onSubmit} encType='multipart/form-data'>
-                    <div className="col-md-4">
-                        <label htmlFor="inputState" className="form-label fs-5">Genre 1</label>
-                        <select id="inputState" defaultValue="" className="form-select" name="genre1" onChange={addData}>
-                            <option value="">Select</option>
-                            <option>Comady</option>
-                            <option>Fantasy</option>
-                            <option>Romance</option>
-                            <option>Slice of Life</option>
-                            <option>SCI-FI</option>
-                            <option>Drama</option>
-                            <option>Action</option>
-                        </select>
-                    </div>
+            <form className="row g-3" onSubmit={onSubmit} encType='multipart/form-data'>
+                <div className="col-md-4">
+                    <label htmlFor="inputState" className="form-label fs-5">Genre 1</label>
+                    <select id="inputState" value={newSeries.genres[0]} className="form-select" name="genre1" onChange={addData}>
+                        <option value="">Select</option>
+                        <option value="Comady">Comady</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Slice of life">Slice of Life</option>
+                        <option value="SCI-FI">SCI-FI</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Action">Action</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Supernatural">Supernatural</option>
 
+                    </select>
                     {error.genres.length > 0 && <small className='invalid-feedback d-block'>{error.genres}</small>}
+                </div>
 
-                    <div className="col-12 inp">
-                        <label htmlFor="inputtitle" className="form-label fs-5">Series title</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputtitle"
-                            placeholder="Less than 50 characters"
-                            name="name"
-                            onChange={addData}
-                        />
-                        {error.name.length > 0 && <small className='invalid-feedback d-block'>{error.name}</small>}
+                <div className="col-md-4">
+                    <label htmlFor="inputStatus" className="form-label fs-5">Status</label>
+                    <select id="inputStatus" value={newSeries.completed} className="form-select" name="completed" onChange={addData}>
+                        <option value={true}>Completed</option>
+                        <option value={false}>On going</option>
 
+
+                    </select>
+                </div>
+
+
+
+                <div className="col-12 inp">
+                    <label htmlFor="inputtitle" className="form-label fs-5">Series title</label>
+                    <input
+                        type="text"
+                        value={newSeries.name}
+                        className="form-control"
+                        id="inputtitle"
+                        placeholder="Less than 50 characters"
+                        name="name"
+                        onChange={addData}
+                    />
+                    {error.name.length > 0 && <small className='invalid-feedback d-block'>{error.name}</small>}
+
+                </div>
+                <div className="col-12 inp">
+                    <label htmlFor="inputAutor" className="form-label fs-5">Series author</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={newSeries.author}
+                        id="inputAutor"
+                        placeholder="Author name (Less than 15 characters)"
+                        name="author"
+                        onChange={addData}
+                    />
+                    {error.author.length > 0 && <small className='invalid-feedback d-block'>{error.author}</small>}
+
+                </div>
+
+                <div className="mb-3 inp">
+                    <label htmlFor="exampleFormControlTextarea1" className="form-label fs-5" >Summary</label >
+                    <textarea
+                        className="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="9"
+                        placeholder="Less than 50 characters"
+                        name="description"
+                        onChange={addData}
+                        value={newSeries.description}
+                    />
+                    {error.description.length > 0 && <small className='invalid-feedback d-block'>{error.description}</small>}
+
+                </div>
+                <div className="col-12 inp">
+                    <label htmlFor="img" className="form-label fs-5">Series Img</label>
+                    <input
+                        type="file"
+                        className="form-control"
+                        name="img"
+                        id="img"
+                        onChange={handlePhoto}
+                        accept=".png, .jpeg , .jpg"
+                    />
+                    {error.img.length > 0 && <small className='invalid-feedback d-block'>{error.img}</small>}
+
+                    <div className="mt-3 d-flex">
+                        <i className="fa-solid fa-check fs-5 trueicon mt-1 mb-1"></i>
+                        <p className="agree ms-3 mt-2">
+                            Image size should be less than 500kb and Image must be of 510*510
+                        </p>
                     </div>
-                    <div className="col-12 inp">
-                        <label htmlFor="inputtitle" className="form-label fs-5">Series author</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputtitle"
-                            placeholder="Author name (Less than 15 characters)"
-                            name="author"
-                            onChange={addData}
-                        />
-                        {error.author.length > 0 && <small className='invalid-feedback d-block'>{error.author}</small>}
-
-                    </div>
-
-                    <div className="mb-3 inp">
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label fs-5" >Summary</label >
-                        <textarea
-                            className="form-control"
-                            id="exampleFormControlTextarea1"
-                            rows="9"
-                            placeholder="Less than 50 characters"
-                            name="description"
-                            onChange={addData}
-                        ></textarea>
-                        {error.description.length > 0 && <small className='invalid-feedback d-block'>{error.description}</small>}
-
-                    </div>
-                    <div className="col-12 inp">
-                        <label htmlFor="inputtitle" className="form-label fs-5">Series Img</label>
-                        <input
-                            type="file"
-                            className="form-control"
-                            name="img"
-                            onChange={handlePhoto}
-                            accept=".png, .jpeg , .jpg"
-                        />
-                        {error.img.length > 0 && <small className='invalid-feedback d-block'>{error.img}</small>}
-
-                        <div className="mt-3 d-flex">
-                            <i className="fa-solid fa-check fs-5 trueicon mt-1 mb-1"></i>
-                            <p className="agree ms-3 mt-2">
-                                Image size should be less than 500kb and Image must be of 510*510
-                            </p>
-                        </div>
-                    </div>
-                    <div className="mt-4">
-                        <button className="btn btn-success">
-                            Create Series
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>
+                <div className="mt-4">
+                    <button className="btn btn-success">
+                        Update Series
+                    </button>
+                </div>
+            </form>
+        </Page>
     )
 }

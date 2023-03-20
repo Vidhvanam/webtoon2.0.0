@@ -134,7 +134,6 @@ export default function CreateSeries() {
                 draggable={true}
                 theme="light"
             />
-            {console.log(newEpisode, url, name, id)}
             <div className="subscribes-container">
 
                 <form className="row g-3" onSubmit={onSubmit} encType='multipart/form-data'>

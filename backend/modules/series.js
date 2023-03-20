@@ -4,7 +4,7 @@ import episode from "./episode.js"
 // create an schema
 
 var seriesSchema = new mongoose.Schema({
-  SeriesId: mongoose.Schema.Types.ObjectId,
+  // SeriesId: mongoose.Schema.Types.ObjectId,
   name: String,
   date: Date,
   subscribers: Number

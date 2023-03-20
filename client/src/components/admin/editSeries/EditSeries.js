@@ -76,7 +76,7 @@ export default function App() {
     return (
         <>
             <Page pageName="Edit Series" hasSearch={true} data={filteredSeries} handelData={handelFilteredSeries}>
-                <div className='overflow-scroll'>
+                <div className='overflow-auto'>
                     {/* {console.log(filteredSeries, allSeries)} */}
                     <table className="table table-striped series-table">
                         <thead className='table-heading'>
@@ -122,14 +122,14 @@ export default function App() {
 
                         </div>
                     ) : null}
-                    <Pagination
-                        className="pagination-bar"
-                        currentPage={currentPage}
-                        totalCount={filteredSeries.length}
-                        pageSize={PageSize}
-                        onPageChange={page => setCurrentPage(page)}
-                    />
                 </div>
+                <Pagination
+                    className="pagination-bar"
+                    currentPage={currentPage}
+                    totalCount={filteredSeries.length}
+                    pageSize={PageSize}
+                    onPageChange={page => setCurrentPage(page)}
+                />
             </Page>
         </>
     );

@@ -41,7 +41,7 @@ export default function MainRoutes({ user }) {
         <Route path="/about" element={<AboutUs />} />
 
         <Route path="/episode/:file" element={<EpisodeView />} />
-        <Route path="/series/:id" element={<SeriesInfo />} />
+        <Route exact path="/series/:id" element={<SeriesInfo />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
@@ -57,7 +57,7 @@ export default function MainRoutes({ user }) {
           <Route path="second/:id" element={<AddEpisode />} />
         </Route>
         <Route path="/episode/:file" element={<EpisodeView />} />
-        <Route path="/series/admin/:id" element={<SeriesInfoAdmin />} />
+        <Route exact path="/series/admin/:id" element={<SeriesInfoAdmin />} />
         <Route path="/editSeries" element={<EditSeries />} />
         <Route path="/EditEpisode" element={<EditEpisode />} />
         <Route path="/EditSeriesInfo/:id" element={<EditSeriesInfo />} />
@@ -85,7 +85,7 @@ export default function MainRoutes({ user }) {
           <Route path="reviwes" element={<UserReviws />} />
         </Route>
         <Route path="/episode/:file" element={<EpisodeView />} />
-        <Route path="/series/:id" element={<SeriesInfo />} />
+        <Route exact path="/series/:id" element={<SeriesInfo />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     }

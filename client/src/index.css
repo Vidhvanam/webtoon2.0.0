@@ -228,9 +228,8 @@ footer {
 
 .user-account-nav ul {
   list-style: none;
-  padding: 0;
+  padding: 10px 0;
   margin: 0;
-  height: 60px;
   justify-content: center;
 }
 
@@ -462,6 +461,11 @@ footer {
   border: 1px solid gray;
 }
 
+#first img {
+  width: 300px;
+  max-width: 400px;
+  margin: auto
+}
 
 /* About us page */
 /* #about {

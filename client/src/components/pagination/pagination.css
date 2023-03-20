@@ -73,3 +73,7 @@
     background-color: transparent;
     cursor: default;
 }
+
+ul {
+    padding: 0;
+}
