@@ -31,7 +31,7 @@ function SeriesInfoAdmin() {
         setReviews(res.data.reviewsData);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     axios
@@ -42,7 +42,7 @@ function SeriesInfoAdmin() {
         setEpisodesData(episodes.data.episodeInfo);
       })
       .catch((err) => console.log(err));
-  }, [series]);
+  }, [series, id]);
 
   const episodesList = episodesData.map((episode) => {
     const createdDate = new Date(episode.createdDate);

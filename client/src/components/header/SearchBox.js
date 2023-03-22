@@ -1,12 +1,18 @@
 import axios from "axios"
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import Pagination from '../pagination/Pagination';
+import { userContext } from "../UserContext"
+
 let PageSize = 5;
 
 
 export default function SearchBox() {
     const wrapperRef = useRef(null);
+    const [seriesLink, setSeriesLink] = useState("/series/")
+
+    const { user } = useContext(userContext)
+
     const [allSeries, setSeries] = useState([])
     const [filteredSeries, setFilteredSeries] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,12 +23,22 @@ export default function SearchBox() {
         return filteredSeries.slice(firstPageIndex, lastPageIndex);
     }, [currentPage, filteredSeries]);
 
+
     useEffect(() => {
         axios.get(`http://localhost:6969/api/series/filter/all`)
             .then(res => {
                 setSeries(res.data.series)
             })
     }, [])
+    useEffect(() => {
+        if (user && user?.roll === "admin") {
+            console.log(user);
+            setSeriesLink("/series/admin/")
+        } else {
+            setSeriesLink("/series/")
+
+        }
+    }, [user])
 
     useEffect(() => {
 
@@ -71,7 +87,7 @@ export default function SearchBox() {
 
                     currentTableData.map(series => {
                         return (
-                            <NavLink to={`/series/${series._id}`} key={series._id} className="d-flex flex-row gap-2 searced-item">
+                            <NavLink to={`${seriesLink}${series._id}`} key={series._id} className="d-flex flex-row gap-2 searced-item">
 
                                 <div className="img-container">
                                     <img src={process.env.REACT_APP_IMG_PATH + series.img} alt="no-img" />

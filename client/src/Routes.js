@@ -27,6 +27,7 @@ import ManageSeries from "./components/admin/ManageSeries";
 import EditSeriesInfo from "./components/admin/editSeries/EditSeriesInfo"
 import EditEpisode from "./components/admin/editSeries/EditEpisode"
 import ManageAddEpisode from "./components/admin/editSeries/ManageAddEpisode"
+import Pramotions from "./components/admin/Pramotions";
 
 export default function MainRoutes({ user }) {
   let routes = (
@@ -64,7 +65,9 @@ export default function MainRoutes({ user }) {
         <Route path="/ManageSeries/:id" element={<ManageSeries />} />
         <Route path="/ManageSeries/addEpisode" element={<ManageAddEpisode />} />
 
+        <Route path="/Pramotions" element={<Pramotions />} />
         <Route path="/account" element={<UserAccount />}>
+
 
 
         </Route>

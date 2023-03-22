@@ -34,7 +34,7 @@ function SeriesInfo() {
         setReviews(res.data.reviewsData);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     axios

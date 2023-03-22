@@ -29,6 +29,9 @@ function Header() {
         <li className="nav-item me-3">
           <NavLink className="nav-link" to="/editSeries">Edit Series</NavLink>
         </li>
+        <li className="nav-item me-3">
+          <NavLink className="nav-link" to="/Pramotions">Pramote Series</NavLink>
+        </li>
 
       </>
     } else {
