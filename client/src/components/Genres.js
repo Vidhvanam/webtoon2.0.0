@@ -34,11 +34,11 @@ function Genres() {
             newFilteredData = newFilteredData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
         } else {
-            // console.log(newFilteredData);
+            console.log(newFilteredData);
             console.log("new");
 
             newFilteredData = newFilteredData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-            console.log(newFilteredData);
+            console.log(newFilteredData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
         }
 
         console.log(newFilteredData);
@@ -46,7 +46,7 @@ function Genres() {
         setfilteredData(newFilteredData)
     }, [filters])
     const handleFilter = (e) => {
-        setFilters({ ...filters, [e.target.name]: e.target.value })
+        setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
     }
 

@@ -4,7 +4,7 @@ import { userContext } from "../UserContext"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { FaStar } from "react-icons/fa";
-import noImg from "D:/sem6/ReactjsProjects/webtoon/client/src/img/noimage.png"
+import noImg from "../../img/noimage.png"
 import{NavLink} from "react-router-dom"
 
 export default function UserReviws() {

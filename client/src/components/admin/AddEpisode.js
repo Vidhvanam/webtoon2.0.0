@@ -111,7 +111,7 @@ export default function CreateSeries() {
       />
       {console.log(newEpisode)}
       <div className="subscribes-container">
-        <h1>Create Series</h1>
+        <h1>Add Episode</h1>
 
         <form className="row g-3" onSubmit={onSubmit} encType='multipart/form-data'>
 

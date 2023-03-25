@@ -77,7 +77,7 @@ function Pramotions() {
                                     <td>{item.author}</td>
                                     <td>{item.ratting} / 5</td>
                                     <td>
-                                        <button className="btn btn-danger m-1" onClick={ }>Delete</button>
+                                        <button className="btn btn-danger m-1">Delete</button>
                                         <button className="btn btn-success m-1" onClick={() => {
                                             console.log("cliked");
                                             // navigate(`/ManageSeries/${item._id}`)

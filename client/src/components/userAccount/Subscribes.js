@@ -4,7 +4,7 @@ import { userContext } from "../UserContext"
 import Card from "../Card"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import noImg from "D:/sem6/ReactjsProjects/webtoon/client/src/img/noimage.png"
+import noImg from "../../img/noimage.png"
 export default function Subscriber() {
     const { user, setUser } = useContext(userContext)
     const [subsribes, setSubsribes] = useState([])

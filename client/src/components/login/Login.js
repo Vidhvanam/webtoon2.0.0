@@ -25,7 +25,7 @@ const Login = () => {
           navigation("/")
         } else {
 
-          navigation(-1)
+          navigation("/")
         }
       }, 2000)
       // sessionStorage.setItem('user',user)

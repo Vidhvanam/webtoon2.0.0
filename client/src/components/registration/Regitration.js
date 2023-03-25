@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { NavLink } from "react-router-dom"
+import { NavLink ,useNavigate} from "react-router-dom"
 // import { GoogleRegistration } from 'react-google-Registration';
 // import { gapi } from 'gapi-script';
 import { ToastContainer, toast } from 'react-toastify';
@@ -23,6 +23,7 @@ const Registration = ({ setRegistrationUser }) => {
     errPass: '',
     errConformPass: ''
   })
+  const navigation = useNavigate()
 
   const formValidation = e => {
     e.preventDefault();
@@ -93,8 +94,14 @@ const Registration = ({ setRegistrationUser }) => {
       }
       axios.post("http://localhost:6969/api/auth/register", newUser)
         .then(res => {
-          alert(res.data.type)
+          // alert(res.data.type)
           toast[res.data.type](res.data.message);
+          setTimeout(()=> {
+            if(res.data.type === "success"){
+              navigation("/login")
+            }
+          } 
+          ,2500)
 
         })
       // console.log('this.state :>> ', this.state);
@@ -168,10 +175,10 @@ const Registration = ({ setRegistrationUser }) => {
                 {error.errConformPass.length > 0 && <small className='invalid-feedback d-block'>{error.errConformPass}</small>}
               </div>
 
-              <div className="d-flex justify-content-between align-items-center">
+              {/* <div className="d-flex justify-content-between align-items-center">
 
                 <a href="#!" className="text-body">Forgot password?</a>
-              </div>
+              </div> */}
 
               <div className="text-center text-lg-start mt-4 pt-2">
                 <button type="submit" className="btn  btn-lg main-btn">Registration</button>

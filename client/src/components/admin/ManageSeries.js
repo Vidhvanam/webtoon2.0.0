@@ -117,10 +117,11 @@ function MagageSeries() {
                                                 <ImUserPlus className="series-icon " />
                                                 <b>{series?.subscribers}</b>
                                             </span>
+                                            <span>{series.completed ?"completed" : "on going"}</span>
                                         </div>
                                         <div >
                                             <MdModeEditOutline onClick={() => navigetor(`/EditSeriesInfo/${series._id}`)} style={{ fontSize: "2rem", backgroundColor: "#e7e2e2a8", padding: "5px", color: "black", margin: "5px" }} />
-                                            <MdDelete style={{ fontSize: "2rem", backgroundColor: "#e7e2e2a8", padding: "5px", color: "black", margin: "5px" }} />
+                                            {/* <MdDelete style={{ fontSize: "2rem", backgroundColor: "#e7e2e2a8", padding: "5px", color: "black", margin: "5px" }} /> */}
 
                                         </div>
                                     </div>

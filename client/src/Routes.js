@@ -17,6 +17,8 @@ import UserAccount from './components/userAccount/UserAccount'
 import Subscribes from './components/userAccount/Subscribes';
 import ScrollToTop from './components/ScrollToTop';
 import UserReviws from './components/userAccount/UserReviews';
+import Terms from "./components/Terms";
+
 
 import CreateSeries from "./components/admin/CreateSeries";
 import CreateSeriesNav from "./components/admin/CreateSeriesNav";
@@ -40,7 +42,7 @@ export default function MainRoutes({ user }) {
         <Route path="/popular" element={<Popular />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
-
+        <Route path="/terms" element={<Terms />} />
         <Route path="/episode/:file" element={<EpisodeView />} />
         <Route exact path="/series/:id" element={<SeriesInfo />} />
         <Route path="*" element={<NotFound />} />
@@ -64,7 +66,7 @@ export default function MainRoutes({ user }) {
         <Route path="/EditSeriesInfo/:id" element={<EditSeriesInfo />} />
         <Route path="/ManageSeries/:id" element={<ManageSeries />} />
         <Route path="/ManageSeries/addEpisode" element={<ManageAddEpisode />} />
-
+        <Route path="/terms" element={<Terms />} />
         <Route path="/Pramotions" element={<Pramotions />} />
         <Route path="/account" element={<UserAccount />}>
 
@@ -89,6 +91,7 @@ export default function MainRoutes({ user }) {
         </Route>
         <Route path="/episode/:file" element={<EpisodeView />} />
         <Route exact path="/series/:id" element={<SeriesInfo />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     }

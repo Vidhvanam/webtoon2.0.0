@@ -67,8 +67,8 @@ export default function CreateSeries() {
             setError(prev => ({ ...prev, name: "" }))
 
         }
-        if (newSeries.description === "" || newSeries.description.length > 300 || newSeries.description.length < 50) {
-            setError(prev => ({ ...prev, description: "Description  should be between 50 to 300 character" }))
+        if (newSeries.description === "" || newSeries.description.length > 400 || newSeries.description.length < 50) {
+            setError(prev => ({ ...prev, description: "Description  should be between 50 to 400 character" }))
             flag = false
         } else {
             setError(prev => ({ ...prev, description: "" }))
@@ -264,7 +264,7 @@ export default function CreateSeries() {
                         className="form-control"
                         id="exampleFormControlTextarea1"
                         rows="9"
-                        placeholder="Less than 50 characters"
+                        placeholder="between 50 to 400 characters"
                         name="description"
                         onChange={addData}
                         value={newSeries.description}
