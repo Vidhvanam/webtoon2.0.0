@@ -32,7 +32,7 @@ export default function SearchBox() {
     }, [])
     useEffect(() => {
         if (user && user?.roll === "admin") {
-            console.log(user);
+            // console.log(user);
             setSeriesLink("/series/admin/")
         } else {
             setSeriesLink("/series/")

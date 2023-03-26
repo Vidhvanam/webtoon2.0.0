@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import AllReviews from "../seriesInfoPage/AllReviews";
@@ -6,13 +6,22 @@ import { FaStar } from "react-icons/fa";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { ImUserPlus } from "react-icons/im";
-    
+import Pagination from '../pagination/Pagination';
+let PageSize = 5;
 
 function SeriesInfoAdmin() {
   const { id } = useParams();
   const [series, setSeries] = useState({});
   const [episodesData, setEpisodesData] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return episodesData.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, episodesData]);
+
 
   useEffect(() => {
     axios
@@ -44,7 +53,7 @@ function SeriesInfoAdmin() {
       .catch((err) => console.log(err));
   }, [series, id]);
 
-  const episodesList = episodesData.map((episode) => {
+  const episodesList = currentTableData.map((episode) => {
     const createdDate = new Date(episode.createdDate);
     const className = `flex-row-box episode ${episode?.status === "removed" ? "removed-ep" : ""}`
     return (
@@ -62,6 +71,7 @@ function SeriesInfoAdmin() {
       </NavLink>
     );
   });
+
 
   return (
     <>
@@ -101,7 +111,13 @@ function SeriesInfoAdmin() {
             {episodesList.length ? (
               <>
                 {episodesList}
-
+                <Pagination
+                  className="pagination-bar"
+                  currentPage={currentPage}
+                  totalCount={episodesData.length}
+                  pageSize={PageSize}
+                  onPageChange={page => setCurrentPage(page)}
+                />
               </>
             ) : (
               <h3 className="text-capitalize">no episode is added yet</h3>

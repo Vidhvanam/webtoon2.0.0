@@ -1,32 +1,49 @@
-// import img1 from '../img/sliderImg/Unlovable-Replacement-Mobile-Banner2.2.jpg'
-
+import { useState, useContext, useEffect } from "react";
+import { userContext } from './UserContext';
+import axios from "axios"
 import { NavLink } from "react-router-dom"
 
 
 
-const pramotedSeries = [
-    {
-        img: "1TheUncommons_desktopbanner_launch-badge_A.png",
-        s_id: "63f1fa5535a2ec169bfefa93"
-    },
-    {
-        img: "1unOrdinary_Pivotal_Ep285_desktopbanner_B.png",
-        s_id: "63cac9ee305732edcfde1ae8"
-    },
-    {
-        img: "5A_Heartfelt_Andante_desktopbanner_launch-nobadge_B.png",
-        s_id: "63ef96724bcca37589763ec3"
-    },
+// const promotedSeries = [
+//     {
+//         img: "1TheUncommons_desktopbanner_launch-badge_A.png",
+//         s_id: "63f1fa5535a2ec169bfefa93"
+//     },
+//     {
+//         img: "1unOrdinary_Pivotal_Ep285_desktopbanner_B.png",
+//         s_id: "63cac9ee305732edcfde1ae8"
+//     },
+//     {
+//         img: "5A_Heartfelt_Andante_desktopbanner_launch-nobadge_B.png",
+//         s_id: "63ef96724bcca37589763ec3"
+//     },
 
 
-]
+// ]
 
 export default function Slider() {
+    const [promotedSeries, setPromotedSeries] = useState([])
+    const { user } = useContext(userContext)
+    const [link, setLink] = useState("/series/")
+    useEffect(() => {
+        if (user) {
+            if (user?.roll === "admin") {
+                setLink("/series/admin/")
+            }
+        }
+    }, [user])
+    useEffect(() => {
+        axios.get('http://localhost:6969/api/promotions/filter/all')
+            .then(res => {
+                setPromotedSeries(res.data.promotions)
+            })
+    }, [])
     return (
         <>
             <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel" data-interval="100">
                 <div className="carousel-indicators">
-                    {pramotedSeries.map((series, index) => {
+                    {promotedSeries.map((series, index) => {
                         if (index === 0) {
                             return <button key={index} type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
 
@@ -40,9 +57,9 @@ export default function Slider() {
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> */}
                 </div>
                 {
-                    pramotedSeries.map((series, i) => {
+                    promotedSeries.map((series, i) => {
 
-                        return <NavLink key={i} to={`/series/${series.s_id}`} className={`carousel-item ${i === 0 && "active"}`}>
+                        return <NavLink key={i} to={`${link}${series.s_id}`} className={`carousel-item ${i === 0 && "active"}`}>
                             <center>
                                 <img src={process.env.REACT_APP_IMG_PATH + "sliderImg/" + series.img} className="d-block " alt="no img" />
                             </center>
