@@ -22,8 +22,8 @@ import { NavLink } from "react-router-dom"
 
 // ]
 
-export default function Slider() {
-    const [promotedSeries, setPromotedSeries] = useState([])
+export default function Slider({ promoSeries = [] }) {
+    const [promotedSeries, setPromotedSeries] = useState(promoSeries)
     const { user } = useContext(userContext)
     const [link, setLink] = useState("/series/")
     useEffect(() => {
@@ -38,7 +38,7 @@ export default function Slider() {
             .then(res => {
                 setPromotedSeries(res.data.promotions)
             })
-    }, [])
+    }, [promoSeries])
     return (
         <>
             <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel" data-interval="100">

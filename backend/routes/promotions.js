@@ -15,9 +15,18 @@ router.get("/filter/all", (req, res) => {
     })
 })
 
-router.delete("/remove/:id", (req, res) => {
-    const id = req.params.id
-    promotions.deleteOne({ s_id: id }, function (err, docs) {
+router.post("/remove", (req, res) => {
+
+    const { _id, img } = req.body
+    const filePath = `./public/img/sliderImg/${img}`
+    console.log(req.body);
+    if (fs.existsSync(filePath)) {
+        console.log(img, 'File exists. Deleting now ...');
+        fs.unlinkSync(filePath);
+    } else {
+        console.log(img, 'File not found, so not deleting.');
+    }
+    promotions.deleteOne({ _id: _id }, function (err, docs) {
         if (!err) {
             res.send({ message: 'Series Removed From Promotion List', type: "success", docs })
         }
@@ -41,10 +50,9 @@ const upload = multer({ storage: storage });
 router.post('/addpromotion', upload.single('img'), (req, res) => {
     const img = req.file.filename
 
-    let { SeriesId } = req.body
-    SeriesId = new mongoose.mongo.ObjectId(SeriesId)
-    const episodeData = { SeriesId, img }
-    const newpromotion = new episode(episodeData)
+    const { SeriesId } = req.body
+    const episodeData = { s_id: SeriesId, img }
+    const newpromotion = new promotions(episodeData)
     console.log('new', newpromotion)
 
     newpromotion.save(err => {

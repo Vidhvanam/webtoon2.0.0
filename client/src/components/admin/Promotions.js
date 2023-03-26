@@ -57,7 +57,7 @@ function Promotions() {
 
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDelete = (series) => {
 
         Swal.fire({
             title: `Are you sure you want to remove series from being Promoted ?`,
@@ -71,12 +71,12 @@ function Promotions() {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 axios
-                    .delete(`http://localhost:6969/api/promotions/remove/${id}`)
+                    .post(`http://localhost:6969/api/promotions/remove`, promotionsSeries.filter(item => item.s_id == series._id)[0])
                     .then((res) => {
                         console.log(res.data);
                         if (res.data.type === "success") {
 
-                            setpromotionsSeries(prev => prev.filter(item => item.s_id !== id));
+                            setpromotionsSeries(prev => prev.filter(item => item.s_id !== series._id));
                         }
                         Swal.fire(res.data.message, '', res.data.type)
                     })
@@ -89,6 +89,97 @@ function Promotions() {
         })
 
     }
+    const handlePromote = (seriesToBePromoted) => {
+        Swal.fire({
+            title: `Select Post image for ${seriesToBePromoted.name}`,
+            input: 'file',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            inputAttributes: {
+                accept: ".png, .jpeg , .jpg",
+            },
+            inputValidator: async (file) => {
+
+                // else if (!file.name.match(/\.(jpg|jpeg|png)$/)) {
+                //     reject("Not valid formate noly JPG , PNG , JPEG allowed.")
+                // } else if (file.size > 512000) {
+                //     reject("Image size should be less than 500kb")
+                // } else {
+
+                //     try {
+                //         let res = await validateImage(file);
+                //         resolve()
+                //     } catch (error) {
+                //         // reject("Image is not 510 * 510")
+                //         // Swal.showValidationMessage("Image is not 510 * 510");
+
+                //     }
+                // }
+
+            },
+            showLoaderOnConfirm: true,
+            preConfirm: async (file) => {
+
+                if (!file) {
+                    console.log("Select valid image")
+                    Swal.showValidationMessage("Select valid image");
+                } else if (!file.name.match(/\.(jpg|jpeg|png)$/)) {
+                    Swal.showValidationMessage("Not valid formate noly JPG , PNG , JPEG allowed.")
+                } else if (file.size > 1048576) {
+                    Swal.showValidationMessage("Image size should be less than 1mb")
+                }
+
+                else {
+
+                    try {
+                        let res = await validateImage(file);
+                        console.log(res);
+                        const formData = new FormData();
+                        formData.append('img', file);
+                        formData.append('SeriesId', seriesToBePromoted._id);
+
+                        return axios.post('http://localhost:6969/api/promotions/addpromotion', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                        })
+                            .then(res => {
+                                Swal.fire(res.data.message, '', res.data.type)
+                                if (res.data.type === "success") {
+                                    setpromotionsSeries(prev => [...prev, res.data.newpromotion])
+                                }
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(`Request failed: ${error}`);
+                            });
+                    } catch (error) {
+                        Swal.showValidationMessage("Image is not 946 * 492")
+
+                    }
+
+                }
+
+            },
+        });
+    }
+    const validateImage = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    console.log(img.width, img.height);
+                    if (img.width == 946 && img.height == 492) {
+                        resolve(true)
+                    } else {
+                        reject(false)
+                    }
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        })
+    };
     return (
 
         <Page pageName="promote series" hasSearch={true} data={filteredSeries} handelData={handelFilteredSeries}>
@@ -117,8 +208,8 @@ function Promotions() {
                                     <td>{item.author}</td>
                                     <td>{item.ratting} / 5</td>
                                     <td>
-                                        {promotionsSeries.map(item => item.s_id).includes(item._id) ? <button className="btn btn-danger m-1" onClick={() => handleDelete(item._id)}>Remove from promotion</button> :
-                                            <button className="btn btn-success m-1">Promote</button>
+                                        {promotionsSeries.map(item => item.s_id).includes(item._id) ? <button className="btn btn-danger m-1" onClick={() => handleDelete(item)}>Remove from promotion</button> :
+                                            <button className="btn btn-success m-1" onClick={() => handlePromote(item)}>Promote</button>
                                         }
 
 
@@ -148,7 +239,7 @@ function Promotions() {
                 </div>
             ) : <div className="d-flex overflow-hidden flex-column text-center mt-5 gap-4" >
                 <h1>Preview</h1>
-                <Slider /></div>}
+                <Slider promoSeries={promotionsSeries} /></div>}
         </Page>
 
     )
