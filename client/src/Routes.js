@@ -30,6 +30,7 @@ import EditSeriesInfo from "./components/admin/editSeries/EditSeriesInfo"
 import EditEpisode from "./components/admin/editSeries/EditEpisode"
 import ManageAddEpisode from "./components/admin/editSeries/ManageAddEpisode"
 import Promotions from "./components/admin/Promotions";
+import AddAuthor from "./components/admin/author/AddAuthor";
 
 export default function MainRoutes({ user }) {
   let routes = (
@@ -70,9 +71,8 @@ export default function MainRoutes({ user }) {
         <Route path="/promotions" element={<Promotions />} />
         <Route path="/account" element={<UserAccount />}>
 
-
-
         </Route>
+        <Route path="/addAuthor" element={<AddAuthor />} />
 
       </Routes >
     } else {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate, NavLink } from "react-router-dom"
@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateSeries() {
   const navigetor = useNavigate()
+  const [authors, setAuthors] = useState([])
   const [newSeries, setNewSeries] = useState({
     name: "",
     completed: false,
@@ -24,6 +25,12 @@ export default function CreateSeries() {
     author: "",
     genres: ""
   })
+  useEffect(() => {
+    axios.get(`http://localhost:6969/api/author/filter/all`)
+      .then(res => {
+        setAuthors(res.data.authors)
+      })
+  }, [])
   const addData = (e) => {
     const { name, value } = e.target;
     if (name == "genre1") {
@@ -60,8 +67,8 @@ export default function CreateSeries() {
     } else {
       setError(prev => ({ ...prev, description: "" }))
     }
-    if (newSeries.author === "" || newSeries.author.length > 15) {
-      setError((prev) => ({ ...prev, author: "Author name should be less than 15 character" }))
+    if (newSeries.author === "") {
+      setError((prev) => ({ ...prev, author: "Select Author" }))
       flag = false
     } else {
       setError(prev => ({ ...prev, author: "" }))
@@ -207,16 +214,17 @@ export default function CreateSeries() {
             {error.name.length > 0 && <small className='invalid-feedback d-block'>{error.name}</small>}
 
           </div>
-          <div className="col-12 inp">
-            <label htmlFor="inputtitle" className="form-label fs-5">Series author</label>
-            <input
-              type="text"
-              className="form-control"
-              id="inputtitle"
-              placeholder="Author name (Less than 15 characters)"
+          <div className="col-md-4">
+            <label htmlFor="inputAuthor" className="form-label fs-5">Series author</label>
+            <select
+              className="form-select"
+              id="inputAuthor"
               name="author"
               onChange={addData}
-            />
+            >
+              <option value="">select author  </option>
+              {authors.map(author => <option key={author._id} value={author._id}>{author.name}</option>)}
+            </select>
             {error.author.length > 0 && <small className='invalid-feedback d-block'>{error.author}</small>}
 
           </div>

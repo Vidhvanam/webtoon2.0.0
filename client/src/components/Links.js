@@ -20,6 +20,9 @@ const Links = () => {
       <li className="nav-item me-3">
         <NavLink className="nav-link" to="/promotions">promote Series</NavLink>
       </li>
+      <li className="nav-item me-3">
+        <NavLink className="nav-link" to="/addAuthor">Author</NavLink>
+      </li>
 
     </>
   } else {

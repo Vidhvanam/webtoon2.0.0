@@ -98,25 +98,7 @@ function Promotions() {
             inputAttributes: {
                 accept: ".png, .jpeg , .jpg",
             },
-            inputValidator: async (file) => {
 
-                // else if (!file.name.match(/\.(jpg|jpeg|png)$/)) {
-                //     reject("Not valid formate noly JPG , PNG , JPEG allowed.")
-                // } else if (file.size > 512000) {
-                //     reject("Image size should be less than 500kb")
-                // } else {
-
-                //     try {
-                //         let res = await validateImage(file);
-                //         resolve()
-                //     } catch (error) {
-                //         // reject("Image is not 510 * 510")
-                //         // Swal.showValidationMessage("Image is not 510 * 510");
-
-                //     }
-                // }
-
-            },
             showLoaderOnConfirm: true,
             preConfirm: async (file) => {
 
