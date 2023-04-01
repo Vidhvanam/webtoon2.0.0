@@ -8,6 +8,8 @@ import Swal from 'sweetalert2'
 
 export default function CreateSeries() {
     const { id } = useParams()
+    const [authors, setAuthors] = useState([])
+
     const navigetor = useNavigate()
     const [newSeries, setNewSeries] = useState({
         name: "",
@@ -33,12 +35,17 @@ export default function CreateSeries() {
             .then((series) => {
                 console.log(series.data);
 
-                setNewSeries(series.data.seriesInfo);
+                setNewSeries({ ...series.data.seriesInfo, author: series.data.seriesInfo.author._id });
             })
             .catch((err) => console.log(err));
+        axios.get(`http://localhost:6969/api/author/filter/all`)
+            .then(res => {
+                setAuthors(res.data.authors)
+            })
     }, [id])
     const addData = (e) => {
         const { name, value } = e.target;
+        console.log(name, value);
         if (name == "genre1") {
             setNewSeries({ ...newSeries, genres: [value] })
 
@@ -73,8 +80,8 @@ export default function CreateSeries() {
         } else {
             setError(prev => ({ ...prev, description: "" }))
         }
-        if (newSeries.author === "" || newSeries.author.length > 15) {
-            setError((prev) => ({ ...prev, author: "Author name should be less than 15 character" }))
+        if (newSeries.author === "") {
+            setError((prev) => ({ ...prev, author: "Select author for the series" }))
             flag = false
         } else {
             setError(prev => ({ ...prev, author: "" }))
@@ -244,16 +251,16 @@ export default function CreateSeries() {
 
                 </div>
                 <div className="col-12 inp">
-                    <label htmlFor="inputAutor" className="form-label fs-5">Series author</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={newSeries.author}
-                        id="inputAutor"
-                        placeholder="Author name (Less than 15 characters)"
+                    <label htmlFor="inputAuthor" className="form-label fs-5">Series author</label>
+                    <select
+                        className="form-select"
+                        id="inputAuthor"
                         name="author"
                         onChange={addData}
-                    />
+                    >
+                        <option value="">select author  </option>
+                        {authors.map(author => <option key={author._id} selected={author._id === newSeries.author && true} value={author._id}>{author.name}</option>)}
+                    </select>
                     {error.author.length > 0 && <small className='invalid-feedback d-block'>{error.author}</small>}
 
                 </div>

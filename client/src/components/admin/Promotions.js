@@ -25,7 +25,7 @@ function Promotions() {
             if (series.name.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
-            if (series.author.toLowerCase().includes(value.toLowerCase())) {
+            if (series.author?.name.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
         })
@@ -187,7 +187,7 @@ function Promotions() {
 
                                     </td>
                                     <td>{item.name}</td>
-                                    <td>{item.author}</td>
+                                    <td>{item.author?.name}</td>
                                     <td>{item.ratting} / 5</td>
                                     <td>
                                         {promotionsSeries.map(item => item.s_id).includes(item._id) ? <button className="btn btn-danger m-1" onClick={() => handleDelete(item)}>Remove from promotion</button> :

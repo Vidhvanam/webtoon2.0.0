@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState ,useMemo} from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import Review from "./Review";
@@ -22,9 +22,9 @@ function SeriesInfo() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentTableData = useMemo(() => {
-      const firstPageIndex = (currentPage - 1) * PageSize;
-      const lastPageIndex = firstPageIndex + PageSize;
-      return episodesData.slice(firstPageIndex, lastPageIndex);
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return episodesData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, episodesData]);
 
   useEffect(() => {
@@ -120,7 +120,7 @@ function SeriesInfo() {
               <h1>{series.name}</h1>
               <span>{new Date(series.date).toDateString()}</span>
             </div>
-            <h3>{series.author}</h3>
+            <h3>{series.author?.name}</h3>
             <p>{series.description}</p>
             <div className="flex-row-box gap-4">
               <span className="flex-row-box gap-1 center-flex">
@@ -144,12 +144,12 @@ function SeriesInfo() {
               <>
                 {episodesList}
                 <Pagination
-                            className="pagination-bar"
-                            currentPage={currentPage}
-                            totalCount={episodesData.length}
-                            pageSize={PageSize}
-                            onPageChange={page => setCurrentPage(page)}
-                        />
+                  className="pagination-bar"
+                  currentPage={currentPage}
+                  totalCount={episodesData.length}
+                  pageSize={PageSize}
+                  onPageChange={page => setCurrentPage(page)}
+                />
               </>
             ) : (
               <h3 className="text-capitalize">no episode is added yet</h3>

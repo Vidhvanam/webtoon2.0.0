@@ -70,15 +70,15 @@ function Genres() {
                 <select value={filters.status} className="form-select form-select-sm mb-3 select-box" name="status" aria-label=".form-select-lg example" onChange={handleFilter}>
                     <option value="both">Status</option>
                     <option value="completed">Completed</option>
-                    <option value="onging">Onging</option>
+                    <option value="onging">On going</option>
 
                 </select>
 
 
                 <select value={filters.order} className="form-select form-select-sm mb-3 select-box" name="order" aria-label=".form-select-lg example" onChange={handleFilter}>
-                    <option value="ratting">By Ratting</option>
-                    <option value="new">By Date (New First)</option>
-                    <option value="old">By Date (Old First)</option>
+                    <option value="ratting">Sort By Rating</option>
+                    <option value="new">Sort By Date (New First)</option>
+                    <option value="old">Sort By Date (Old First)</option>
                     {/* <option value="3">Three</option> */}
                 </select>
 

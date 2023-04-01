@@ -34,7 +34,7 @@ export default function App() {
             if (series.name.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
-            if (series.author.toLowerCase().includes(value.toLowerCase())) {
+            if (series.author?.name.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
         })
@@ -98,7 +98,7 @@ export default function App() {
 
                                         </td>
                                         <td>{item.name}</td>
-                                        <td>{item.author}</td>
+                                        <td>{item.author?.name}</td>
                                         <td>{item.ratting} / 5</td>
                                         <td>
                                             <button className="btn btn-danger m-1" onClick={() => fireAlert(item)}>Delete</button>

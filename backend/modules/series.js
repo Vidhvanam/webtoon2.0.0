@@ -7,7 +7,8 @@ var seriesSchema = new mongoose.Schema({
   // SeriesId: mongoose.Schema.Types.ObjectId,
   name: String,
   date: Date,
-  subscribers: Number
+  subscribers: Number,
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'author' }
 }, { strict: false });
 
 // seriesSchema.pre("deleteOne", { document: false, query: true }, function (next) {

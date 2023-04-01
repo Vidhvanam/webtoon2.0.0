@@ -92,13 +92,13 @@ export default function AddAuthor() {
                 <div className="bg-white col-md-8">
                     <form className="p-4 rounded shadow-md" onSubmit={onSubmit}>
                         <div>
-                            <label htmlFor="name" className="form-label">Your Name</label>
+                            <label htmlFor="name" className="form-label">Name</label>
                             <input type="text" value={newAuthor.name} name="name" className="form-control" placeholder="Author Name" onChange={addData} />
                             {error.name.length > 0 && <small className='invalid-feedback d-block'>{error.name}</small>}
 
                         </div>
                         <div className="mt-3">
-                            <label htmlFor="email" className="form-label">Your Email</label>
+                            <label htmlFor="email" className="form-label">Email</label>
                             <input type="email" value={newAuthor.email} name="email" className="form-control" placeholder="Author's Email" onChange={addData} />
                             {error.email.length > 0 && <small className='invalid-feedback d-block'>{error.email}</small>}
 

@@ -71,7 +71,7 @@ export default function SearchBox() {
             if (series.name.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
-            if (series.author.toLowerCase().includes(value.toLowerCase())) {
+            if (series.author?.name.toLowerCase().includes(value.toLowerCase())) {
                 return true
             }
         })
@@ -96,7 +96,7 @@ export default function SearchBox() {
                                     <span>{series.name}</span>
                                     <div>
 
-                                        <span>{series.author} | </span>
+                                        <span>{series.author?.name} | </span>
                                         <span>{series.genres.join(' / ')}</span>
 
                                     </div>

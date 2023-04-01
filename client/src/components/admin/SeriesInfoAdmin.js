@@ -91,7 +91,7 @@ function SeriesInfoAdmin() {
               <h1>{series?.name}</h1>
               <span>{new Date(series?.date).toDateString()}</span>
             </div>
-            <h3>{series?.author}</h3>
+            <h3>{series?.author?.name}</h3>
             <p>{series?.description}</p>
             <div className="flex-row-box gap-4">
               <span className="flex-row-box gap-1 center-flex">

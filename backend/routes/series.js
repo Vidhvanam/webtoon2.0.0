@@ -3,9 +3,10 @@ import series from '../modules/series.js'
 import multer from 'multer';
 import fs from "fs"
 import episode from '../modules/episode.js';
+import mongoose from 'mongoose';
 const router = express.Router()
 router.get('/:id', (req, res) => {
-    series.findOne({ _id: req.params.id })
+    series.findOne({ _id: req.params.id }).populate('author')
         .then(seriesInfo => {
             // console.log('seriesInfo', seriesInfo)
             res.send({ seriesInfo })
@@ -15,7 +16,7 @@ router.get('/:id', (req, res) => {
 })
 
 router.get('/userSubscribes/:id', (req, res) => {
-    series.find({ subscribers: req.params.id })
+    series.find({ subscribers: req.params.id }).populate('author')
         .then(seriesInfo => {
             // console.log('seriesInfo', seriesInfo)
             res.send({ seriesInfo })
@@ -26,7 +27,7 @@ router.get('/userSubscribes/:id', (req, res) => {
 router.get('/allSubscribes/get', (req, res) => {
     const userSubscribes = req.query.userSubscribes.split(",")
     // console.log(req.query.userSubscribes.split(","));
-    series.find({ _id: { $in: userSubscribes } })
+    series.find({ _id: { $in: userSubscribes } }).populate('author')
 
         .then(seriesInfo => {
             // console.log('seriesInfo', seriesInfo)
@@ -42,11 +43,12 @@ router.get("/filter/newSeries", (req, res) => {
             $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000),
             $lt: new Date()
         }
-    }, (err, series) => {
-        if (err) return console.log(err)
-        // console.log(series)
-        res.send({ series: [...series] })
-    })
+    }).populate("author")
+        .then(series => {
+            // console.log(series)
+            res.send({ series: [...series] })
+        }
+        ).catch(err => console.log(err))
 })
 router.get("/filter/trending", (req, res) => {
     series.find({
@@ -55,24 +57,22 @@ router.get("/filter/trending", (req, res) => {
         //     $lt: new Date()
         // },
         ratting: { $gte: 4 }
-    }, (err, series) => {
-        if (err) return console.log(err)
+    }).populate("author").then((series) => {
         // console.log(series)
         res.send({ series: [...series] })
-    })
+    }).catch(err => console.log(err))
 })
 
 router.get("/filter/all", (req, res) => {
-    series.find({}, (err, series) => {
-        if (err) return console.log(err)
+    series.find({}).populate("author").then(series => {
         // console.log(series)
         res.send({ series: [...series] })
-    })
+    }).catch(err => console.log(err))
 })
 router.get("/filter/popularByGenre/:genre", async (req, res) => {
     try {
         // console.log(req.params.genre);
-        let seriesIngo = await series.find({ ratting: { $gte: 4 }, genres: { $regex: new RegExp("^" + req.params.genre.toLowerCase() + "$", "i") } }).limit(10).exec()
+        let seriesIngo = await series.find({ ratting: { $gte: 4 }, genres: { $regex: new RegExp("^" + req.params.genre.toLowerCase() + "$", "i") } }).populate("author").limit(10).exec()
         res.send({ series: [...seriesIngo] })
     } catch (error) {
         res.send({ error })
@@ -95,10 +95,10 @@ router.post('/admin/add', upload.single('img'), (req, res) => {
     const date = new Date()
     const img = req.file.filename
 
-    const { genres, ratting } = req.body
+    const { genres, ratting, author } = req.body
     const rattingNum = Number(ratting)
     let genarray = [genres]
-    const seriesData = { ...req.body, completed: false, genres: genarray, ratting: rattingNum, img }
+    const seriesData = { ...req.body, completed: false, genres: genarray, ratting: rattingNum, img, author: mongoose.Types.ObjectId(author) }
     const newSeries = new series(seriesData)
     console.log('new', newSeries)
 
@@ -116,13 +116,14 @@ router.post('/admin/add', upload.single('img'), (req, res) => {
 router.post('/admin/update', upload.single('img'), async (req, res) => {
     try {
         const img = req.file.filename
-        let { genres, ratting, _id, completed, date, subscribers } = req.body
+        let { genres, ratting, _id, completed, date, subscribers, author } = req.body
         genres = [genres]
         ratting = Number(ratting)
         completed = (completed === "true")
         date = new Date(date)
         subscribers = Number(subscribers)
-        const seriesData = await { ...req.body, completed, genres, ratting, date, subscribers, img }
+        author = mongoose.Types.ObjectId(author)
+        const seriesData = await { ...req.body, completed, genres, ratting, date, subscribers, img, author }
         console.log('createdData', seriesData, _id)
 
         const oldEpData = await series.findOneAndUpdate({ _id: _id }, seriesData, { returnDocument: "before" })

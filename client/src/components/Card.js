@@ -27,7 +27,7 @@ export default function Card({ series, mode = "view", label, handleSubArray }) {
         <div className="card-img-overlay">
           <h5 className="card-title">{series.name}</h5>
           <p style={{ color: colors[color] }} className="pos-bot">{series.genres.join(' / ')}</p>
-          <div>{series.author}</div>
+          <div>{series?.author?.name}</div>
           <AiFillStar style={{ color: 'var(--main-color)' }} /> <span className="main-txt-color">{series.ratting}/5</span>
           <div className="main-txt-color">{series.completed ? "completed" : "on going"}</div>
           <div>{new Date(series.date).getDate() + "/" + (new Date(series.date).getMonth() + 1) + "/" + new Date(series.date).getFullYear()}</div>
@@ -44,7 +44,7 @@ export default function Card({ series, mode = "view", label, handleSubArray }) {
         <div className="card-img-overlay" style={{ pointerEvents: "none", opacity: "0.8" }}>
           <h5 className="card-title">{series.name}</h5>
           <p className="pos-bot">{series.genres.join(' / ')}</p>
-          <div>{series.author}</div>
+          <div>{series.author.name}</div>
           <AiFillStar style={{ color: 'var(--main-color)' }} /> <span className="main-txt-color">{series.ratting}/5</span>
 
         </div>

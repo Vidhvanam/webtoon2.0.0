@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { FaStar } from "react-icons/fa";
 import noImg from "../../img/noimage.png"
-import{NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 export default function UserReviws() {
     const { user, setUser } = useContext(userContext)
@@ -25,7 +25,7 @@ export default function UserReviws() {
                 if (res.data.type === "success") {
                     const reviewsData = res.data.reviewsData
                     setReviews(reviewsData)
-                    let temp ={}
+                    let temp = {}
 
 
                     reviewsData.forEach(item => {
@@ -40,24 +40,24 @@ export default function UserReviws() {
     }, [user])
 
     function handlereArray(s_id, e) {
-         let isChecked = !reArray[s_id].isChecked
-         console.log(reArray[s_id] , isChecked);
-        setReArray({...reArray , [s_id] : {...reArray[s_id] , isChecked}})
-  
+        let isChecked = !reArray[s_id].isChecked
+        console.log(reArray[s_id], isChecked);
+        setReArray({ ...reArray, [s_id]: { ...reArray[s_id], isChecked } })
+
         e.target.parentElement.classList.toggle("re-selected")
 
     }
 
     function selectAll(e) {
-         let bool = selectedAll ? false : true
-                    let temp ={}
-              
+        let bool = selectedAll ? false : true
+        let temp = {}
 
-                    Object.values(reArray).forEach(val => {
 
-                        temp[val.id] = { id: val.id, isChecked: bool }
-                    })
-                    setReArray(temp)
+        Object.values(reArray).forEach(val => {
+
+            temp[val.id] = { id: val.id, isChecked: bool }
+        })
+        setReArray(temp)
         setReArray(temp)
         setSelectedAll(!selectedAll)
 
@@ -65,8 +65,8 @@ export default function UserReviws() {
     function handelMode() {
         setMode(prev => prev === "view" ? "edit" : "view")
     }
-    function cancleEdit(){
-        let temp ={}
+    function cancleEdit() {
+        let temp = {}
         reviews.forEach(item => {
 
             temp[item._id] = { id: item._id, isChecked: false }
@@ -78,17 +78,17 @@ export default function UserReviws() {
     function deleteSub() {
         const r_id = []
         Object.values(reArray).forEach(val => {
-            if(val.isChecked){
+            if (val.isChecked) {
                 r_id.push(val.id)
             }
         })
         console.log({ r_id });
-        if (!r_id) {
+        if (r_id.length === 0) {
             toast.info("Select review to delete");
         } else {
-           
-            
-            axios.delete(`http://localhost:6969/api/reviews/reviewsDelete?r_ids=${[...r_id]}`, { data: reArray, action: 'unSub'}).then(res => {
+
+
+            axios.delete(`http://localhost:6969/api/reviews/reviewsDelete?r_ids=${[...r_id]}`, { data: reArray, action: 'unSub' }).then(res => {
                 if (res.data.type === "success") {
 
                     toast[res.data.type](res.data.message);

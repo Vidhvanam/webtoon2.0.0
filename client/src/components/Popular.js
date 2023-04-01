@@ -86,7 +86,7 @@ function Popular() {
                 <div className="d-flex flex-column  gap-2">
                     <div className="category">{item?.genres.join(' / ')}</div>
                     <div className="title">{item.name}</div>
-                    <div className="author mt-1">{item.author}</div>
+                    <div className="author mt-1">{item.author?.name}</div>
                 </div>
             </NavLink>
 
@@ -112,7 +112,7 @@ function Popular() {
                                     <div id="info" className="my-2">
                                         <p className="category">{top?.genres?.join(" / ")}</p>
                                         <h3 className="name mb-2">{top.name}</h3>
-                                        <p className="author">{top.author}</p>
+                                        <p className="author">{top.author?.name}</p>
                                         <p className="summary">
                                             {top.description}
                                         </p>

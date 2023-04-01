@@ -186,7 +186,7 @@ export default function CreateSeries() {
 
         <form className="row g-3" onSubmit={onSubmit} encType='multipart/form-data'>
           <div className="col-md-4">
-            <label htmlFor="inputState" className="form-label fs-5">Genre 1</label>
+            <label htmlFor="inputState" className="form-label fs-5">Genre</label>
             <select id="inputState" defaultValue="" className="form-select" name="genre1" onChange={addData}>
               <option value="">Select</option>
               <option>Comady</option>
@@ -207,7 +207,7 @@ export default function CreateSeries() {
               type="text"
               className="form-control"
               id="inputtitle"
-              placeholder="between 50 to 400 characters"
+              placeholder="Less than 50 characters"
               name="name"
               onChange={addData}
             />
@@ -235,7 +235,7 @@ export default function CreateSeries() {
               className="form-control"
               id="exampleFormControlTextarea1"
               rows="9"
-              placeholder="Less than 50 characters"
+              placeholder="between 50 to 400 characters"
               name="description"
               onChange={addData}
             ></textarea>
