@@ -28,7 +28,7 @@ export default function CreateSeries() {
   useEffect(() => {
     axios.get(`http://localhost:6969/api/author/filter/all`)
       .then(res => {
-        setAuthors(res.data.authors)
+        setAuthors(res.data.authors.filter(author => author?.status !== "removed"))
       })
   }, [])
   const addData = (e) => {

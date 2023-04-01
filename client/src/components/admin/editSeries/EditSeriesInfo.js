@@ -29,19 +29,26 @@ export default function CreateSeries() {
         author: "",
         genres: ""
     })
-    useEffect(() => {
-        axios
+    const requestes = async () => {
+        let authorid = ""
+        await axios
             .get(`http://localhost:6969/api/series/${id}`)
             .then((series) => {
                 console.log(series.data);
-
-                setNewSeries({ ...series.data.seriesInfo, author: series.data.seriesInfo.author._id });
+                authorid = series.data.seriesInfo.author._id
+                setNewSeries({ ...series.data.seriesInfo, author: authorid });
             })
             .catch((err) => console.log(err));
-        axios.get(`http://localhost:6969/api/author/filter/all`)
+        await axios.get(`http://localhost:6969/api/author/filter/all`)
             .then(res => {
-                setAuthors(res.data.authors)
+                setAuthors(res.data.authors.filter(author => {
+                    console.log((author?.status !== "removed" || author._id === authorid));
+                    return (author?.status !== "removed" || author._id === authorid)
+                }))
             })
+    }
+    useEffect(() => {
+        requestes()
     }, [id])
     const addData = (e) => {
         const { name, value } = e.target;
