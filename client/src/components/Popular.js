@@ -6,9 +6,15 @@ function Popular() {
     const [seriesData, setSeriesData] = useState([])
     const [top, setTop] = useState({})
 
-    const colors = { thriller: "#c00355", romance: "#fd337f", action: "#006afa", fantasy: "#8b00e9", sliceoflife: "#9ab710", comedy: "#eea800", supernatural: "#7a41e9" }
-    // const [color ,setColor] = useState("")
-
+    const colors = { drama: "#00b19a", thriller: "#c00355", romance: "#fd337f", action: "#006afa", fantasy: "#8b00e9", sliceoflife: "#9ab710", comedy: "#eea800", supernatural: "#7a41e9" }
+    const [color, setColor] = useState("#fd337f")
+    function hexToRgba(hex, opacity) {
+        hex = hex.replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        return `rgba(${r}, ${g}, ${b}, ${0.1})`;
+    }
     useEffect(() => {
         axios.get('http://localhost:6969/api/series/filter/popularByGenre/romance',)
             .then(res => {
@@ -22,7 +28,7 @@ function Popular() {
     const handleGenre = (e) => {
         e.preventDefault()
         const gener = e.target.textContent.toLowerCase()
-        console.log();
+        setColor(colors[gener] ? colors[gener] : "#fd337f")
         axios.get(`http://localhost:6969/api/series/filter/popularByGenre/${gener}`,)
             .then(res => {
                 setSeriesData(res.data.series.filter((item, i) => i !== 0))
@@ -70,26 +76,26 @@ function Popular() {
     const otherSeries = seriesData.map((item, i) => {
 
         return (
-
-            <NavLink to={`/series/${item._id}`} className="d-flex flex-wrap gap-3 b-border-gray p-2" key={i}>
-                <div className="photo">
-                    <img src={process.env.REACT_APP_IMG_PATH + item.img} alt="" className="img-fluid" />
-                    {/* <div className="mt-1 ms-2 new">
+            <div style={{ backgroundColor: hexToRgba(color) }}>
+                <NavLink to={`/series/${item._id}`} style={{ marginBottom: "10px", backgroundColor: "transparent" }} className="d-flex flex-wrap gap-3 b-border-gray p-2 popular-hover" key={i}>
+                    <div className="photo">
+                        <img src={process.env.REACT_APP_IMG_PATH + item.img} alt="" className="img-fluid" />
+                        {/* <div className="mt-1 ms-2 new">
 <p id="new">NEW</p>
 </div> */}
-                </div>
+                    </div>
 
-                <div className=" num d-flex justify-content-center align-items-center">
-                    <p>{i + 2}</p>
-                </div>
+                    <div className=" num d-flex justify-content-center align-items-center">
+                        <p>{i + 2}</p>
+                    </div>
 
-                <div className="d-flex flex-column  gap-2">
-                    <div className="category">{item?.genres.join(' / ')}</div>
-                    <div className="title">{item.name}</div>
-                    <div className="author mt-1">{item.author?.name}</div>
-                </div>
-            </NavLink>
-
+                    <div className="d-flex flex-column  gap-2">
+                        <div className="category">{item?.genres.join(' / ')}</div>
+                        <div className="title">{item.name}</div>
+                        <div className="author mt-1">{item.author?.name}</div>
+                    </div>
+                </NavLink>
+            </div>
 
         )
     }
@@ -104,10 +110,10 @@ function Popular() {
                         {top ? (
                             <>
                                 {console.log(top)}
-                                <NavLink to={`/series/${top._id}`} id="coll-left" className=" col-lg-5">
+                                <NavLink to={`/series/${top._id}`} id="coll-left" className=" col-lg-5" style={{ backgroundColor: color, padding: "20px", color: "white" }}>
                                     <div id="first" className=" position-relative">
                                         <center> <img src={process.env.REACT_APP_IMG_PATH + top.img} className="w-100 img-fluid" alt="" /></center>
-                                        <h1 className="position-absolute top-0 m-5">1</h1>
+                                        <h1 className="position-absolute top-0 m-5" style={{ color: color }}>1</h1>
                                     </div>
                                     <div id="info" className="my-2">
                                         <p className="category">{top?.genres?.join(" / ")}</p>

@@ -155,6 +155,12 @@ export default function AddAuthor() {
         setNewAuthor(prev => ({ ...prev, [name]: value }))
     }
     const updateAuthor = (author) => {
+        setError({
+            name: "",
+            email: "",
+            phone: "",
+            introduction: ""
+        })
         setMode("edit")
         setNewAuthor(author)
     }
@@ -205,7 +211,7 @@ export default function AddAuthor() {
                 theme="light"
             />
             <div className=" d-flex align-items-center justify-content-center">
-                <div className="bg-white col-md-8">
+                <div className="bg-white col-md-8 w-100">
                     <form className="p-4 rounded shadow-md" onSubmit={onSubmit}>
                         <div>
                             <label htmlFor="name" className="form-label">Name</label>

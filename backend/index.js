@@ -9,7 +9,7 @@ import episodeRoute from "./routes/episode.js";
 import reviewsRoute from "./routes/reviews.js";
 import userRoute from "./routes/user.js"
 import authorRoute from "./routes/author.js"
-
+import mailRoute from "./routes/mail.js"
 import promotionsRoute from "./routes/promotions.js"
 dotenv.config()
 
@@ -38,7 +38,7 @@ app.use("/api/reviews", reviewsRoute)
 app.use("/api/user", userRoute)
 app.use("/api/promotions", promotionsRoute)
 app.use("/api/author", authorRoute)
-
+app.use("/api/mail", mailRoute)
 // console.log(authRoute)
 //routes routes
 

@@ -180,7 +180,7 @@ export default function CreateSeries() {
         draggable={true}
         theme="light"
       />
-      {console.log(newSeries)}
+      {/* {console.log(newSeries)} */}
       <div className="subscribes-container">
         <h1>Create Series</h1>
 
