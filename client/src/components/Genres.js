@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import Card from "./Card"
 import axios from "axios"
 import Page from "./Page"
+import noImg from "../img/noimage.png"
+
 function Genres() {
     const [series, setSeries] = useState([])
     const [filteredData, setfilteredData] = useState([])
@@ -63,7 +65,7 @@ function Genres() {
                     <option value="Fantasy">Fantasy</option>
                     <option value="Action">Action</option>
                     <option value="Slice of life">Slice of life</option>
-                    <option value="Fantasy">Fantasy</option>
+                    <option value="Drama">Drama</option>
 
                 </select>
 
@@ -84,7 +86,14 @@ function Genres() {
 
             </div>
             <div className="flex-box">
-                {filteredData.map(item => <Card key={item._id} series={item} />)}
+                {filteredData.length === 0 ? (<div className="flex-col-box color-gray">
+                    <img src={noImg} />
+                    <h3>No Series Found.</h3>
+                    <h5>"We were not able to find any series matching your filters"</h5>
+                    <h5>Try other filters</h5>
+
+                </div>) : (filteredData.map(item => <Card key={item._id} series={item} />))}
+
             </div>
         </Page>
     )

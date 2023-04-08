@@ -1,6 +1,7 @@
 import express from 'express'
 import { ObjectId } from 'mongoose';
 import reviewMd from '../modules/reviews.js'
+import seriesModel from '../modules/series.js';
 
 const router = express.Router()
 router.get('/useReview', (req, res) => {
@@ -36,6 +37,34 @@ router.post('/addReview', (req, res) => {
     })
 
 })
+
+// router.post('/addReview', (req, res) => {
+
+//     const date = new Date()
+//     const { star, review, userId, seriesId } = req.body
+//     // console.log('dd',req.body)
+//     const newReview = new reviewMd({ userId, seriesId, star, review, date })
+//     newReview.save(err => {
+//         if (err) {
+//             res.send({ err, message: "Sorry error occured", type: "error" })
+//         } else {
+//             res.send({ message: "Review added sucessfully", type: "success", newReview })
+//         }
+//     })
+//     reviewMd.find({ seriesId: seriesId },)
+//         .then(reviewsData => {
+//             const totalFound = reviewsData.length;
+//             const sumResult = reviewsData.reduce((acc, cur) => acc + cur["star"], 0);
+//             console.log(sumResult, totalFound, seriesId);
+//             console.log("ratting", Math.round(sumResult / totalFound));
+//             seriesModel.findOneAndUpdate({ _id: seriesId }, { ratting: Math.round(sumResult / totalFound) }, { new: true })
+//                 .then((updatedDoc) => {
+//                     console.log('Document updated successfully:', updatedDoc)
+//                 })
+//         }).catch(err => console.log("re err :", err));
+
+
+// })
 
 router.post('/updateReview/:id', async (req, res) => {
     const id = req.params.id

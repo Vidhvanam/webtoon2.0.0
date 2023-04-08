@@ -8,7 +8,7 @@ import noImg from "../img/noimage.png"
 export default function Card({ series, mode = "view", label, handleSubArray }) {
   const { user, setUser } = useContext(userContext)
 
-  const colors = { thriller: "#c00355", romance: "#fd337f", action: "#006afa", fantasy: "#8b00e9", sliceoflife: "#9ab710", comedy: "#eea800", supernatural: "#7a41e9" }
+  const colors = { drama: "#00b19a", thriller: "#c00355", romance: "#fd337f", action: "#006afa", fantasy: "#8b00e9", sliceoflife: "#9ab710", comedy: "#eea800", supernatural: "#7a41e9" }
   const color = series.genres[0].split(" ").join("").toLowerCase()
   const link = user?.roll === "admin" ? `/series/admin/${series._id}` : `/series/${series._id}`
   const [isChecked, setIsChecked] = useState(false);

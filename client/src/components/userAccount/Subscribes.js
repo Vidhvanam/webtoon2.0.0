@@ -101,7 +101,7 @@ export default function Subscriber() {
                                             (<div className="flex-row-box gap-2">
 
                                                 <button className="btn btn-danger " onClick={() => deleteSub()}>Delete</button>
-                                                <button className="btn btn-success" onClick={() => handelMode()}>Cancle</button>
+                                                <button className="btn btn-success" onClick={() => handelMode()}>Cancel</button>
                                             </div>
                                             )
                                         }

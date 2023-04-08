@@ -28,7 +28,7 @@ export default function CreateSeries() {
   useEffect(() => {
     axios.get(`http://localhost:6969/api/author/filter/all`)
       .then(res => {
-        setAuthors(res.data.authors)
+        setAuthors(res.data.authors.filter(author => author?.status !== "removed"))
       })
   }, [])
   const addData = (e) => {
@@ -180,7 +180,7 @@ export default function CreateSeries() {
         draggable={true}
         theme="light"
       />
-      {console.log(newSeries)}
+      {/* {console.log(newSeries)} */}
       <div className="subscribes-container">
         <h1>Create Series</h1>
 

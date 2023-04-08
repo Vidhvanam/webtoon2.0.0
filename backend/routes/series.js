@@ -51,11 +51,13 @@ router.get("/filter/newSeries", (req, res) => {
         ).catch(err => console.log(err))
 })
 router.get("/filter/trending", (req, res) => {
+    const currentDate = new Date();
+
+    const startDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 1);
+
+    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
     series.find({
-        // date: {
-        //     $gte: new Date(new Date() - 300 * 60 * 60 * 24 * 1000) , 
-        //     $lt: new Date()
-        // },
+        date: { $gte: startDate, $lte: endDate },
         ratting: { $gte: 4 }
     }).populate("author").then((series) => {
         // console.log(series)

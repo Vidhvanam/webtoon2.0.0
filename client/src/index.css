@@ -370,7 +370,6 @@ footer {
 
 /* popular page */
 .category {
-  color: gray;
   font-family: var(--font1);
   font-size: bold;
   font-size: 15px;
@@ -378,6 +377,10 @@ footer {
 
 .first {
   position: static;
+}
+
+.popular-hover:hover {
+  background-color: rgb(24, 243, 101) !important;
 }
 
 .name {
@@ -494,14 +497,15 @@ footer {
   font-weight: bold;
 }
 
-.manage-series-box .img-container img{
-  width : auto;
+.manage-series-box .img-container img {
+  width: auto;
 }
 
-.footer-links{
+.footer-links {
   list-style: none;
 }
-.footer-links li a{
+
+.footer-links li a {
   text-decoration: none;
-  color:black
+  color: black
 }

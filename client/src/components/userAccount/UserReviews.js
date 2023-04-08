@@ -133,7 +133,7 @@ export default function UserReviws() {
 
                                                 <button className="btn btn-danger " onClick={() => deleteSub()}>Delete</button>
                                                 <button className="btn btn-primary" onClick={(e) => selectAll(e)}>{selectedAll ? "Unselect All" : "Select All"}</button>
-                                                <button className="btn btn-success" onClick={() => cancleEdit()}>Cancle</button>
+                                                <button className="btn btn-success" onClick={() => cancleEdit()}>Cancel</button>
                                             </div>
                                             )
                                         }
