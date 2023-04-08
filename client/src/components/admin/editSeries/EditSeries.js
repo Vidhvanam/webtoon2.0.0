@@ -22,7 +22,7 @@ export default function App() {
         return filteredSeries.slice(firstPageIndex, lastPageIndex);
     }, [currentPage, filteredSeries]);
     useEffect(() => {
-        axios.get(`http://localhost:6969/api/series/filter/all`)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/all`)
             .then(res => {
                 setSeries(res.data.series)
                 setFilteredSeries(res.data.series)
@@ -52,7 +52,7 @@ export default function App() {
         ).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios.post('http://localhost:6969/api/series/admin/deleteSeries/one', series)
+                axios.post(`${process.env.REACT_APP_API}api/series/admin/deleteSeries/one`, series)
                     .then(res => {
                         console.log(res);
                         setSeries(prev => prev.filter(item => item._id !== series._id))

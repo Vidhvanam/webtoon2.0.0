@@ -32,14 +32,14 @@ export default function CreateSeries() {
     const requestes = async () => {
         let authorid = ""
         await axios
-            .get(`http://localhost:6969/api/series/${id}`)
+            .get(`${process.env.REACT_APP_API}api/series/${id}`)
             .then((series) => {
                 console.log(series.data);
                 authorid = series.data.seriesInfo.author._id
                 setNewSeries({ ...series.data.seriesInfo, author: authorid });
             })
             .catch((err) => console.log(err));
-        await axios.get(`http://localhost:6969/api/author/filter/all`)
+        await axios.get(`${process.env.REACT_APP_API}api/author/filter/all`)
             .then(res => {
                 setAuthors(res.data.authors.filter(author => {
                     console.log((author?.status !== "removed" || author._id === authorid));
@@ -174,7 +174,7 @@ export default function CreateSeries() {
                     formData.append('subscribers', newSeries.subscribers);
 
 
-                    axios.post('http://localhost:6969/api/series/admin/update', formData)
+                    axios.post(`${process.env.REACT_APP_API}api/series/admin/update`, formData)
                         .then(res => {
                             Swal.fire(res.data.message, '', res.data.type);
                             // console.log(res);

@@ -34,7 +34,7 @@ export default function Slider({ promoSeries }) {
         }
     }, [user])
     useEffect(() => {
-        axios.get('http://localhost:6969/api/promotions/filter/all')
+        axios.get(`${process.env.REACT_APP_API}api/promotions/filter/all`)
             .then(res => {
                 setPromotedSeries(res.data.promotions)
                 // console.log(res.data.promotions);

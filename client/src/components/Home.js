@@ -17,11 +17,11 @@ function Home() {
     ))
 
     useEffect(() => {
-        axios.get('http://localhost:6969/api/series/filter/newSeries')
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/newSeries`)
             .then(res => {
                 setSeriesData(res.data.series)
             })
-        axios.get('http://localhost:6969/api/series/filter/trending')
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/trending`)
             .then(res => {
                 setTrandingData(res.data.series)
             })

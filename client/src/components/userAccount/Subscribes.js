@@ -16,7 +16,7 @@ export default function Subscriber() {
 
             if (user) {
                 const userSubscribes = user.subscribes
-                const res = await axios.get(`http://localhost:6969/api/series/allSubscribes/get?userSubscribes=${userSubscribes}`)
+                const res = await axios.get(`${process.env.REACT_APP_API}api/series/allSubscribes/get?userSubscribes=${userSubscribes}`)
 
                 if (res.data.type === "success") {
                     const resSeries = res.data.seriesInfo
@@ -46,7 +46,7 @@ export default function Subscriber() {
         } else {
             const s_id = user.subscribes.filter(prev => !subArray.includes(prev))
             console.log({ s_id });
-            axios.put(`http://localhost:6969/api/user/unSubscribe/${user._id}`, { data: subArray, action: 'unSub', s_id }).then(res => {
+            axios.put(`${process.env.REACT_APP_API}api/user/unSubscribe/${user._id}`, { data: subArray, action: 'unSub', s_id }).then(res => {
                 if (res.data.type === "success") {
 
                     setUser(res.data.upUser)

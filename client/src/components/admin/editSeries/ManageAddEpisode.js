@@ -71,7 +71,7 @@ export default function CreateSeries() {
             formData.append('pdf', newEpisode.pdf);
             formData.append('ep_num', newEpisode.ep_num)
 
-            axios.post('http://localhost:6969/api/episodes/admin/add', formData)
+            axios.post(`${process.env.REACT_APP_API}api/episodes/admin/add`, formData)
                 .then(res => {
                     toast[res.data.type](res.data.message);
                     setTimeout(() => {

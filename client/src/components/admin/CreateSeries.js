@@ -26,7 +26,7 @@ export default function CreateSeries() {
     genres: ""
   })
   useEffect(() => {
-    axios.get(`http://localhost:6969/api/author/filter/all`)
+    axios.get(`${process.env.REACT_APP_API}api/author/filter/all`)
       .then(res => {
         setAuthors(res.data.authors.filter(author => author?.status !== "removed"))
       })
@@ -141,7 +141,7 @@ export default function CreateSeries() {
       formData.append('subscribers', newSeries.subscribers);
 
 
-      axios.post('http://localhost:6969/api/series/admin/add', formData)
+      axios.post(`${process.env.REACT_APP_API}api/series/admin/add`, formData)
         .then(res => {
           toast[res.data.type](res.data.message);
           // console.log(res);

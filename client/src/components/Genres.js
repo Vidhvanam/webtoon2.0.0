@@ -9,7 +9,7 @@ function Genres() {
     const [filteredData, setfilteredData] = useState([])
     const [filters, setFilters] = useState({ gener: "all", order: "ratting", status: "both" })
     useEffect(() => {
-        axios.get(`http://localhost:6969/api/series/filter/all`)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/all`)
             .then(res => {
                 setSeries(res.data.series)
                 setfilteredData(res.data.series.sort((a, b) => b.ratting - a.ratting))

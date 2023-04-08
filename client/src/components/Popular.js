@@ -16,7 +16,7 @@ function Popular() {
         return `rgba(${r}, ${g}, ${b}, ${0.1})`;
     }
     useEffect(() => {
-        axios.get('http://localhost:6969/api/series/filter/popularByGenre/romance',)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/popularByGenre/romance`,)
             .then(res => {
                 setSeriesData(res.data.series.filter((item, i) => i !== 0))
                 setTop(res.data.series[0])
@@ -29,7 +29,7 @@ function Popular() {
         e.preventDefault()
         const gener = e.target.textContent.toLowerCase()
         setColor(colors[gener] ? colors[gener] : "#fd337f")
-        axios.get(`http://localhost:6969/api/series/filter/popularByGenre/${gener}`,)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/popularByGenre/${gener}`,)
             .then(res => {
                 setSeriesData(res.data.series.filter((item, i) => i !== 0))
                 setTop(res.data.series[0])

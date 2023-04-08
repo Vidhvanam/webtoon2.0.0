@@ -40,7 +40,7 @@ const Login = () => {
 
   const onSubmit = () => {
 
-    axios.post("http://localhost:6969/api/auth/login", logUser)
+    axios.post(`${process.env.REACT_APP_API}api/auth/login`, logUser)
       .then(res => {
         // alert(res.data.message)
         toast[res.data.type](res.data.message);

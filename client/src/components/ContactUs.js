@@ -16,7 +16,7 @@ function ContactUs() {
     }
     const onSubmit = (e) => {
         e.preventDefault()
-        axios.post(`http://localhost:6969/api/mail/contactUs`, mail).then(res => {
+        axios.post(`${process.env.REACT_APP_API}api/mail/contactUs`, mail).then(res => {
             console.log(res);
 
             Swal.fire(res.data.message, 'we will contact you as soon as posible', res.data.type);

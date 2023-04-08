@@ -30,7 +30,7 @@ function MagageSeries() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:6969/api/series/${id}`)
+            .get(`${process.env.REACT_APP_API}api/series/${id}`)
             .then((series) => {
                 console.log(series.data);
 
@@ -42,7 +42,7 @@ function MagageSeries() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:6969/api/episodes/${id}`)
+            .get(`${process.env.REACT_APP_API}api/episodes/${id}`)
             .then((episodes) => {
                 // console.log(episodes.data.episodeInfo);
 
@@ -64,7 +64,7 @@ function MagageSeries() {
         ).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios.post(`http://localhost:6969/api/episodes/deleteEpisode/${item._id}`, { url: "", status: "removed", name: item.name })
+                axios.post(`${process.env.REACT_APP_API}api/episodes/deleteEpisode/${item._id}`, { url: "", status: "removed", name: item.name })
                     .then(res => {
                         console.log(res);
                         if (res.data.type === "success") {
@@ -117,7 +117,7 @@ function MagageSeries() {
                                                 <ImUserPlus className="series-icon " />
                                                 <b>{series?.subscribers}</b>
                                             </span>
-                                            <span>{series.completed ?"completed" : "on going"}</span>
+                                            <span>{series.completed ? "completed" : "on going"}</span>
                                         </div>
                                         <div >
                                             <MdModeEditOutline onClick={() => navigetor(`/EditSeriesInfo/${series._id}`)} style={{ fontSize: "2rem", backgroundColor: "#e7e2e2a8", padding: "5px", color: "black", margin: "5px" }} />

@@ -20,7 +20,7 @@ export default function UserReviws() {
 
             if (user) {
                 const userSubscribes = user.subscribes
-                const res = await axios.get(`http://localhost:6969/api/reviews/AllUserReviews/${user._id}`)
+                const res = await axios.get(`${process.env.REACT_APP_API}api/reviews/AllUserReviews/${user._id}`)
 
                 if (res.data.type === "success") {
                     const reviewsData = res.data.reviewsData
@@ -88,7 +88,7 @@ export default function UserReviws() {
         } else {
 
 
-            axios.delete(`http://localhost:6969/api/reviews/reviewsDelete?r_ids=${[...r_id]}`, { data: reArray, action: 'unSub' }).then(res => {
+            axios.delete(`${process.env.REACT_APP_API}api/reviews/reviewsDelete?r_ids=${[...r_id]}`, { data: reArray, action: 'unSub' }).then(res => {
                 if (res.data.type === "success") {
 
                     toast[res.data.type](res.data.message);

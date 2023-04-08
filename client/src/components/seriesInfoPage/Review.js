@@ -46,13 +46,13 @@ function Review({ reviews, setReviews, s_id }) {
 
       toast.warn('Pleace rate and review first');
     } else {
-      axios.post(`http://localhost:6969/api/reviews/addReview`, { ...userReview, userId: user['_id'] })
+      axios.post(`${process.env.REACT_APP_API}api/reviews/addReview`, { ...userReview, userId: user['_id'] })
         .then(res => {
           //  console.log(res.data.newReview);
           toast[res.data.type](res.data.message);
           if (res.data.type === "success") {
-            const newReview ={...res.data.newReview,userId :user}
-            setReviews(prevReviews => ([...prevReviews , newReview ]))
+            const newReview = { ...res.data.newReview, userId: user }
+            setReviews(prevReviews => ([...prevReviews, newReview]))
             console.log(newReview);
             setMode("update")
 
@@ -68,7 +68,7 @@ function Review({ reviews, setReviews, s_id }) {
 
       toast.warn('Pleace rate and review first');
     } else {
-      axios.post(`http://localhost:6969/api/reviews/updateReview/${userReview._id}`, { ...userReview, userId: user['_id'] })
+      axios.post(`${process.env.REACT_APP_API}api/reviews/updateReview/${userReview._id}`, { ...userReview, userId: user['_id'] })
         .then(res => {
 
           toast[res.data.type](res.data.message);
@@ -87,16 +87,16 @@ function Review({ reviews, setReviews, s_id }) {
           }
         })
 
-    
+
     }
   }
   const deleteReview = () => {
-    axios.post(`http://localhost:6969/api/reviews/deleteReview/${userReview._id}`)
+    axios.post(`${process.env.REACT_APP_API}api/reviews/deleteReview/${userReview._id}`)
       .then(res => {
-          
+
         toast[res.data.type](res.data.message);
         if (res.data.type === "error") {
-          setReviews(prevReviews =>  prevReviews.filter(item => item.userId._id !== user._id))
+          setReviews(prevReviews => prevReviews.filter(item => item.userId._id !== user._id))
           setMode("adde")
           setUserReview({
             seriesId: s_id,
@@ -105,7 +105,7 @@ function Review({ reviews, setReviews, s_id }) {
           })
         }
       })
-         
+
   }
 
   return (

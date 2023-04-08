@@ -25,7 +25,7 @@ export default function SearchBox() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:6969/api/series/filter/all`)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/all`)
             .then(res => {
                 setSeries(res.data.series)
             })
