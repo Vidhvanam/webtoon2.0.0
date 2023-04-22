@@ -2,9 +2,11 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { NavLink } from "react-router-dom"
 import Page from "./Page"
+import WTLoader from "./WTLoader"
 function Popular() {
     const [seriesData, setSeriesData] = useState([])
     const [top, setTop] = useState({})
+    const [loading, setLoading] = useState(true)
 
     const colors = { drama: "#00b19a", thriller: "#c00355", romance: "#fd337f", action: "#006afa", fantasy: "#8b00e9", sliceoflife: "#9ab710", comedy: "#eea800", supernatural: "#7a41e9" }
     const [color, setColor] = useState("#fd337f")
@@ -20,7 +22,7 @@ function Popular() {
             .then(res => {
                 setSeriesData(res.data.series.filter((item, i) => i !== 0))
                 setTop(res.data.series[0])
-
+                setLoading(false)
                 // setColor(colors[res.data.series[0].genres[0].split(" ").join("").toLowerCase()])
                 // console.log(color);
             })
@@ -40,7 +42,7 @@ function Popular() {
     }
     const genersBar = (
 
-        <nav className="user-account-nav my-5">
+        <nav className="user-account-nav genres-nav my-5">
             <ul className="flex-row-box">
 
                 <li className="nav-item">
@@ -100,6 +102,9 @@ function Popular() {
         )
     }
     )
+    if (loading) {
+        return <WTLoader />
+    }
     return (
         <>
             <Page pageName="top pick by genre">

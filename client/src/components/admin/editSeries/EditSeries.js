@@ -76,7 +76,7 @@ export default function App() {
     return (
         <>
             <Page pageName="Edit Series" hasSearch={true} data={filteredSeries} handelData={handelFilteredSeries}>
-                <div className='overflow-auto'>
+                <div className='overflow-auto min-height-680'>
                     {/* {console.log(filteredSeries, allSeries)} */}
                     <table className="table table-striped series-table">
                         <thead className='table-heading'>

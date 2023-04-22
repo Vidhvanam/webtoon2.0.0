@@ -9,11 +9,14 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ImUserPlus } from "react-icons/im";
 import { userContext } from "../UserContext";
 import Pagination from '../pagination/Pagination';
+import WTLoader from "../WTLoader";
 let PageSize = 5;
 
 
 function SeriesInfo() {
   const { user, setUser } = useContext(userContext)
+  const [loading, setLoading] = useState(true)
+
   const { id } = useParams();
   const [series, setSeries] = useState({});
   const [episodesData, setEpisodesData] = useState([]);
@@ -51,7 +54,7 @@ function SeriesInfo() {
       .get(`${process.env.REACT_APP_API}api/episodes/${id}`)
       .then((episodes) => {
         // console.log(episodes.data.episodeInfo);
-
+        setLoading(false)
         setEpisodesData(episodes.data.episodeInfo);
       })
       .catch((err) => console.log(err));
@@ -101,6 +104,9 @@ function SeriesInfo() {
         toast[res.data.type](res.data.message);
       }
     })
+  }
+  if (loading) {
+    return <WTLoader />
   }
   return (
     <>

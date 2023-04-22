@@ -5,9 +5,11 @@ import Card from "../Card"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import noImg from "../../img/noimage.png"
+import WTLoader from "../WTLoader";
 export default function Subscriber() {
     const { user, setUser } = useContext(userContext)
     const [subsribes, setSubsribes] = useState([])
+    const [loading, setLoading] = useState(true)
     const [subArray, setSubArray] = useState([])
     const [mode, setMode] = useState("view")
 
@@ -21,6 +23,7 @@ export default function Subscriber() {
                 if (res.data.type === "success") {
                     const resSeries = res.data.seriesInfo
                     setSubsribes(resSeries)
+                    setLoading(false)
                     setSubArray(resSeries.map(item => item._id))
                 }
             }
@@ -70,6 +73,9 @@ export default function Subscriber() {
 
 
     ))
+    if (loading) {
+        return <WTLoader />
+    }
     return (
         <div className="main-container">
 

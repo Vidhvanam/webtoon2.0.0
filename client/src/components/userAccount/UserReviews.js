@@ -6,10 +6,12 @@ import 'react-toastify/dist/ReactToastify.css'
 import { FaStar } from "react-icons/fa";
 import noImg from "../../img/noimage.png"
 import { NavLink } from "react-router-dom"
+import WTLoader from "../WTLoader";
 
 export default function UserReviws() {
     const { user, setUser } = useContext(userContext)
     const [reviews, setReviews] = useState([])
+    const [loading, setLoading] = useState(true)
     const [reArray, setReArray] = useState({})
     const [mode, setMode] = useState("view")
     const stars = Array(5).fill(0);
@@ -25,6 +27,7 @@ export default function UserReviws() {
                 if (res.data.type === "success") {
                     const reviewsData = res.data.reviewsData
                     setReviews(reviewsData)
+                    setLoading(false)
                     let temp = {}
 
 
@@ -100,7 +103,9 @@ export default function UserReviws() {
             })
         }
     }
-
+    if (loading) {
+        return <WTLoader />
+    }
 
     return (
         <div className="main-container">

@@ -2,7 +2,9 @@ import Card from './Card'
 import { useEffect, useState, useContext } from 'react'
 import axios from 'axios'
 import Slider from './Slider'
+import WTLoader from './WTLoader'
 function Home() {
+    const [loading, setLoading] = useState(true)
 
     const [newSeriesData, setSeriesData] = useState([])
     const [trendingSeriesData, setTrandingData] = useState([])
@@ -24,8 +26,12 @@ function Home() {
         axios.get(`${process.env.REACT_APP_API}api/series/filter/trending`)
             .then(res => {
                 setTrandingData(res.data.series)
+                setLoading(false)
             })
     }, [])
+    if (loading) {
+        return <WTLoader />
+    }
     return (
 
         <div className="home-container">

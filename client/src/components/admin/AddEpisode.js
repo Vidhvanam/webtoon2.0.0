@@ -89,7 +89,7 @@ export default function CreateSeries() {
   }
   return (
     <div className="main-container">
-      <nav className="user-account-nav">
+      <nav className="user-account-nav add-episode-bar">
         <ul className="flex-row-box">
           <li>
             <NavLink to="/createSeries/first" className="disabled-link">1. Create Series</NavLink>

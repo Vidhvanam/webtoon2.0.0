@@ -91,7 +91,7 @@ export default function CreateSeries() {
         }
     }
     return (
-        <div className="main-container">
+        <div >
             {console.log(newEpisode)}
             <ToastContainer
                 position="top-center"

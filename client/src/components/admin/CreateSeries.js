@@ -3,10 +3,12 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate, NavLink } from "react-router-dom"
 import 'react-toastify/dist/ReactToastify.css';
+import WTLoader from "../WTLoader";
 
 export default function CreateSeries() {
   const navigetor = useNavigate()
   const [authors, setAuthors] = useState([])
+  const [loading, setLoading] = useState(false)
   const [newSeries, setNewSeries] = useState({
     name: "",
     completed: false,
@@ -129,6 +131,7 @@ export default function CreateSeries() {
     const flag = await formValidation()
     if (flag) {
       console.log("valid");
+      setLoading(true)
       const formData = new FormData();
       formData.append('name', newSeries.name);
       formData.append('completed', newSeries.completed);
@@ -144,12 +147,15 @@ export default function CreateSeries() {
       axios.post(`${process.env.REACT_APP_API}api/series/admin/add`, formData)
         .then(res => {
           toast[res.data.type](res.data.message);
+          setLoading(false)
+
           // console.log(res);
           // <Navigate to={`createSeries/second/${res.data.newSeries._id}`} />
           navigetor(`/createSeries/second/${res.data.newSeries._id}`)
         })
         .catch(err => {
           // console.log(err);
+          setLoading(false)
           toast[err.data.type](err.data.message);
 
         });
@@ -158,9 +164,12 @@ export default function CreateSeries() {
       console.log("not valid");
     }
   }
+  if (loading) {
+    return <WTLoader />
+  }
   return (
     <div className="main-container">
-      <nav className="user-account-nav">
+      <nav className="user-account-nav create-series-bar">
         <ul className="flex-row-box">
           <li>
             <NavLink to="/createSeries/first">1. Create Series</NavLink>

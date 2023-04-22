@@ -1,4 +1,4 @@
-import logo from '../header/logo3.png'
+import logo from '../header/wed.png'
 import { NavLink } from 'react-router-dom'
 import Links from '../Links'
 export default function Footer() {
@@ -28,12 +28,12 @@ export default function Footer() {
                   className="mt-0 d-inline-block mx-auto"
                 // style="width: 60px; background-color: #7c4dff; height: 2px"
                 />
-               <ul className='footer-links'>
-                <Links/>
-               </ul>
+                <ul className='footer-links'>
+                  <Links />
+                </ul>
               </div>
 
-             
+
 
               <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 className="text-uppercase fw-bold">Contact</h6>
@@ -53,9 +53,9 @@ export default function Footer() {
 
         <div
           className="text-center p-3"
-          style={{ backgroundColor: 'var(--main-color)',color:"white" }}
+          style={{ backgroundColor: 'var(--main-color)', color: "white" }}
         >
-          © 2020 Copyright : 
+          © 2020 Copyright :
           <NavLink className="text-light" to="/"
           > Wbtoon.com</NavLink>
         </div>
