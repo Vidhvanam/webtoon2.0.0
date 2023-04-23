@@ -2,7 +2,8 @@ import WTLoader from "./components/WTLoader";
 import { Route, Routes, Navigate, Outlet } from "react-router-dom"
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { userContext } from './components/UserContext'
-
+import ForgotPassword from "./components/ForgotPassword"
+import ResetPassword from "./components/ResetPassword"
 
 const Registration = lazy(() => import('./components/registration/Regitration'));
 const Login = lazy(() => import('./components/login/Login'));
@@ -62,7 +63,11 @@ export default function MainRoutes({ user }) {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
+
         <Route path="/registration" element={<Registration />} />
+        <Route path="/password-reset/:id" element={<ResetPassword />} />
+
         <Route path="/genres" element={<Genres />} />
         <Route path="/popular" element={<Popular />} />
         <Route path="/contact" element={<ContactUs />} />
@@ -96,6 +101,8 @@ export default function MainRoutes({ user }) {
             <Route path="/terms" element={<Terms />} />
             <Route path="/promotions" element={<Promotions />} />
             <Route path="/account" element={<UserAccount />}>
+              <Route index element={<Navigate to="password-reset/64044b1c46f0d66271d78cbb" />} />
+              <Route path="password-reset/:id" element={<ResetPassword />} />
 
             </Route>
             <Route path="/addAuthor" element={<AddAuthor />} />
@@ -116,6 +123,8 @@ export default function MainRoutes({ user }) {
             <Route index element={<Navigate to="subscribes" />} />
             <Route path="subscribes" element={<Subscribes />} replace />
             <Route path="reviwes" element={<UserReviws />} />
+            <Route path="password-reset/:id" element={<ResetPassword />} />
+
           </Route>
           <Route path="/episode/:file" element={<EpisodeView />} />
           <Route exact path="/series/:id" element={<SeriesInfo />} />

@@ -1,53 +1,56 @@
-import { useEffect  ,useContext } from "react"
-import {  NavLink, useNavigate ,Outlet } from "react-router-dom"
+import { useEffect, useContext } from "react"
+import { NavLink, useNavigate, Outlet } from "react-router-dom"
 import { userContext } from '../UserContext';
 
-export default function UserAccount(){
-    const {user , setUser} = useContext(userContext)
-    let links
-    if(user?.roll === "admin"){
-      links =  <ul className="flex-row-box">
-     <li>
-        <a  href="#" onClick={()=>{
-          setUser(null)    
+export default function UserAccount() {
+  const { user, setUser } = useContext(userContext)
+  let links
+  if (user?.roll === "admin") {
+    links = <ul className="flex-row-box">
+      <li>
+        <NavLink to={`password-reset/${user._id}`}>Reset Password</NavLink>
+      </li>
+      <li>
+        <a href="#" onClick={() => {
+          setUser(null)
           localStorage.removeItem('user')
           navigate('/')
-          }}>Log Out</a>
+        }}>Log Out</a>
       </li>
     </ul>
-    }else{
-      links =  <ul className="flex-row-box">
+  } else {
+    links = <ul className="flex-row-box">
       <li>
-        <NavLink  to="subscribes">Subscribes</NavLink>
+        <NavLink to="subscribes">Subscribes</NavLink>
       </li>
       <li>
-        <NavLink  to="reviwes">Reviwes</NavLink>
+        <NavLink to="reviwes">Reviwes</NavLink>
       </li>
-      {/* <li>
-        <a  href="#"></a>
-      </li> */}
       <li>
-        <a  href="#" onClick={()=>{
-          setUser(null)    
+        <NavLink to={`password-reset/${user._id}`}>Reset Password</NavLink>
+      </li>
+      <li>
+        <a href="#" onClick={() => {
+          setUser(null)
           localStorage.removeItem('user')
           navigate('/')
-          }}>Log Out</a>
+        }}>Log Out</a>
       </li>
     </ul>
+  }
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate('/')
     }
-    const navigate = useNavigate()
-    useEffect(()=>{
-     if(!user){
-        navigate('/')
-     }
-      
-    },[user])
-    return(
-        <>
-        <nav className="user-account-nav">
-         {links}
+
+  }, [user])
+  return (
+    <>
+      <nav className="user-account-nav">
+        {links}
       </nav>
-      <Outlet/>
-        </>
-    )
+      <Outlet />
+    </>
+  )
 }

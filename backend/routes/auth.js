@@ -2,7 +2,7 @@ import express from 'express'
 import users from '../modules/user.js'
 import CryptoJS from 'crypto-js';
 import dotenv from 'dotenv'
-
+import { sendEmail } from "./mail.js";
 dotenv.config()
 const router = express.Router()
 
@@ -21,7 +21,7 @@ router.post("/login", (req, res) => {
             }
             // console.log('user does not exists')
         } else {
-            res.send({ message: "Not registered", type: "success" })
+            res.send({ message: "Not registered", type: "info" })
         }
     })
 });
@@ -47,5 +47,35 @@ router.post("/register", (req, res) => {
     })
 
 
+})
+
+router.post("/forgotPassword", async (req, res) => {
+    // console.log(req.body) 
+    const user = await users.findOne({ email: req.body.email });
+    if (!user)
+        return res.send({ message: "user with given email doesn't exist", type: "error" });
+
+    const link = `${process.env.APP_URL}/password-reset/${user._id}`;
+    const send = await sendEmail(user.email, "Password reset", link);
+    if (send) {
+        return res.send({ message: "Check email to reset password", type: "info" });
+
+    } else {
+        return res.send({ message: "Sorry try again later", type: "error" });
+
+    }
+})
+
+router.post("/resetPassword", async (req, res) => {
+    try {
+        const { password, id } = req.body
+        var ciphertext = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString();
+
+        const Ures = await users.updateOne({ _id: id }, { password: ciphertext })
+        console.log(Ures);
+        res.send({ message: 'Reset password successfully', type: "success" })
+    } catch (err) {
+        res.send({ message: 'Sorry try again later ', type: "error", err })
+    }
 })
 export default router

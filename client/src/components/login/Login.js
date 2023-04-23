@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios';
-import { NavLink, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 // import { GoogleLogin } from 'react-google-login';
 // import { gapi } from 'gapi-script';
 import { userContext } from '../UserContext';
@@ -11,7 +11,6 @@ import WTLoader from '../WTLoader';
 const Login = () => {
   const navigation = useNavigate()
   const { user, setUser } = useContext(userContext)
-  const [loading, setLoading] = useState(false)
   const [logUser, setLogUser] = useState({
     email: "",
     password: "",
@@ -41,14 +40,12 @@ const Login = () => {
   }
 
   const onSubmit = () => {
-    setLoading(true)
     axios.post(`${process.env.REACT_APP_API}api/auth/login`, logUser)
       .then(res => {
         // alert(res.data.message)
         toast[res.data.type](res.data.message);
         if (res.data.user) {
           console.log(res.data.user)
-          setLoading(false)
 
           setUser(res.data.user._doc)
           localStorage.setItem('user', JSON.stringify(res.data.user._doc))
@@ -59,9 +56,9 @@ const Login = () => {
       })
 
   }
-  if (loading) {
-    return <WTLoader />
-  }
+  // if (loading) {
+  //   return <WTLoader />
+  // }
   return (
     <Page pageName="LOGIN TO WEBTOON">
       <ToastContainer
@@ -108,7 +105,7 @@ const Login = () => {
                     Remember me
                   </label>
                 </div> */}
-                {/* <a href="#!" className="text-body">Forgot password?</a> */}
+                <Link to="/forgotPassword" className="text-body">Forgot password?</Link>
               </div>
 
               <div className="text-center text-lg-start mt-4 pt-2">
