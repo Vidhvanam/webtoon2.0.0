@@ -30,12 +30,16 @@ body {
 
 .main-container {
   min-height: 100vh;
+  position: relative;
+  top: 94px;
   /* padding:40px 0px; */
 
 }
 
 .home-container {
   min-height: 100vh;
+  position: relative;
+  top: 94px;
   /* padding:40px 0px; */
   display: flex;
   flex-direction: column;
@@ -44,6 +48,8 @@ body {
 
 footer {
   padding-top: 20px;
+  position: relative;
+  top: 94px;
 }
 
 .pd-y-40 {
@@ -224,6 +230,15 @@ footer {
 /* user account page */
 .user-account-nav {
   background-color: rgb(243, 242, 242);
+  position: relative;
+  top: 94px;
+}
+
+.genres-nav,
+.create-series-bar,
+.add-episode-bar {
+  background-color: rgb(243, 242, 242);
+  position: static
 }
 
 .user-account-nav ul {

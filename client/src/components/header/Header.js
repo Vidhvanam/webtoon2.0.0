@@ -1,4 +1,4 @@
-import logo from './logo3.png'
+import logo from './webtoon2.png'
 import './header.css'
 import { NavLink } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
@@ -59,7 +59,7 @@ function Header() {
   // }
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg  navbar-light bg-light fixed-top">
         <div className="container-fluid">
           <img className='logo me-5' src={logo} alt="webtoon" />
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

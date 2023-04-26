@@ -3,15 +3,18 @@ import Card from "./Card"
 import axios from "axios"
 import Page from "./Page"
 import noImg from "../img/noimage.png"
+import WTLoader from "./WTLoader"
 
 function Genres() {
     const [series, setSeries] = useState([])
+    const [loading, setLoading] = useState(true)
     const [filteredData, setfilteredData] = useState([])
     const [filters, setFilters] = useState({ gener: "all", order: "ratting", status: "both" })
     useEffect(() => {
-        axios.get(`http://localhost:6969/api/series/filter/all`)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/all`)
             .then(res => {
                 setSeries(res.data.series)
+                setLoading(false)
                 setfilteredData(res.data.series.sort((a, b) => b.ratting - a.ratting))
             })
 
@@ -51,7 +54,9 @@ function Genres() {
         setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
     }
-
+    if (loading) {
+        return <WTLoader />
+    }
     return (
         <Page pageName="Filter series">
             {/* {console.log(series)} */}

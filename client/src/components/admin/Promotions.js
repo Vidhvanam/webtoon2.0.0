@@ -39,14 +39,14 @@ function Promotions() {
     }, [currentPage, filteredSeries]);
 
     useEffect(() => {
-        axios.get(`http://localhost:6969/api/series/filter/all`)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/all`)
             .then(res => {
                 setAllSeries(res.data.series)
                 setFilteredSeries(res.data.series)
 
             })
         axios
-            .get(`http://localhost:6969/api/promotions/filter/all`)
+            .get(`${process.env.REACT_APP_API}api/promotions/filter/all`)
             .then((series) => {
                 // console.log(series.data);
 
@@ -71,7 +71,7 @@ function Promotions() {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 axios
-                    .post(`http://localhost:6969/api/promotions/remove`, promotionsSeries.filter(item => item.s_id == series._id)[0])
+                    .post(`${process.env.REACT_APP_API}api/promotions/remove`, promotionsSeries.filter(item => item.s_id == series._id)[0])
                     .then((res) => {
                         console.log(res.data);
                         if (res.data.type === "success") {
@@ -120,7 +120,7 @@ function Promotions() {
                         formData.append('img', file);
                         formData.append('SeriesId', seriesToBePromoted._id);
 
-                        return axios.post('http://localhost:6969/api/promotions/addpromotion', formData, {
+                        return axios.post(`${process.env.REACT_APP_API}api/promotions/addpromotion`, formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
                             },

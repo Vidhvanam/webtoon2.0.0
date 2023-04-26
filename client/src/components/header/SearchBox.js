@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect, useRef, useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import Pagination from '../pagination/Pagination';
 import { userContext } from "../UserContext"
+import noImg from "../../img/noimage.png"
 
 let PageSize = 5;
 
@@ -25,7 +26,7 @@ export default function SearchBox() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:6969/api/series/filter/all`)
+        axios.get(`${process.env.REACT_APP_API}api/series/filter/all`)
             .then(res => {
                 setSeries(res.data.series)
             })
@@ -90,7 +91,7 @@ export default function SearchBox() {
                             <NavLink to={`${seriesLink}${series._id}`} key={series._id} className="d-flex flex-row gap-2 searced-item">
 
                                 <div className="img-container">
-                                    <img src={process.env.REACT_APP_IMG_PATH + series.img} alt="no-img" />
+                                    <img src={process.env.REACT_APP_IMG_PATH + series.img} alt="no-img" onError={(e) => e.target.src = noImg} style={{ opacity: "0.8" }} />
                                 </div>
                                 <div className="series-info d-flex flex-column">
                                     <span>{series.name}</span>

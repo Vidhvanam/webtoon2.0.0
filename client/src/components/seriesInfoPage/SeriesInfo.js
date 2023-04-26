@@ -9,11 +9,14 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ImUserPlus } from "react-icons/im";
 import { userContext } from "../UserContext";
 import Pagination from '../pagination/Pagination';
+import WTLoader from "../WTLoader";
 let PageSize = 5;
 
 
 function SeriesInfo() {
   const { user, setUser } = useContext(userContext)
+  const [loading, setLoading] = useState(true)
+
   const { id } = useParams();
   const [series, setSeries] = useState({});
   const [episodesData, setEpisodesData] = useState([]);
@@ -29,7 +32,7 @@ function SeriesInfo() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:6969/api/series/${id}`)
+      .get(`${process.env.REACT_APP_API}api/series/${id}`)
       .then((series) => {
         // console.log(series.data.seriesInfo);
 
@@ -38,7 +41,7 @@ function SeriesInfo() {
       .catch((err) => console.log(err));
 
     axios
-      .get(`http://localhost:6969/api/reviews/${id}`)
+      .get(`${process.env.REACT_APP_API}api/reviews/${id}`)
       .then((res) => {
         // console.log('res.data.reviews', id)
         setReviews(res.data.reviewsData);
@@ -48,10 +51,10 @@ function SeriesInfo() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:6969/api/episodes/${id}`)
+      .get(`${process.env.REACT_APP_API}api/episodes/${id}`)
       .then((episodes) => {
         // console.log(episodes.data.episodeInfo);
-
+        setLoading(false)
         setEpisodesData(episodes.data.episodeInfo);
       })
       .catch((err) => console.log(err));
@@ -83,7 +86,7 @@ function SeriesInfo() {
     } else {
       newSubcribes = [...user.subscribes, id]
     }
-    axios.put(`http://localhost:6969/api/user/unSubscribe/${user._id}`, { data: newSubcribes, action, s_id: [id] }).then(res => {
+    axios.put(`${process.env.REACT_APP_API}api/user/unSubscribe/${user._id}`, { data: newSubcribes, action, s_id: [id] }).then(res => {
       if (res.data.type === "success") {
 
         setUser(res.data.upUser)
@@ -101,6 +104,9 @@ function SeriesInfo() {
         toast[res.data.type](res.data.message);
       }
     })
+  }
+  if (loading) {
+    return <WTLoader />
   }
   return (
     <>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { NavLink ,useNavigate} from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 // import { GoogleRegistration } from 'react-google-Registration';
 // import { gapi } from 'gapi-script';
 import { ToastContainer, toast } from 'react-toastify';
@@ -92,16 +92,16 @@ const Registration = ({ setRegistrationUser }) => {
         phone,
         password
       }
-      axios.post("http://localhost:6969/api/auth/register", newUser)
+      axios.post(`${process.env.REACT_APP_API}api/auth/register`, newUser)
         .then(res => {
           // alert(res.data.type)
           toast[res.data.type](res.data.message);
-          setTimeout(()=> {
-            if(res.data.type === "success"){
+          setTimeout(() => {
+            if (res.data.type === "success") {
               navigation("/login")
             }
-          } 
-          ,2500)
+          }
+            , 2500)
 
         })
       // console.log('this.state :>> ', this.state);

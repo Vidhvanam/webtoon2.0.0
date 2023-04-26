@@ -25,7 +25,7 @@ function SeriesInfoAdmin() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:6969/api/series/${id}`)
+      .get(`${process.env.REACT_APP_API}api/series/${id}`)
       .then((series) => {
         console.log(series.data);
 
@@ -34,7 +34,7 @@ function SeriesInfoAdmin() {
       .catch((err) => console.log(err));
 
     axios
-      .get(`http://localhost:6969/api/reviews/${id}`)
+      .get(`${process.env.REACT_APP_API}api/reviews/${id}`)
       .then((res) => {
         // console.log('res.data.reviews', id)
         setReviews(res.data.reviewsData);
@@ -44,7 +44,7 @@ function SeriesInfoAdmin() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:6969/api/episodes/${id}`)
+      .get(`${process.env.REACT_APP_API}api/episodes/${id}`)
       .then((episodes) => {
         console.log(episodes.data.episodeInfo);
 

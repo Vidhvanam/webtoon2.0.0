@@ -33,7 +33,7 @@ export default function AddAuthor() {
     }, [currentPage, allAuthors]);
 
     useEffect(() => {
-        axios.get(`http://localhost:6969/api/author/filter/all`)
+        axios.get(`${process.env.REACT_APP_API}api/author/filter/all`)
             .then(res => {
                 setAllAuthors(res.data.authors.filter(author => author?.status !== "removed"))
             })
@@ -80,7 +80,7 @@ export default function AddAuthor() {
         const flag = formValidation()
         if (flag) {
             if (mode === "insert") {
-                axios.post("http://localhost:6969/api/author/addAuthor", newAuthor)
+                axios.post(`${process.env.REACT_APP_API}api/author/addAuthor`, newAuthor)
                     .then(res => {
                         // alert(res.data.type)
                         toast[res.data.type](res.data.message);
@@ -108,7 +108,7 @@ export default function AddAuthor() {
                 ).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        axios.post("http://localhost:6969/api/author/update", newAuthor)
+                        axios.post(`${process.env.REACT_APP_API}api/author/update`, newAuthor)
                             .then(res => {
                                 if (res.data.type === "success") {
                                     setAllAuthors(prev => prev.map(author => {
@@ -176,7 +176,7 @@ export default function AddAuthor() {
         ).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios.post(`http://localhost:6969/api/author/remove/${author._id}`)
+                axios.post(`${process.env.REACT_APP_API}api/author/remove/${author._id}`)
                     .then(res => {
                         console.log(res);
                         if (res.data.type === "success") {

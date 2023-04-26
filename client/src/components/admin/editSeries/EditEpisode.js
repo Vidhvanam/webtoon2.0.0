@@ -16,7 +16,7 @@ export default function CreateSeries() {
     // useEffect(() => {
     //     if (url !== "") {
 
-    //         axios.get(`http://localhost:6969/api/episodes/getFile/${url}`)
+    //         axios.get(`${process.env.REACT_APP_API}api/episodes/getFile/${url}`)
     //             .then(res => res.data).then(pdf => {
     //                 const converted = new Blob([pdf], { type: 'application/pdf' });
 
@@ -95,7 +95,7 @@ export default function CreateSeries() {
                     formData.append('name', newEpisode.name)
                     formData.append('status', "published")
                     formData.append('pdf', newEpisode.pdf);
-                    axios.post(`http://localhost:6969/api/episodes/updateEpisode/${id}`, formData)
+                    axios.post(`${process.env.REACT_APP_API}api/episodes/updateEpisode/${id}`, formData)
                         .then(res => {
                             Swal.fire(res.data.message, '', res.data.type);
                             setTimeout(() => {

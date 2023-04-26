@@ -68,7 +68,7 @@ export default function CreateSeries() {
       formData.append('pdf', newEpisode.pdf);
       formData.append('ep_num', newEpisode.ep_num)
 
-      axios.post('http://localhost:6969/api/episodes/admin/add', formData)
+      axios.post(`${process.env.REACT_APP_API}api/episodes/admin/add`, formData)
         .then(res => {
           toast[res.data.type](res.data.message);
           setTimeout(() => {
@@ -89,7 +89,7 @@ export default function CreateSeries() {
   }
   return (
     <div className="main-container">
-      <nav className="user-account-nav">
+      <nav className="user-account-nav add-episode-bar">
         <ul className="flex-row-box">
           <li>
             <NavLink to="/createSeries/first" className="disabled-link">1. Create Series</NavLink>

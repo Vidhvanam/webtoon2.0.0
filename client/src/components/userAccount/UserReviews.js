@@ -6,10 +6,12 @@ import 'react-toastify/dist/ReactToastify.css'
 import { FaStar } from "react-icons/fa";
 import noImg from "../../img/noimage.png"
 import { NavLink } from "react-router-dom"
+import WTLoader from "../WTLoader";
 
 export default function UserReviws() {
     const { user, setUser } = useContext(userContext)
     const [reviews, setReviews] = useState([])
+    const [loading, setLoading] = useState(true)
     const [reArray, setReArray] = useState({})
     const [mode, setMode] = useState("view")
     const stars = Array(5).fill(0);
@@ -20,11 +22,12 @@ export default function UserReviws() {
 
             if (user) {
                 const userSubscribes = user.subscribes
-                const res = await axios.get(`http://localhost:6969/api/reviews/AllUserReviews/${user._id}`)
+                const res = await axios.get(`${process.env.REACT_APP_API}api/reviews/AllUserReviews/${user._id}`)
 
                 if (res.data.type === "success") {
                     const reviewsData = res.data.reviewsData
                     setReviews(reviewsData)
+                    setLoading(false)
                     let temp = {}
 
 
@@ -88,7 +91,7 @@ export default function UserReviws() {
         } else {
 
 
-            axios.delete(`http://localhost:6969/api/reviews/reviewsDelete?r_ids=${[...r_id]}`, { data: reArray, action: 'unSub' }).then(res => {
+            axios.delete(`${process.env.REACT_APP_API}api/reviews/reviewsDelete?r_ids=${[...r_id]}`, { data: reArray, action: 'unSub' }).then(res => {
                 if (res.data.type === "success") {
 
                     toast[res.data.type](res.data.message);
@@ -100,7 +103,9 @@ export default function UserReviws() {
             })
         }
     }
-
+    if (loading) {
+        return <WTLoader />
+    }
 
     return (
         <div className="main-container">
