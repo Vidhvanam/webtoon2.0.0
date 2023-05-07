@@ -22,6 +22,7 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
 
 })
+
 router.post('/addReview', (req, res) => {
 
     const date = new Date()
@@ -48,20 +49,23 @@ router.post('/addReview', (req, res) => {
 //         if (err) {
 //             res.send({ err, message: "Sorry error occured", type: "error" })
 //         } else {
-//             res.send({ message: "Review added sucessfully", type: "success", newReview })
+
+//             reviewMd.find({ seriesId: seriesId },)
+
+//                 .then(reviewsData => {
+//                     const totalFound = reviewsData.length;
+//                     const sumResult = reviewsData.reduce((acc, cur) => acc + Number(cur["star"]), 0);
+//                     console.log(sumResult, totalFound, seriesId);
+//                     const ratting = Math.round(sumResult / totalFound);
+//                     seriesModel.findOneAndUpdate({ _id: seriesId }, { ratting: ratting }, { new: true })
+//                         .then((updatedDoc) => {
+//                             console.log('Document updated successfully:', updatedDoc)
+//                         })
+//                     res.send({ message: "Review added sucessfully", type: "success", newReview, ratting })
+//                 }).catch(err => console.log("re err :", err));
 //         }
 //     })
-//     reviewMd.find({ seriesId: seriesId },)
-//         .then(reviewsData => {
-//             const totalFound = reviewsData.length;
-//             const sumResult = reviewsData.reduce((acc, cur) => acc + cur["star"], 0);
-//             console.log(sumResult, totalFound, seriesId);
-//             console.log("ratting", Math.round(sumResult / totalFound));
-//             seriesModel.findOneAndUpdate({ _id: seriesId }, { ratting: Math.round(sumResult / totalFound) }, { new: true })
-//                 .then((updatedDoc) => {
-//                     console.log('Document updated successfully:', updatedDoc)
-//                 })
-//         }).catch(err => console.log("re err :", err));
+
 
 
 // })

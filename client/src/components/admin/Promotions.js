@@ -96,7 +96,7 @@ function Promotions() {
             showCancelButton: true,
             confirmButtonText: 'Submit',
             inputAttributes: {
-                accept: ".png, .jpeg , .jpg",
+                accept: ".png, .jpeg , .jpg , .gif",
             },
 
             showLoaderOnConfirm: true,
@@ -105,8 +105,8 @@ function Promotions() {
                 if (!file) {
                     console.log("Select valid image")
                     Swal.showValidationMessage("Select valid image");
-                } else if (!file.name.match(/\.(jpg|jpeg|png)$/)) {
-                    Swal.showValidationMessage("Not valid formate noly JPG , PNG , JPEG allowed.")
+                } else if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+                    Swal.showValidationMessage("Not valid formate noly JPG , PNG , JPEG , GIF allowed.")
                 } else if (file.size > 1048576) {
                     Swal.showValidationMessage("Image size should be less than 1mb")
                 }

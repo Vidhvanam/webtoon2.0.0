@@ -9,7 +9,7 @@ import WTLoader from "../WTLoader";
 export default function Subscriber() {
     const { user, setUser } = useContext(userContext)
     const [subsribes, setSubsribes] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [subArray, setSubArray] = useState([])
     const [mode, setMode] = useState("view")
 

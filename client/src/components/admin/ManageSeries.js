@@ -155,7 +155,7 @@ function MagageSeries() {
                                     <tr key={item._id} className={item?.status === "removed" ? "removed-ep" : ""}>
                                         <td>{item.ep_num}</td>
                                         <td>{item.name}</td>
-                                        <td className="text-danger">{item?.status}</td>
+                                        <td className="text-danger">{item?.status ? item.status : "published"}</td>
                                         <td>{new Date(item.createdDate).toDateString()}</td>
                                         <td>
                                             <button className="btn btn-danger m-1" onClick={() => handleDelete(item)} disabled={item?.status === "removed"}>Delete</button>
